@@ -8,6 +8,15 @@
     "iv": "BJfiDrDGH4J0rIQE",
     "ct": "o+6bnNGSAl6cUbmXMTKmJoONkHKEMwQSHfqipfCy6gz6ys4zYKbvWmbs9i8313xRWIoOJxxbokNr4aqNzOYfd2IvdPFx0huzCvRIEXjj72Yeu25J0SEH7RIvycGFI0cBE99T+uRG9ajfG+Nozg=="
    }
+  },
+  {
+   "name": "DoanKan",
+   "role": "user",
+   "w": {
+    "salt": "wx6Q5VeNkCRtC28/lQu76w==",
+    "iv": "gWlmUpeNgHo+bpKc",
+    "ct": "FKuA17kq5h3par52JALQNexvXCLe+dmSoY5yaEuxasfh6T0ZbHHgAjgTZoP2OASvPbDPJfeMzl2k3Yr17jzkGTEyoYkVKhEtEfRI07cmaaODuAy219fbMrnJTQUbjJs2AhzxjaaGYrnJnTLBsw=="
+   }
   }
  ]
 }
