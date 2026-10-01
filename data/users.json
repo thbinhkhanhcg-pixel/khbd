@@ -1,0 +1,13 @@
+{
+ "users": [
+  {
+   "name": "admin",
+   "role": "admin",
+   "w": {
+    "salt": "o4j4JdHn4HFMOVhmHzDGPg==",
+    "iv": "BJfiDrDGH4J0rIQE",
+    "ct": "o+6bnNGSAl6cUbmXMTKmJoONkHKEMwQSHfqipfCy6gz6ys4zYKbvWmbs9i8313xRWIoOJxxbokNr4aqNzOYfd2IvdPFx0huzCvRIEXjj72Yeu25J0SEH7RIvycGFI0cBE99T+uRG9ajfG+Nozg=="
+   }
+  }
+ ]
+}
