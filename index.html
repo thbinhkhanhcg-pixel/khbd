@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kho Kế hoạch bài dạy</title>
+<style>
+:root{--bg:#0d1526;--side:#131f38;--card:#17233f;--line:#243254;--tx:#e8edf7;--mu:#8b99b8;--ac:#2f6bff;--rd:#ef4f5f}
+*{box-sizing:border-box;margin:0}
+body{font:14px/1.4 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--tx);display:flex;min-height:100vh}
+button,input,select{font:inherit;color:inherit}
+aside{width:282px;background:var(--side);border-right:1px solid var(--line);padding:16px 12px;display:flex;flex-direction:column;gap:14px;position:sticky;top:0;height:100vh;flex:none}
+.logo{font-size:20px;font-weight:700;padding:4px 8px;display:flex;gap:10px;align-items:center}
+.logo i{font-style:normal;background:linear-gradient(135deg,#ffb830,#ff7a18);border-radius:8px;width:34px;height:34px;display:grid;place-items:center}
+.acc{display:flex;gap:10px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:12px;background:#182646}
+.av{width:36px;height:36px;border-radius:50%;background:var(--ac);display:grid;place-items:center;font-weight:700;flex:none}
+.acc small{display:block;color:var(--mu);font-size:12px}
+nav a{display:flex;gap:10px;padding:10px 12px;border-radius:10px;color:var(--mu);cursor:pointer;text-decoration:none;margin-bottom:2px}
+nav a:hover{color:var(--tx)}nav a.on{background:#1d3160;color:var(--tx);border:1px solid #2b4583}
+main{flex:1;min-width:0}
+header{height:60px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;padding:0 24px;font-size:18px;font-weight:600}
+#menu{display:none;background:none;border:0;font-size:20px;cursor:pointer}
+.wrap{max-width:1152px;margin:32px auto;padding:0 16px;display:flex;flex-direction:column;gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px}
+.head{padding:20px;display:flex;gap:16px;align-items:flex-start}
+.ico{width:46px;height:46px;border-radius:12px;background:#1e3a6e;border:1px solid #2f4f8c;display:grid;place-items:center;font-size:22px;flex:none}
+.head h2{font-size:18px}.meta{color:var(--mu);font-size:12.5px;margin-top:4px}
+.crumb a{cursor:pointer;color:var(--mu)}.crumb a:hover{color:var(--tx)}
+.tag{display:inline-block;border:1px solid var(--line);background:#1b2a4d;border-radius:6px;padding:1px 8px;font-size:11.5px;color:var(--mu);margin:8px 6px 0 0}
+.btn{border:1px solid var(--line);background:#1b2a4d;border-radius:10px;padding:7px 14px;cursor:pointer;font-weight:600;font-size:13px;white-space:nowrap}
+.btn:hover{background:#22345e}.btn.p{background:var(--ac);border-color:var(--ac)}.btn.p:hover{background:#4a7fff}.btn.d{color:#ff8b96}
+.bar{padding:10px 14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sp{flex:1}
+input[type=text],input[type=password],select{background:#101b33;border:1px solid var(--line);border-radius:10px;padding:8px 12px;outline:none}
+input:focus,select:focus{border-color:var(--ac)}
+input[type=checkbox]{width:18px;height:18px;accent-color:var(--ac);cursor:pointer;flex:none}
+.row{display:flex;align-items:center;gap:16px;padding:10px 16px;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}.row:hover{background:#1b2a4a}
+.fi{width:36px;height:40px;border-radius:8px;display:grid;place-items:center;font-size:10px;font-weight:800;flex:none}
+.nm{flex:1;min-width:0}.nm b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer}
+.nm small{color:var(--mu);font-size:12px}
+.chip{background:#23396b;border-radius:5px;padding:0 7px;margin-left:6px;font-size:11px;color:#b9c9ee}
+.acts{display:flex;gap:8px;align-items:center}
+.empty{padding:56px 20px;text-align:center;color:var(--mu)}
+.ov{position:fixed;inset:0;background:#000a;display:none;place-items:center;z-index:9;padding:16px}
+.ov.on{display:grid}
+.md{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;width:min(480px,100%);max-height:92vh;overflow:auto;display:flex;flex-direction:column;gap:12px}
+.md.big{width:min(1000px,100%);height:90vh}.md.big iframe,.md.big img{flex:1;width:100%;border:0;border-radius:10px;background:#fff;min-height:0;object-fit:contain}
+.md h3{font-size:17px}.md label{display:flex;flex-direction:column;gap:5px;color:var(--mu);font-size:12.5px}
+.md input,.md select{width:100%;color:var(--tx)}.md p,.md li{color:var(--mu);font-size:13px}.md ol{padding-left:18px;display:flex;flex-direction:column;gap:6px}
+.fl{display:flex;gap:8px;justify-content:flex-end}
+#menuBox{position:fixed;background:#1b2a4d;border:1px solid var(--line);border-radius:10px;padding:4px;display:none;z-index:8;min-width:170px}
+#menuBox button{display:block;width:100%;text-align:left;background:none;border:0;padding:8px 12px;border-radius:7px;cursor:pointer}
+#menuBox button:hover{background:#26396a}
+#toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);background:#26396a;padding:10px 18px;border-radius:10px;opacity:0;transition:.25s;z-index:20;pointer-events:none;max-width:90vw}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:820px){aside{position:fixed;left:-300px;z-index:7;transition:.2s}aside.open{left:0}#menu{display:block}.acts .hide{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head>
+<body>
+<aside id="sb">
+ <div class="logo"><i>📚</i>KHBD Cloud</div>
+ <div class="acc"><div class="av">GV</div><div><b id="accN"></b><small id="accS"></small></div></div>
+ <nav>
+  <a class="on" data-a="home">🗂 Kho kế hoạch bài dạy</a>
+  <a data-a="users" id="nUsers" style="display:none">👥 Quản lý tài khoản</a>
+  <a data-a="pw" id="nPw" style="display:none">🔒 Đổi mật khẩu</a>
+  <a data-a="set">⚙ Cài đặt repo</a>
+  <a data-a="help">❓ Hướng dẫn</a>
+  <a data-a="login" id="nLog">🔑 Đăng nhập</a>
+  <a data-a="logout" id="nOut" style="display:none">↩ Đăng xuất</a>
+ </nav>
+</aside>
+<main>
+ <header><button id="menu" data-a="menu">☰</button>Kế hoạch bài dạy</header>
+ <div class="wrap">
+  <section class="card head">
+   <div class="ico">📁</div>
+   <div style="flex:1;min-width:0"><h2 class="crumb" id="crumb"></h2><div class="meta" id="meta"></div><span class="tag">lưu trên GitHub</span></div>
+   <button class="btn" data-a="share">Chia sẻ</button>
+  </section>
+  <section class="card bar">
+   <input type="checkbox" id="all" title="Chọn tất cả">
+   <button class="btn p" data-a="up">⬆ Tải lên</button>
+   <button class="btn" data-a="nf">＋ Thư mục mới</button>
+   <button class="btn d" id="delSel" data-a="delSel" style="display:none"></button>
+   <span class="sp"></span>
+   <input type="text" id="q" placeholder="Tìm tên, môn, lớp…" style="width:200px">
+   <select id="sort"><option value="date">Mới nhất</option><option value="name">Tên A–Z</option><option value="size">Dung lượng</option></select>
+   <button class="btn" data-a="re" title="Tải lại">⟳</button>
+  </section>
+  <section class="card" id="list"></section>
+ </div>
+</main>
+<div class="ov" id="ov"><div class="md" id="md"></div></div>
+<div id="menuBox"></div><div id="toast"></div>
+<input type="file" id="file" multiple hidden>
+<script>
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
+const b64=s=>btoa(unescape(encodeURIComponent(s)));
+let db={folders:[],items:[]},cur='',sel=new Set(),q='',sort='date';
+// Tự nhận repo khi chạy trên GitHub Pages (owner.github.io/repo)
+const auto={owner:'',repo:'',branch:'main',token:''};
+if(location.hostname.endsWith('.github.io')){auto.owner=location.hostname.split('.')[0];const s=location.pathname.split('/')[1];auto.repo=s&&s!=='index.html'?s:auto.owner+'.github.io'}
+let C={...auto};try{C={...auto,...JSON.parse(localStorage.getItem('khbd')||'{}')}}catch(e){}
+const DEF='0977889090';
+let S=null;try{S=JSON.parse(sessionStorage.getItem('khs')||'null')}catch(e){}
+const can=()=>!!(S&&C.owner&&C.repo);
+const chkPw=p=>{if(p.length<8||p===DEF)throw new Error('Mật khẩu tối thiểu 8 ký tự và khác mật khẩu mặc định.')};
+// Mã hóa token GitHub bằng mật khẩu từng người (PBKDF2 + AES-GCM). Sai mật khẩu thì không giải mã được.
+const te=new TextEncoder(),bin=b=>btoa(String.fromCharCode(...new Uint8Array(b))),unb=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+async function dk(pw,salt){const k=await crypto.subtle.importKey('raw',te.encode(pw),'PBKDF2',false,['deriveKey']);return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:310000,hash:'SHA-256'},k,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])}
+async function wrap(pw,tok){const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));return{salt:bin(salt),iv:bin(iv),ct:bin(await crypto.subtle.encrypt({name:'AES-GCM',iv},await dk(pw,salt),te.encode(tok)))}}
+async function unwrap(pw,w){try{return new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:unb(w.iv)},await dk(pw,unb(w.salt)),unb(w.ct)))}catch(e){return null}}
+async function putJson(path,obj,msg){const r=await gh(`contents/${path}?ref=${C.branch}&t=${Date.now()}`);const sha=r.ok?(await r.json()).sha:undefined;
+ const w=await gh('contents/'+path,{method:'PUT',body:JSON.stringify({message:msg,content:b64(JSON.stringify(obj,null,1)),branch:C.branch,sha})});if(!w.ok)throw new Error((await w.json()).message)}
+async function getUsers(){
+ try{const r=await fetch(`https://api.github.com/repos/${C.owner}/${C.repo}/contents/data/users.json?ref=${C.branch}&t=${Date.now()}`,{headers:{Accept:'application/vnd.github.raw+json'}});if(r.ok)return await r.json();if(r.status==404)return null}catch(e){}
+ try{const r=await fetch('data/users.json?t='+Date.now());if(r.ok)return await r.json()}catch(e){}
+ throw new Error('Không đọc được danh sách tài khoản')}
+const signIn=u=>{S=u;sessionStorage.setItem('khs',JSON.stringify(u));close();toast('Xin chào '+u.name);return load()};
+async function doLogin(n,p){
+ if(!n||!p)throw new Error('Nhập tên đăng nhập và mật khẩu');
+ const L=await getUsers();
+ if(!L){if(n.toLowerCase()==='admin'&&p===DEF)return modal('setup');throw new Error('Chưa có tài khoản. Lần đầu hãy đăng nhập admin với mật khẩu mặc định.')}
+ const u=L.users.find(x=>x.name.toLowerCase()===n.toLowerCase()),t=u&&await unwrap(p,u.w);
+ if(!t)throw new Error('Sai tên đăng nhập hoặc mật khẩu');
+ await signIn({name:u.name,role:u.role,token:t})}
+async function doSetup(tok,p1,p2){
+ if(!tok)throw new Error('Hãy nhập GitHub token');chkPw(p1);if(p1!==p2)throw new Error('Hai mật khẩu không khớp');
+ const r=await fetch(`https://api.github.com/repos/${C.owner}/${C.repo}`,{headers:{Authorization:'Bearer '+tok}});
+ if(!r.ok)throw new Error('Token không truy cập được repo '+C.owner+'/'+C.repo);
+ if(!(await r.json()).permissions?.push)throw new Error('Token chưa có quyền ghi (Contents: Read and write)');
+ S={name:'admin',role:'admin',token:tok};
+ try{await putJson('data/users.json',{users:[{name:'admin',role:'admin',w:await wrap(p1,tok)}]},'Tạo tài khoản admin')}catch(e){S=null;throw e}
+ await signIn(S)}
+async function doPw(o,n,n2){chkPw(n);if(n!==n2)throw new Error('Hai mật khẩu không khớp');
+ const L=await getUsers(),u=L&&L.users.find(x=>x.name===S.name);if(!u||!(await unwrap(o,u.w)))throw new Error('Mật khẩu hiện tại không đúng');
+ u.w=await wrap(n,S.token);await putJson('data/users.json',L,'Đổi mật khẩu');close();toast('Đã đổi mật khẩu')}
+async function mutU(fn){if(!S||S.role!='admin')throw new Error('Chỉ Admin được quản lý tài khoản');
+ const L=(await getUsers())||{users:[]};fn(L);await putJson('data/users.json',L,'Cập nhật tài khoản');modal('users',L)}
+const deny=i=>{if(!S){modal('login');return true}if(S.role!='admin'&&i.by!==S.name){toast('Bạn chỉ được sửa/xóa tệp do mình tải lên.');return true}return false};
+const gh=(p,o={})=>fetch(`https://api.github.com/repos/${C.owner}/${C.repo}/${p}`,{...o,headers:{Accept:'application/vnd.github+json',Authorization:'Bearer '+(S?S.token:''),'Content-Type':'application/json'}});
+const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),3000)};
+const fsize=n=>n>=1048576?(n/1048576).toFixed(1)+' MB':Math.max(1,Math.round(n/1024))+' KB';
+const fdate=d=>new Date(d).toLocaleString('vi-VN',{dateStyle:'medium',timeStyle:'short'});
+const par=f=>f.includes('/')?f.slice(0,f.lastIndexOf('/')):'';
+const url=i=>new URL('files/'+encodeURIComponent(i.path),location.href.split('#')[0]).href;
+const ext=n=>(n.split('.').pop()||'').toLowerCase();
+const COL={pdf:['#ff5a6a','#3a1f2d'],doc:['#5aa0ff','#1b2f57'],docx:['#5aa0ff','#1b2f57'],ppt:['#ff9a4d','#3d2a1c'],pptx:['#ff9a4d','#3d2a1c'],xls:['#3ecf8e','#16382f'],xlsx:['#3ecf8e','#16382f'],zip:['#ffc233','#3a3119'],rar:['#ffc233','#3a3119']};
+const badge=n=>{const e=ext(n),c=COL[e]||['#9aa8c7','#26314d'];return `<div class="fi" style="color:${c[0]};background:${c[1]}">${esc(e.slice(0,4).toUpperCase())}</div>`};
+
+async function load(){
+ try{
+  if(can()){
+   const r=await gh(`contents/data/index.json?ref=${C.branch}&t=${Date.now()}`);
+   if(r.ok){const j=await r.json();db=JSON.parse(decodeURIComponent(escape(atob(j.content.replace(/\s/g,'')))))}
+   else if(r.status==404)db={folders:[],items:[]};else throw new Error('Không đọc được repo ('+r.status+'). Kiểm tra cài đặt.')
+  }else{
+   const r=await fetch('data/index.json?t='+Date.now());db=r.ok?await r.json():{folders:[],items:[]}
+  }
+ }catch(e){toast(e.message||'Không tải được dữ liệu')}
+ db.folders=db.folders||[];db.items=db.items||[];render()
+}
+async function save(msg){
+ const r=await gh(`contents/data/index.json?ref=${C.branch}&t=${Date.now()}`);
+ const sha=r.ok?(await r.json()).sha:undefined;
+ const w=await gh('contents/data/index.json',{method:'PUT',body:JSON.stringify({message:msg,content:b64(JSON.stringify(db,null,1)),branch:C.branch,sha})});
+ if(!w.ok)throw new Error((await w.json()).message)
+}
+async function act(fn,ok){
+ if(!can()){toast('Hãy đăng nhập để chỉnh sửa.');return modal('login')}
+ try{await fn();if(ok)toast(ok)}catch(e){toast('Lỗi: '+e.message)}
+ sel.clear();await load()
+}
+async function rmFile(i){
+ const r=await gh(`contents/files/${encodeURIComponent(i.path)}?ref=${C.branch}`);
+ if(r.ok){const d=await gh(`contents/files/${encodeURIComponent(i.path)}`,{method:'DELETE',body:JSON.stringify({message:'Xóa '+i.name,sha:(await r.json()).sha,branch:C.branch})});if(!d.ok)throw new Error((await d.json()).message)}
+ db.items=db.items.filter(x=>x.id!==i.id)
+}
+
+function render(){
+ const parts=cur?cur.split('/'):[];
+ $('#crumb').innerHTML='<a data-p="">Kho KHBD</a>'+parts.map((p,i)=>' / <a data-p="'+esc(parts.slice(0,i+1).join('/'))+'">'+esc(p)+'</a>').join('');
+ const subs=q?[]:db.folders.filter(f=>par(f)===cur);
+ let its=q?db.items.filter(i=>(i.name+' '+(i.subject||'')+' '+(i.grade||'')).toLowerCase().includes(q)):db.items.filter(i=>i.folder===cur);
+ its.sort((a,b)=>sort=='name'?a.name.localeCompare(b.name,'vi'):sort=='size'?b.size-a.size:b.date.localeCompare(a.date));
+ const last=db.items.map(i=>i.date).sort().pop();
+ $('#meta').textContent=(last?fdate(last)+' · ':'')+(subs.length+its.length)+' mục';
+ const ad=S&&S.role=='admin';
+ $('#accN').textContent=S?S.name:'Khách';$('#accS').textContent=S?(ad?'Admin':'User')+' · '+C.owner+'/'+C.repo:'Chế độ chỉ xem';
+ $('.av').textContent=S?S.name.slice(0,2).toUpperCase():'GV';
+ $('#nUsers').style.display=ad?'':'none';$('#nPw').style.display=S?'':'none';$('#nOut').style.display=S?'':'none';$('#nLog').style.display=S?'none':'';
+ $('#delSel').style.display=sel.size?'':'none';$('#delSel').textContent='🗑 Xóa ('+sel.size+')';
+ $('#all').checked=its.length>0&&its.every(i=>sel.has(i.id));
+ let h=subs.map(f=>{const n=db.items.filter(i=>i.folder===f||i.folder.startsWith(f+'/')).length;
+  return `<div class="row"><span style="width:18px"></span><div class="fi" style="background:#3a3119;font-size:20px">📁</div><div class="nm"><b data-p="${esc(f)}">${esc(f.split('/').pop())}</b><small>${n} tệp</small></div><div class="acts"><button class="btn" data-m="f" data-id="${esc(f)}">⋮</button></div></div>`}).join('');
+ h+=its.map(i=>{const pv=['pdf','png','jpg','jpeg','docx','pptx','xlsx'].includes(ext(i.name));
+  return `<div class="row"><input type="checkbox" data-s="${esc(i.id)}" ${sel.has(i.id)?'checked':''}>${badge(i.name)}<div class="nm"><b data-pv="${esc(i.id)}">${esc(i.name)}</b><small>${fdate(i.date)} · ${fsize(i.size)}${i.subject?'<span class="chip">'+esc(i.subject)+'</span>':''}${i.grade?'<span class="chip">Lớp '+esc(i.grade)+'</span>':''}</small></div>
+  <div class="acts">${pv?`<button class="btn hide" data-pv="${esc(i.id)}">👁 Xem</button>`:''}<a class="btn" style="text-decoration:none" href="${url(i)}" download="${esc(i.name)}">⬇ Tải</a><button class="btn" data-m="i" data-id="${esc(i.id)}">⋮</button></div></div>`}).join('');
+ $('#list').innerHTML=h||`<div class="empty">${q?'Không tìm thấy kết quả.':'Thư mục trống. Bấm “Tải lên” để thêm kế hoạch bài dạy đầu tiên.'}</div>`
+}
+function nav(p){cur=p;q='';$('#q').value='';sel.clear();location.hash=encodeURIComponent(p);render()}
+addEventListener('hashchange',()=>{cur=decodeURIComponent(location.hash.slice(1));render()});
+
+function modal(k,x){
+ const md=$('#md');md.className='md';let h='';
+ if(k=='set')h=`<h3>Cài đặt repo</h3><p>Thường tự nhận khi chạy trên GitHub Pages. Chỉ chỉnh khi mở tệp trên máy hoặc dùng tên miền riêng.</p>
+ <label>Tài khoản / tổ chức<input type="text" id="c1" value="${esc(C.owner)}"></label><label>Tên repo<input type="text" id="c2" value="${esc(C.repo)}"></label>
+ <label>Nhánh<input type="text" id="c3" value="${esc(C.branch)}"></label>
+ <div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" data-a="setOk">Lưu</button></div>`;
+ if(k=='login')h=`<h3>Đăng nhập</h3><label>Tên đăng nhập<input type="text" id="ln" autocomplete="username"></label><label>Mật khẩu<input type="password" id="lp" autocomplete="current-password"></label><p>Lần đầu dùng: tài khoản <b>admin</b>, mật khẩu mặc định <b>0977889090</b>. Hệ thống sẽ yêu cầu đổi mật khẩu ngay.</p><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" data-a="loginOk">Đăng nhập</button></div>`;
+ if(k=='setup')h=`<h3>Thiết lập lần đầu</h3><p>Nhập GitHub token (fine-grained, quyền Contents: Read and write cho repo này) và đặt mật khẩu Admin mới. Token được mã hóa bằng mật khẩu này trước khi lưu lên repo; mật khẩu mặc định không được dùng để bảo vệ dữ liệu.</p><label>GitHub token<input type="password" id="st" placeholder="github_pat_…"></label><label>Mật khẩu mới (≥ 8 ký tự, khác mật khẩu mặc định)<input type="password" id="s1"></label><label>Nhập lại mật khẩu<input type="password" id="s2"></label><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" data-a="setupOk">Hoàn tất</button></div>`;
+ if(k=='users')h=`<h3>Quản lý tài khoản</h3>`+x.users.map(u=>`<div class="row" style="padding:8px 0"><div class="nm"><b style="cursor:default">${esc(u.name)}</b><small>${u.role=='admin'?'Admin':'User'}</small></div><button class="btn" data-a="uReset" data-id="${esc(u.name)}">Đặt lại MK</button>${u.name==S.name?'':`<button class="btn d" data-a="uDel" data-id="${esc(u.name)}">Xóa</button>`}</div>`).join('')+`<label>Tên đăng nhập mới<input type="text" id="nn"></label><label>Mật khẩu (≥ 8 ký tự)<input type="password" id="np"></label><label>Quyền<select id="nr"><option value="user">User: tải lên, sửa/xóa tệp của mình</option><option value="admin">Admin: toàn quyền</option></select></label><div class="fl"><button class="btn" data-a="x">Đóng</button><button class="btn p" data-a="uAdd">Tạo tài khoản</button></div>`;
+ if(k=='pw')h=`<h3>Đổi mật khẩu</h3><label>Mật khẩu hiện tại<input type="password" id="p0"></label><label>Mật khẩu mới (≥ 8 ký tự)<input type="password" id="p1"></label><label>Nhập lại<input type="password" id="p2"></label><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" data-a="pwOk">Đổi mật khẩu</button></div>`;
+ if(k=='help')h=`<h3>Hướng dẫn</h3><ol><li>Tạo repo public trên GitHub, tải <b>index.html</b> lên nhánh main.</li><li>Vào Settings → Pages, chọn nhánh main, thư mục root.</li><li>Tạo fine-grained token cho repo này (Contents: Read and write).</li><li>Mở trang, đăng nhập <b>admin</b> với mật khẩu mặc định, rồi nhập token và đặt mật khẩu mới. Admin tạo tài khoản cho giáo viên ở “Quản lý tài khoản”. Khách chỉ xem và tải.</li></ol><p>Tệp nằm ở <code>files/</code>, danh mục ở <code>data/index.json</code>. Sau khi tải lên, GitHub Pages cần khoảng 1 phút để tệp mới tải về được.</p><div class="fl"><button class="btn p" data-a="x">Đã hiểu</button></div>`;
+ if(k=='up')h=`<h3>Tải lên kế hoạch bài dạy</h3><label>Tệp (Word, PDF, PowerPoint… tối đa 50 MB/tệp)<input type="file" id="uf" multiple></label>
+ <label>Môn<select id="us"><option>Tin học</option><option>Công nghệ</option><option>Toán</option><option>Tiếng Việt</option><option>Khác</option></select></label>
+ <label>Lớp<select id="ug"><option value="">Không chọn</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+ <p id="ust"></p><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" id="ub" data-a="upOk">Tải lên</button></div>`;
+ if(k=='pv'){md.className='md big';const u=url(x),e=ext(x.name);
+  h=`<div class="fl" style="justify-content:space-between;align-items:center"><b>${esc(x.name)}</b><button class="btn" data-a="x">Đóng</button></div>`+
+  (['png','jpg','jpeg'].includes(e)?`<img src="${u}">`:e=='pdf'?`<iframe src="${u}"></iframe>`:`<iframe src="https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(u)}"></iframe>`)}
+ md.innerHTML=h;$('#ov').classList.add('on')
+}
+const close=()=>{$('#ov').classList.remove('on');$('#md').innerHTML=''};
+
+async function doUpload(files,subject,grade){
+ const st=$('#ust'),bt=$('#ub');bt.disabled=true;
+ try{
+  for(const [n,f] of [...files].entries()){
+   if(f.size>50*1048576)throw new Error(f.name+' vượt quá 50 MB');
+   st.textContent=`Đang tải ${n+1}/${files.length}: ${f.name}`;
+   const data=await new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result.split(',')[1]);fr.readAsDataURL(f)});
+   const path=Date.now()+'_'+f.name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/gi,'d').replace(/[^\w.-]+/g,'_');
+   const w=await gh('contents/files/'+encodeURIComponent(path),{method:'PUT',body:JSON.stringify({message:'Tải lên '+f.name,content:data,branch:C.branch})});
+   if(!w.ok)throw new Error((await w.json()).message);
+   db.items.push({id:path,name:f.name,path,size:f.size,date:new Date().toISOString(),folder:cur,subject,grade,by:S.name})
+  }
+  st.textContent='Đang lưu danh mục…';await save('Cập nhật danh mục');close();toast('Đã tải lên '+files.length+' tệp')
+ }catch(e){bt.disabled=false;st.textContent='';toast('Lỗi: '+e.message)}
+ await load()
+}
+const itemOf=id=>db.items.find(i=>i.id===id);
+document.addEventListener('click',async e=>{
+ const box=$('#menuBox');if(!e.target.closest('[data-m]'))box.style.display='none';
+ if(e.target===$('#ov'))return close();
+ const t=e.target.closest('[data-a],[data-p],[data-pv],[data-m]');if(!t)return;
+ if(t.dataset.p!==undefined)return nav(t.dataset.p);
+ if(t.dataset.pv)return modal('pv',itemOf(t.dataset.pv));
+ if(t.dataset.m){const r=t.getBoundingClientRect(),id=t.dataset.id,f=t.dataset.m=='f';
+  box.innerHTML=(f?'':'<button data-a="cp" data-id="'+esc(id)+'">🔗 Sao chép liên kết</button><button data-a="rn" data-id="'+esc(id)+'">✏ Đổi tên</button>')+'<button data-a="'+(f?'delF':'delI')+'" data-id="'+esc(id)+'" style="color:#ff8b96">🗑 Xóa</button>';
+  box.style.display='block';box.style.top=r.bottom+4+'px';box.style.left=Math.max(8,r.right-170)+'px';return}
+ const a=t.dataset.a,id=t.dataset.id,i=id&&itemOf(id);
+ if(a=='x')close();
+ if(a=='menu')$('#sb').classList.toggle('open');
+ if(a=='home')nav('');
+ if(a=='set'||a=='help')modal(a);
+ if(a=='re')load();
+ if(a=='share'){navigator.clipboard.writeText(location.href);toast('Đã sao chép liên kết thư mục')}
+ if(a=='cp'){navigator.clipboard.writeText(url(i));toast('Đã sao chép liên kết tệp')}
+ if(a=='setOk'){C={owner:$('#c1').value.trim(),repo:$('#c2').value.trim(),branch:$('#c3').value.trim()||'main'};localStorage.setItem('khbd',JSON.stringify(C));close();toast('Đã lưu kết nối');load()}
+ if(a=='login')modal('login');
+ if(a=='logout'){S=null;sessionStorage.removeItem('khs');toast('Đã đăng xuất');load()}
+ if(a=='loginOk')try{await doLogin($('#ln').value.trim(),$('#lp').value)}catch(er){toast(er.message)}
+ if(a=='setupOk')try{await doSetup($('#st').value.trim(),$('#s1').value,$('#s2').value)}catch(er){toast(er.message)}
+ if(a=='users')try{modal('users',(await getUsers())||{users:[]})}catch(er){toast(er.message)}
+ if(a=='pw')modal('pw');
+ if(a=='pwOk')try{await doPw($('#p0').value,$('#p1').value,$('#p2').value)}catch(er){toast(er.message)}
+ if(a=='uAdd')try{const n=$('#nn').value.trim(),p=$('#np').value,r=$('#nr').value;chkPw(p);if(!/^[\w.-]{3,30}$/.test(n))throw new Error('Tên đăng nhập 3–30 ký tự: chữ không dấu, số, . _ -');
+  const w=await wrap(p,S.token);await mutU(L=>{if(L.users.some(u=>u.name.toLowerCase()==n.toLowerCase()))throw new Error('Tên đăng nhập đã tồn tại');L.users.push({name:n,role:r,w})});toast('Đã tạo tài khoản '+n)}catch(er){toast(er.message)}
+ if(a=='uReset')try{const p=prompt('Mật khẩu mới cho '+id+' (≥ 8 ký tự):');if(!p)return;chkPw(p);const w=await wrap(p,S.token);await mutU(L=>{L.users.find(u=>u.name==id).w=w});toast('Đã đặt lại mật khẩu')}catch(er){toast(er.message)}
+ if(a=='uDel'&&confirm('Xóa tài khoản '+id+'?'))try{await mutU(L=>{L.users=L.users.filter(u=>u.name!=id)});toast('Đã xóa tài khoản')}catch(er){toast(er.message)}
+ if(a=='up'){if(!can()){toast('Hãy đăng nhập để tải lên.');return modal('login')}modal('up')}
+ if(a=='upOk'){const f=$('#uf').files;if(!f.length)return toast('Hãy chọn ít nhất một tệp');doUpload(f,$('#us').value,$('#ug').value)}
+ if(a=='nf'){const n=prompt('Tên thư mục mới (ví dụ: Lớp 3):');if(!n||!n.trim())return;
+  const p=(cur?cur+'/':'')+n.trim().replace(/\//g,'-');if(db.folders.includes(p))return toast('Thư mục đã tồn tại');
+  act(async()=>{db.folders.push(p);await save('Tạo thư mục '+p)},'Đã tạo thư mục')}
+ if(a=='rn'&&i&&deny(i))return;
+ if(a=='rn'){const n=prompt('Tên mới:',i.name);if(n&&n.trim())act(async()=>{i.name=n.trim();await save('Đổi tên tệp')},'Đã đổi tên')}
+ if(a=='delI'&&deny(i))return;
+ if(a=='delI'&&confirm('Xóa “'+i.name+'”? Không thể hoàn tác trên trang này.'))act(async()=>{await rmFile(i);await save('Xóa '+i.name)},'Đã xóa');
+ if(a=='delF'&&S&&S.role!='admin')return toast('Chỉ Admin được xóa thư mục.');
+ if(a=='delF'){if(db.items.some(x=>x.folder===id||x.folder.startsWith(id+'/'))||db.folders.some(f=>f.startsWith(id+'/')))return toast('Hãy xóa hoặc chuyển các mục bên trong trước.');
+  act(async()=>{db.folders=db.folders.filter(f=>f!==id);await save('Xóa thư mục')},'Đã xóa thư mục')}
+ if(a=='delSel'&&S&&S.role!='admin'&&[...sel].some(id=>itemOf(id).by!==S.name))return toast('Bạn chỉ được xóa tệp do mình tải lên.');
+ if(a=='delSel'&&confirm('Xóa '+sel.size+' tệp đã chọn?'))act(async()=>{for(const id of [...sel])await rmFile(itemOf(id));await save('Xóa nhiều tệp')},'Đã xóa')
+});
+document.addEventListener('change',e=>{
+ if(e.target.dataset.s){e.target.checked?sel.add(e.target.dataset.s):sel.delete(e.target.dataset.s);render()}
+ if(e.target.id=='all'){const ids=(q?db.items.filter(i=>(i.name+(i.subject||'')).toLowerCase().includes(q)):db.items.filter(i=>i.folder===cur)).map(i=>i.id);ids.forEach(id=>e.target.checked?sel.add(id):sel.delete(id));render()}
+ if(e.target.id=='sort'){sort=e.target.value;render()}
+});
+$('#q').addEventListener('input',e=>{q=e.target.value.trim().toLowerCase();render()});
+addEventListener('dragover',e=>e.preventDefault());
+addEventListener('drop',e=>{e.preventDefault();if(!e.dataTransfer.files.length)return;if(!can()){toast('Hãy đăng nhập để tải lên.');return modal('login')}modal('up');$('#uf').files=e.dataTransfer.files});
+$('#ov').addEventListener('keydown',e=>{if(e.key=='Enter'&&e.target.tagName=='INPUT'&&e.target.type!='file'){const b=$('#md .btn.p');b&&b.click()}});
+cur=decodeURIComponent(location.hash.slice(1));load();
+</script></body></html>
