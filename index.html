@@ -83,7 +83,7 @@ input[type=checkbox]{width:18px;height:18px;accent-color:var(--ac);cursor:pointe
    <button class="btn" data-a="nf">＋ Thư mục mới</button>
    <button class="btn d" id="delSel" data-a="delSel" style="display:none"></button>
    <span class="sp"></span>
-   <input type="text" id="q" placeholder="Tìm tên, môn, lớp…" style="width:200px">
+   <input type="text" id="q" placeholder="Tìm tên tệp, môn, lớp, người tải…" style="width:200px">
    <select id="sort"><option value="date">Mới nhất</option><option value="name">Tên A–Z</option><option value="size">Dung lượng</option></select>
    <button class="btn" data-a="re" title="Tải lại">⟳</button>
   </section>
@@ -104,6 +104,12 @@ let C={...auto};try{C={...auto,...JSON.parse(localStorage.getItem('khbd')||'{}')
 const DEF='0977889090';
 let S=null;try{S=JSON.parse(sessionStorage.getItem('khs')||'null')}catch(e){}
 const can=()=>!!(S&&C.owner&&C.repo);
+let UD={};
+const info=u=>(u.role=='admin'?'Admin':u.role=='bgh'?'Ban giám hiệu':'Giáo viên')+(u.team?' · '+u.team:'')+(u.leader?' · Tổ trưởng':'');
+// Quyền xem: Admin và BGH xem tất cả; Tổ trưởng xem tệp của cả tổ; Giáo viên chỉ xem tệp của mình
+const canView=i=>{if(!S)return false;if(S.role=='admin'||S.role=='bgh'||i.by===S.name)return true;const o=UD[i.by];return !!(S.leader&&S.team&&o&&o.team===S.team)};
+async function syncUsers(){try{const L=await getUsers();UD={};(L?L.users:[]).forEach(u=>UD[u.name]=u);
+ if(S){const u=UD[S.name];if(!u){S=null;sessionStorage.removeItem('khs')}else{S={...S,role:u.role,team:u.team||'',leader:!!u.leader};sessionStorage.setItem('khs',JSON.stringify(S))}}}catch(e){}}
 const chkPw=p=>{if(p.length<8||p===DEF)throw new Error('Mật khẩu tối thiểu 8 ký tự và khác mật khẩu mặc định.')};
 // Mã hóa token GitHub bằng mật khẩu từng người (PBKDF2 + AES-GCM). Sai mật khẩu thì không giải mã được.
 const te=new TextEncoder(),bin=b=>btoa(String.fromCharCode(...new Uint8Array(b))),unb=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
@@ -113,7 +119,7 @@ async function unwrap(pw,w){try{return new TextDecoder().decode(await crypto.sub
 async function putJson(path,obj,msg){const r=await gh(`contents/${path}?ref=${C.branch}&t=${Date.now()}`);const sha=r.ok?(await r.json()).sha:undefined;
  const w=await gh('contents/'+path,{method:'PUT',body:JSON.stringify({message:msg,content:b64(JSON.stringify(obj,null,1)),branch:C.branch,sha})});if(!w.ok)throw new Error((await w.json()).message)}
 async function getUsers(){
- try{const r=await fetch(`https://api.github.com/repos/${C.owner}/${C.repo}/contents/data/users.json?ref=${C.branch}&t=${Date.now()}`,{headers:{Accept:'application/vnd.github.raw+json'}});if(r.ok)return await r.json();if(r.status==404)return null}catch(e){}
+ try{const r=await fetch(`https://api.github.com/repos/${C.owner}/${C.repo}/contents/data/users.json?ref=${C.branch}&t=${Date.now()}`,{headers:{Accept:'application/vnd.github.raw+json',...(S?{Authorization:'Bearer '+S.token}:{})}});if(r.ok)return await r.json();if(r.status==404)return null}catch(e){}
  try{const r=await fetch('data/users.json?t='+Date.now());if(r.ok)return await r.json()}catch(e){}
  throw new Error('Không đọc được danh sách tài khoản')}
 const signIn=u=>{S=u;sessionStorage.setItem('khs',JSON.stringify(u));close();toast('Xin chào '+u.name);return load()};
@@ -123,7 +129,7 @@ async function doLogin(n,p){
  if(!L){if(n.toLowerCase()==='admin'&&p===DEF)return modal('setup');throw new Error('Chưa có tài khoản. Lần đầu hãy đăng nhập admin với mật khẩu mặc định.')}
  const u=L.users.find(x=>x.name.toLowerCase()===n.toLowerCase()),t=u&&await unwrap(p,u.w);
  if(!t)throw new Error('Sai tên đăng nhập hoặc mật khẩu');
- await signIn({name:u.name,role:u.role,token:t})}
+ await signIn({name:u.name,role:u.role,team:u.team||'',leader:!!u.leader,token:t})}
 async function doSetup(tok,p1,p2){
  if(!tok)throw new Error('Hãy nhập GitHub token');chkPw(p1);if(p1!==p2)throw new Error('Hai mật khẩu không khớp');
  const r=await fetch(`https://api.github.com/repos/${C.owner}/${C.repo}`,{headers:{Authorization:'Bearer '+tok}});
@@ -158,7 +164,7 @@ async function load(){
    const r=await fetch('data/index.json?t='+Date.now());db=r.ok?await r.json():{folders:[],items:[]}
   }
  }catch(e){toast(e.message||'Không tải được dữ liệu')}
- db.folders=db.folders||[];db.items=db.items||[];render()
+ db.folders=db.folders||[];db.items=db.items||[];if(S)await syncUsers();render()
 }
 async function save(msg){
  const r=await gh(`contents/data/index.json?ref=${C.branch}&t=${Date.now()}`);
@@ -181,22 +187,22 @@ function render(){
  const parts=cur?cur.split('/'):[];
  $('#crumb').innerHTML='<a data-p="">Kho KHBD</a>'+parts.map((p,i)=>' / <a data-p="'+esc(parts.slice(0,i+1).join('/'))+'">'+esc(p)+'</a>').join('');
  const subs=q?[]:db.folders.filter(f=>par(f)===cur);
- let its=q?db.items.filter(i=>(i.name+' '+(i.subject||'')+' '+(i.grade||'')).toLowerCase().includes(q)):db.items.filter(i=>i.folder===cur);
+ let its=(q?db.items.filter(i=>(i.name+' '+(i.subject||'')+' '+(i.grade||'')+' '+(i.by||'')).toLowerCase().includes(q)):db.items.filter(i=>i.folder===cur)).filter(canView);
  its.sort((a,b)=>sort=='name'?a.name.localeCompare(b.name,'vi'):sort=='size'?b.size-a.size:b.date.localeCompare(a.date));
- const last=db.items.map(i=>i.date).sort().pop();
+ const last=db.items.filter(canView).map(i=>i.date).sort().pop();
  $('#meta').textContent=(last?fdate(last)+' · ':'')+(subs.length+its.length)+' mục';
  const ad=S&&S.role=='admin';
- $('#accN').textContent=S?S.name:'Khách';$('#accS').textContent=S?(ad?'Admin':'User')+' · '+C.owner+'/'+C.repo:'Chế độ chỉ xem';
+ $('#accN').textContent=S?S.name:'Khách';$('#accS').textContent=S?info(S):'Chế độ chỉ xem';
  $('.av').textContent=S?S.name.slice(0,2).toUpperCase():'GV';
  $('#nUsers').style.display=ad?'':'none';$('#nPw').style.display=S?'':'none';$('#nOut').style.display=S?'':'none';$('#nLog').style.display=S?'none':'';
  $('#delSel').style.display=sel.size?'':'none';$('#delSel').textContent='🗑 Xóa ('+sel.size+')';
  $('#all').checked=its.length>0&&its.every(i=>sel.has(i.id));
- let h=subs.map(f=>{const n=db.items.filter(i=>i.folder===f||i.folder.startsWith(f+'/')).length;
+ let h=subs.map(f=>{const n=db.items.filter(i=>(i.folder===f||i.folder.startsWith(f+'/'))&&canView(i)).length;
   return `<div class="row"><span style="width:18px"></span><div class="fi" style="background:#3a3119;font-size:20px">📁</div><div class="nm"><b data-p="${esc(f)}">${esc(f.split('/').pop())}</b><small>${n} tệp</small></div><div class="acts"><button class="btn" data-m="f" data-id="${esc(f)}">⋮</button></div></div>`}).join('');
  h+=its.map(i=>{const pv=['pdf','png','jpg','jpeg','docx','pptx','xlsx'].includes(ext(i.name));
-  return `<div class="row"><input type="checkbox" data-s="${esc(i.id)}" ${sel.has(i.id)?'checked':''}>${badge(i.name)}<div class="nm"><b data-pv="${esc(i.id)}">${esc(i.name)}</b><small>${fdate(i.date)} · ${fsize(i.size)}${i.subject?'<span class="chip">'+esc(i.subject)+'</span>':''}${i.grade?'<span class="chip">Lớp '+esc(i.grade)+'</span>':''}</small></div>
+  return `<div class="row"><input type="checkbox" data-s="${esc(i.id)}" ${sel.has(i.id)?'checked':''}>${badge(i.name)}<div class="nm"><b data-pv="${esc(i.id)}">${esc(i.name)}</b><small>${fdate(i.date)} · ${fsize(i.size)}${S&&i.by!==S.name?' · '+esc(i.by||'không rõ')+(UD[i.by]&&UD[i.by].team?' ('+esc(UD[i.by].team)+')':''):''}${i.subject?'<span class="chip">'+esc(i.subject)+'</span>':''}${i.grade?'<span class="chip">Lớp '+esc(i.grade)+'</span>':''}</small></div>
   <div class="acts">${pv?`<button class="btn hide" data-pv="${esc(i.id)}">👁 Xem</button>`:''}<a class="btn" style="text-decoration:none" href="${url(i)}" download="${esc(i.name)}">⬇ Tải</a><button class="btn" data-m="i" data-id="${esc(i.id)}">⋮</button></div></div>`}).join('');
- $('#list').innerHTML=h||`<div class="empty">${q?'Không tìm thấy kết quả.':'Thư mục trống. Bấm “Tải lên” để thêm kế hoạch bài dạy đầu tiên.'}</div>`
+ $('#list').innerHTML=h||`<div class="empty">${q?'Không tìm thấy kết quả.':(S?'Chưa có tệp nào bạn được phép xem ở đây. Bấm “Tải lên” để thêm kế hoạch bài dạy.':'Hãy đăng nhập để xem kế hoạch bài dạy.')}</div>`
 }
 function nav(p){cur=p;q='';$('#q').value='';sel.clear();location.hash=encodeURIComponent(p);render()}
 addEventListener('hashchange',()=>{cur=decodeURIComponent(location.hash.slice(1));render()});
@@ -209,7 +215,8 @@ function modal(k,x){
  <div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" data-a="setOk">Lưu</button></div>`;
  if(k=='login')h=`<h3>Đăng nhập</h3><label>Tên đăng nhập<input type="text" id="ln" autocomplete="username"></label><label>Mật khẩu<input type="password" id="lp" autocomplete="current-password"></label><p>Lần đầu dùng: tài khoản <b>admin</b>, mật khẩu mặc định <b>0977889090</b>. Hệ thống sẽ yêu cầu đổi mật khẩu ngay.</p><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" data-a="loginOk">Đăng nhập</button></div>`;
  if(k=='setup')h=`<h3>Thiết lập lần đầu</h3><p>Nhập GitHub token (fine-grained, quyền Contents: Read and write cho repo này) và đặt mật khẩu Admin mới. Token được mã hóa bằng mật khẩu này trước khi lưu lên repo; mật khẩu mặc định không được dùng để bảo vệ dữ liệu.</p><label>GitHub token<input type="password" id="st" placeholder="github_pat_…"></label><label>Mật khẩu mới (≥ 8 ký tự, khác mật khẩu mặc định)<input type="password" id="s1"></label><label>Nhập lại mật khẩu<input type="password" id="s2"></label><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" data-a="setupOk">Hoàn tất</button></div>`;
- if(k=='users')h=`<h3>Quản lý tài khoản</h3>`+x.users.map(u=>`<div class="row" style="padding:8px 0"><div class="nm"><b style="cursor:default">${esc(u.name)}</b><small>${u.role=='admin'?'Admin':'User'}</small></div><button class="btn" data-a="uReset" data-id="${esc(u.name)}">Đặt lại MK</button>${u.name==S.name?'':`<button class="btn d" data-a="uDel" data-id="${esc(u.name)}">Xóa</button>`}</div>`).join('')+`<label>Tên đăng nhập mới<input type="text" id="nn"></label><label>Mật khẩu (≥ 8 ký tự)<input type="password" id="np"></label><label>Quyền<select id="nr"><option value="user">User: tải lên, sửa/xóa tệp của mình</option><option value="admin">Admin: toàn quyền</option></select></label><div class="fl"><button class="btn" data-a="x">Đóng</button><button class="btn p" data-a="uAdd">Tạo tài khoản</button></div>`;
+ if(k=='users')h=`<h3>Quản lý tài khoản</h3>`+x.users.map(u=>`<div class="row" style="padding:8px 0;flex-wrap:wrap"><div class="nm"><b style="cursor:default">${esc(u.name)}</b><small>${info(u)}</small></div><button class="btn" data-a="uEdit" data-id="${esc(u.name)}">Phân quyền</button><button class="btn" data-a="uReset" data-id="${esc(u.name)}">Đặt lại MK</button>${u.name==S.name?'':`<button class="btn d" data-a="uDel" data-id="${esc(u.name)}">Xóa</button>`}</div>`).join('')+`<label>Tên đăng nhập mới<input type="text" id="nn"></label><label>Mật khẩu (≥ 8 ký tự)<input type="password" id="np"></label><label>Vai trò<select id="nr"><option value="user">Giáo viên: chỉ xem, sửa, xóa tệp của mình</option><option value="bgh">Ban giám hiệu: xem tất cả tệp</option><option value="admin">Admin: toàn quyền</option></select></label><label>Tổ chuyên môn (nếu có)<input type="text" id="nt" placeholder="Ví dụ: Tổ 3"></label><label style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" id="nl" style="width:18px"> Phân công làm tổ trưởng của tổ này</label><div class="fl"><button class="btn" data-a="x">Đóng</button><button class="btn p" data-a="uAdd">Tạo tài khoản</button></div>`;
+ if(k=='uedit')h=`<h3>Phân quyền: ${esc(x.name)}</h3><label>Vai trò<select id="er"><option value="user"${x.role=='user'?' selected':''}>Giáo viên</option><option value="bgh"${x.role=='bgh'?' selected':''}>Ban giám hiệu</option><option value="admin"${x.role=='admin'?' selected':''}>Admin</option></select></label><label>Tổ chuyên môn<input type="text" id="et" value="${esc(x.team||'')}"></label><label style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" id="el" style="width:18px" ${x.leader?'checked':''}> Phân công làm tổ trưởng</label><div class="fl"><button class="btn" data-a="uback">Quay lại</button><button class="btn p" data-a="uEditOk" data-id="${esc(x.name)}">Lưu</button></div>`;
  if(k=='pw')h=`<h3>Đổi mật khẩu</h3><label>Mật khẩu hiện tại<input type="password" id="p0"></label><label>Mật khẩu mới (≥ 8 ký tự)<input type="password" id="p1"></label><label>Nhập lại<input type="password" id="p2"></label><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" data-a="pwOk">Đổi mật khẩu</button></div>`;
  if(k=='help')h=`<h3>Hướng dẫn</h3><ol><li>Tạo repo public trên GitHub, tải <b>index.html</b> lên nhánh main.</li><li>Vào Settings → Pages, chọn nhánh main, thư mục root.</li><li>Tạo fine-grained token cho repo này (Contents: Read and write).</li><li>Mở trang, đăng nhập <b>admin</b> với mật khẩu mặc định, rồi nhập token và đặt mật khẩu mới. Admin tạo tài khoản cho giáo viên ở “Quản lý tài khoản”. Khách chỉ xem và tải.</li></ol><p>Tệp nằm ở <code>files/</code>, danh mục ở <code>data/index.json</code>. Sau khi tải lên, GitHub Pages cần khoảng 1 phút để tệp mới tải về được.</p><div class="fl"><button class="btn p" data-a="x">Đã hiểu</button></div>`;
  if(k=='up')h=`<h3>Tải lên kế hoạch bài dạy</h3><label>Tệp (Word, PDF, PowerPoint… tối đa 50 MB/tệp)<input type="file" id="uf" multiple></label>
@@ -265,8 +272,12 @@ document.addEventListener('click',async e=>{
  if(a=='users')try{modal('users',(await getUsers())||{users:[]})}catch(er){toast(er.message)}
  if(a=='pw')modal('pw');
  if(a=='pwOk')try{await doPw($('#p0').value,$('#p1').value,$('#p2').value)}catch(er){toast(er.message)}
- if(a=='uAdd')try{const n=$('#nn').value.trim(),p=$('#np').value,r=$('#nr').value;chkPw(p);if(!/^[\w.-]{3,30}$/.test(n))throw new Error('Tên đăng nhập 3–30 ký tự: chữ không dấu, số, . _ -');
-  const w=await wrap(p,S.token);await mutU(L=>{if(L.users.some(u=>u.name.toLowerCase()==n.toLowerCase()))throw new Error('Tên đăng nhập đã tồn tại');L.users.push({name:n,role:r,w})});toast('Đã tạo tài khoản '+n)}catch(er){toast(er.message)}
+ if(a=='uAdd')try{const n=$('#nn').value.trim(),p=$('#np').value,r=$('#nr').value,tm=$('#nt').value.trim(),ld=$('#nl').checked;chkPw(p);if(ld&&!tm)throw new Error('Tổ trưởng cần có tên tổ');if(!/^[\w.-]{3,30}$/.test(n))throw new Error('Tên đăng nhập 3–30 ký tự: chữ không dấu, số, . _ -');
+  const w=await wrap(p,S.token);await mutU(L=>{if(L.users.some(u=>u.name.toLowerCase()==n.toLowerCase()))throw new Error('Tên đăng nhập đã tồn tại');L.users.push({name:n,role:r,team:tm,leader:ld,w})});toast('Đã tạo tài khoản '+n)}catch(er){toast(er.message)}
+ if(a=='uEdit')try{const L=await getUsers();modal('uedit',L.users.find(u=>u.name==id))}catch(er){toast(er.message)}
+ if(a=='uback')try{modal('users',(await getUsers())||{users:[]})}catch(er){toast(er.message)}
+ if(a=='uEditOk')try{const tm=$('#et').value.trim(),ld=$('#el').checked,r=$('#er').value;if(ld&&!tm)throw new Error('Tổ trưởng cần có tên tổ');if(id==S.name&&r!='admin')throw new Error('Không thể tự hạ quyền Admin của chính mình');
+  await mutU(L=>{const u=L.users.find(x=>x.name==id);u.role=r;u.team=tm;u.leader=ld});toast('Đã cập nhật phân quyền')}catch(er){toast(er.message)}
  if(a=='uReset')try{const p=prompt('Mật khẩu mới cho '+id+' (≥ 8 ký tự):');if(!p)return;chkPw(p);const w=await wrap(p,S.token);await mutU(L=>{L.users.find(u=>u.name==id).w=w});toast('Đã đặt lại mật khẩu')}catch(er){toast(er.message)}
  if(a=='uDel'&&confirm('Xóa tài khoản '+id+'?'))try{await mutU(L=>{L.users=L.users.filter(u=>u.name!=id)});toast('Đã xóa tài khoản')}catch(er){toast(er.message)}
  if(a=='up'){if(!can()){toast('Hãy đăng nhập để tải lên.');return modal('login')}modal('up')}
@@ -286,7 +297,7 @@ document.addEventListener('click',async e=>{
 });
 document.addEventListener('change',e=>{
  if(e.target.dataset.s){e.target.checked?sel.add(e.target.dataset.s):sel.delete(e.target.dataset.s);render()}
- if(e.target.id=='all'){const ids=(q?db.items.filter(i=>(i.name+(i.subject||'')).toLowerCase().includes(q)):db.items.filter(i=>i.folder===cur)).map(i=>i.id);ids.forEach(id=>e.target.checked?sel.add(id):sel.delete(id));render()}
+ if(e.target.id=='all'){const ids=(q?db.items.filter(i=>(i.name+(i.subject||'')).toLowerCase().includes(q)):db.items.filter(i=>i.folder===cur)).filter(canView).map(i=>i.id);ids.forEach(id=>e.target.checked?sel.add(id):sel.delete(id));render()}
  if(e.target.id=='sort'){sort=e.target.value;render()}
 });
 $('#q').addEventListener('input',e=>{q=e.target.value.trim().toLowerCase();render()});
