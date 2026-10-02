@@ -145,6 +145,7 @@ async function doPw(o,n,n2){chkPw(n);if(n!==n2)throw new Error('Hai mật khẩu
  u.w=await wrap(n,S.token);await putJson('data/users.json',L,'Đổi mật khẩu');close();toast('Đã đổi mật khẩu')}
 async function mutU(fn){if(!S||S.role!='admin')throw new Error('Chỉ Admin được quản lý tài khoản');
  const L=(await getUsers())||{users:[]};fn(L);await putJson('data/users.json',L,'Cập nhật tài khoản');modal('users',L)}
+const fdeny=f=>{if(!S){modal('login');return true}if(S.role!='admin'&&(db.fowner||{})[f]!==S.name){toast('Bạn chỉ được sửa/xóa thư mục do mình tạo.');return true}return false};
 const deny=i=>{if(!S){modal('login');return true}if(S.role!='admin'&&i.by!==S.name){toast('Bạn chỉ được sửa/xóa tệp do mình tải lên.');return true}return false};
 const gh=(p,o={})=>fetch(`https://api.github.com/repos/${C.owner}/${C.repo}/${p}`,{...o,headers:{Accept:'application/vnd.github+json',Authorization:'Bearer '+(S?S.token:''),'Content-Type':'application/json'}});
 const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),3000)};
@@ -257,7 +258,7 @@ document.addEventListener('click',async e=>{
  if(t.dataset.p!==undefined)return nav(t.dataset.p);
  if(t.dataset.pv)return modal('pv',itemOf(t.dataset.pv));
  if(t.dataset.m){const r=t.getBoundingClientRect(),id=t.dataset.id,f=t.dataset.m=='f';
-  box.innerHTML=(f?'':'<button data-a="cp" data-id="'+esc(id)+'">🔗 Sao chép liên kết</button><button data-a="rn" data-id="'+esc(id)+'">✏ Đổi tên</button>')+'<button data-a="'+(f?'delF':'delI')+'" data-id="'+esc(id)+'" style="color:#ff8b96">🗑 Xóa</button>';
+  box.innerHTML=(f?'<button data-a="rnF" data-id="'+esc(id)+'">✏ Đổi tên</button>':'<button data-a="cp" data-id="'+esc(id)+'">🔗 Sao chép liên kết</button><button data-a="rn" data-id="'+esc(id)+'">✏ Đổi tên</button>')+'<button data-a="'+(f?'delF':'delI')+'" data-id="'+esc(id)+'" style="color:#ff8b96">🗑 Xóa</button>';
   box.style.display='block';box.style.top=r.bottom+4+'px';box.style.left=Math.max(8,r.right-170)+'px';return}
  const a=t.dataset.a,id=t.dataset.id,i=id&&itemOf(id);
  if(a=='x')close();
@@ -287,14 +288,18 @@ document.addEventListener('click',async e=>{
  if(a=='upOk'){const f=$('#uf').files;if(!f.length)return toast('Hãy chọn ít nhất một tệp');doUpload(f,$('#us').value,$('#ug').value)}
  if(a=='nf'){const n=prompt('Tên thư mục mới (ví dụ: Lớp 3):');if(!n||!n.trim())return;
   const p=(cur?cur+'/':'')+n.trim().replace(/\//g,'-');if(db.folders.includes(p))return toast('Thư mục đã tồn tại');
-  act(async()=>{db.folders.push(p);await save('Tạo thư mục '+p)},'Đã tạo thư mục')}
+  act(async()=>{db.folders.push(p);(db.fowner=db.fowner||{})[p]=S.name;await save('Tạo thư mục '+p)},'Đã tạo thư mục')}
  if(a=='rn'&&i&&deny(i))return;
  if(a=='rn'){const n=prompt('Tên mới:',i.name);if(n&&n.trim())act(async()=>{i.name=n.trim();await save('Đổi tên tệp')},'Đã đổi tên')}
  if(a=='delI'&&deny(i))return;
  if(a=='delI'&&confirm('Xóa “'+i.name+'”? Không thể hoàn tác trên trang này.'))act(async()=>{await rmFile(i);await save('Xóa '+i.name)},'Đã xóa');
- if(a=='delF'&&S&&S.role!='admin')return toast('Chỉ Admin được xóa thư mục.');
+ if((a=='delF'||a=='rnF')&&fdeny(id))return;
+ if(a=='rnF'){const old=id.split('/').pop(),n=(prompt('Tên mới của thư mục:',old)||'').trim().replace(/\//g,'-');if(!n||n===old)return;
+  const np=(par(id)?par(id)+'/':'')+n;if(db.folders.includes(np))return toast('Đã có thư mục trùng tên');
+  const mv=p=>p===id?np:p.startsWith(id+'/')?np+p.slice(id.length):p;
+  act(async()=>{db.folders=db.folders.map(mv);db.items.forEach(x=>x.folder=mv(x.folder));if(db.fowner){const o={};Object.keys(db.fowner).forEach(k=>o[mv(k)]=db.fowner[k]);db.fowner=o}await save('Đổi tên thư mục')},'Đã đổi tên thư mục')}
  if(a=='delF'){if(db.items.some(x=>x.folder===id||x.folder.startsWith(id+'/'))||db.folders.some(f=>f.startsWith(id+'/')))return toast('Hãy xóa hoặc chuyển các mục bên trong trước.');
-  act(async()=>{db.folders=db.folders.filter(f=>f!==id);await save('Xóa thư mục')},'Đã xóa thư mục')}
+  act(async()=>{db.folders=db.folders.filter(f=>f!==id);if(db.fowner)delete db.fowner[id];await save('Xóa thư mục')},'Đã xóa thư mục')}
  if(a=='delSel'&&S&&S.role!='admin'&&[...sel].some(id=>itemOf(id).by!==S.name))return toast('Bạn chỉ được xóa tệp do mình tải lên.');
  if(a=='delSel'&&confirm('Xóa '+sel.size+' tệp đã chọn?'))act(async()=>{for(const id of [...sel])await rmFile(itemOf(id));await save('Xóa nhiều tệp')},'Đã xóa')
 });
