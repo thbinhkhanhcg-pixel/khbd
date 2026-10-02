@@ -41,6 +41,17 @@
     "iv": "6GB9vsoalxLzHDjk",
     "ct": "tMmm0WYadQve+JIxGJ5+ing9naSL/eXBn2F9GSPpUUwx+j7mF2aengSCoXECNJoGrfZW/z7HFWWIBrmBX8a+lWidi+MDl+ZXQoxDElXhwUa4KJo64uV/pUQDOEpH/sLPmrq+h1+4ZZq21RdgJg=="
    }
+  },
+  {
+   "name": "BGH",
+   "role": "bgh",
+   "team": "",
+   "leader": false,
+   "w": {
+    "salt": "0lAY5N4w8Gl2OpdaRU1f5Q==",
+    "iv": "2mZv1iLsX+1miLzm",
+    "ct": "Fq1nx9cumTtAnHGt6W1CtESWcjzsjh3UJq9t1y3OjwPGYm2e+x5imAZ+Lb+dqaBWcwheZkCQanGSX38XkrlPVjPmdzS3sbfuWW3Asxlo9RIsmtWWLQjttZqAvi/JzOVBkEKX13m8Wcv/sXCwQg=="
+   }
   }
  ]
 }
