@@ -4,8 +4,7 @@
   "LỚP 2",
   "LỚP 2/LỚP 3",
   "LỚP 3",
-  "LỚP 3/LỚP 2",
-  "LỚP 2/Test"
+  "LỚP 3/LỚP 2"
  ],
  "items": [
   {
@@ -31,7 +30,5 @@
    "by": "GV2"
   }
  ],
- "fowner": {
-  "LỚP 2/Test": "GV1"
- }
+ "fowner": {}
 }
