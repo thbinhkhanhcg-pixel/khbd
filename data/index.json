@@ -3,5 +3,17 @@
   "Tin học 5",
   "LỚP 2"
  ],
- "items": []
+ "items": [
+  {
+   "id": "1790921969708_clean_Bai1_TH2.pptx",
+   "name": "clean_Bai1_TH2.pptx",
+   "path": "1790921969708_clean_Bai1_TH2.pptx",
+   "size": 29507826,
+   "date": "2026-10-02T06:19:39.319Z",
+   "folder": "LỚP 2",
+   "subject": "Tin học",
+   "grade": "2",
+   "by": "GV1"
+  }
+ ]
 }
