@@ -1,7 +1,7 @@
 {
  "folders": [
   "Admin SHARE",
-  "BM",
+  "Tổ trưởng BM",
   "BM SHARE",
   "Tin học 3",
   "GV 2",
@@ -36,7 +36,7 @@
    "path": "1791034773034_Bia_4_.docx",
    "size": 20432,
    "date": "2026-10-03T13:39:34.949Z",
-   "folder": "BM",
+   "folder": "Tổ trưởng BM",
    "subject": "Tin học",
    "grade": "1",
    "by": "DoanKan"
@@ -66,7 +66,7 @@
  ],
  "fowner": {
   "Admin SHARE": "admin",
-  "BM": "DoanKan",
+  "Tổ trưởng BM": "DoanKan",
   "BM SHARE": "DoanKan",
   "Tin học 3": "GV1",
   "GV 2": "GV2",
