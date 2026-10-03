@@ -67,9 +67,13 @@ input[type=checkbox]:checked{border-color:var(--ac);background:var(--ac) url("da
 .srch{display:flex;align-items:center;gap:8px;background:#101b33;border:1px solid var(--line);border-radius:12px;padding:0 12px;color:var(--mu)}.srch input{border:0;background:none;padding:8px 0;width:190px}
 .vd{width:1px;height:22px;background:var(--line);margin:0 4px}
 #menuBox button{display:flex;align-items:center;gap:9px}
+.mh{padding:7px 12px 4px;font-size:11px;letter-spacing:.06em;color:var(--mu);text-transform:uppercase}
+.ck{width:18px;display:inline-flex;flex:none}
+.fbar{display:flex;align-items:center;gap:10px;padding:8px 14px;color:var(--mu)}.fbar input{flex:1;background:none;border:0;padding:8px 0;color:var(--tx)}
+.btn.i.on{background:#22345e;color:#fff}
 </style></head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></symbol><symbol id="i-folder" viewBox="0 0 24 24"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9L9.6 3.9A2 2 0 0 0 7.9 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol><symbol id="i-folderplus" viewBox="0 0 24 24"><path d="M12 10v6"/><path d="M9 13h6"/><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9L9.6 3.9A2 2 0 0 0 7.9 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol><symbol id="i-folderopen" viewBox="0 0 24 24"><path d="m6 14 1.5-2.9A2 2 0 0 1 9.2 10H20a2 2 0 0 1 1.9 2.5l-1.5 6a2 2 0 0 1-1.9 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.7.9l.8 1.2a2 2 0 0 0 1.7.9H18a2 2 0 0 1 2 2v2"/></symbol><symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></symbol><symbol id="i-more" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></symbol><symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4"/><path d="m15.4 6.5-6.8 4"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol><symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></symbol><symbol id="i-sort" viewBox="0 0 24 24"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></symbol><symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol><symbol id="i-drive" viewBox="0 0 24 24"><path d="M22 12H2"/><path d="M5.5 5.1 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.5-6.9A2 2 0 0 0 16.8 4H7.2a2 2 0 0 0-1.7 1.1Z"/><path d="M6 16h.01"/><path d="M10 16h.01"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol><symbol id="i-sliders" viewBox="0 0 24 24"><path d="M21 4h-7"/><path d="M10 4H3"/><path d="M21 12h-9"/><path d="M8 12H3"/><path d="M21 20h-5"/><path d="M12 20H3"/><path d="M14 2v4"/><path d="M8 10v4"/><path d="M16 18v4"/></symbol><symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol><symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></symbol><symbol id="i-key" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></symbol><symbol id="i-pencil" viewBox="0 0 24 24"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></symbol><symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></symbol><symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><path d="M10 11v6"/><path d="M14 11v6"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></symbol><symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 12h16"/><path d="M4 6h16"/><path d="M4 18h16"/></symbol></defs></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></symbol><symbol id="i-folder" viewBox="0 0 24 24"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9L9.6 3.9A2 2 0 0 0 7.9 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol><symbol id="i-folderplus" viewBox="0 0 24 24"><path d="M12 10v6"/><path d="M9 13h6"/><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9L9.6 3.9A2 2 0 0 0 7.9 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol><symbol id="i-folderopen" viewBox="0 0 24 24"><path d="m6 14 1.5-2.9A2 2 0 0 1 9.2 10H20a2 2 0 0 1 1.9 2.5l-1.5 6a2 2 0 0 1-1.9 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.7.9l.8 1.2a2 2 0 0 0 1.7.9H18a2 2 0 0 1 2 2v2"/></symbol><symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></symbol><symbol id="i-more" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></symbol><symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4"/><path d="m15.4 6.5-6.8 4"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol><symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></symbol><symbol id="i-sort" viewBox="0 0 24 24"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></symbol><symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol><symbol id="i-drive" viewBox="0 0 24 24"><path d="M22 12H2"/><path d="M5.5 5.1 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.5-6.9A2 2 0 0 0 16.8 4H7.2a2 2 0 0 0-1.7 1.1Z"/><path d="M6 16h.01"/><path d="M10 16h.01"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol><symbol id="i-sliders" viewBox="0 0 24 24"><path d="M21 4h-7"/><path d="M10 4H3"/><path d="M21 12h-9"/><path d="M8 12H3"/><path d="M21 20h-5"/><path d="M12 20H3"/><path d="M14 2v4"/><path d="M8 10v4"/><path d="M16 18v4"/></symbol><symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol><symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></symbol><symbol id="i-key" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></symbol><symbol id="i-pencil" viewBox="0 0 24 24"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></symbol><symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></symbol><symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><path d="M10 11v6"/><path d="M14 11v6"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></symbol><symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 12h16"/><path d="M4 6h16"/><path d="M4 18h16"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol><symbol id="i-filter" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M7 12h10"/><path d="M10 18h4"/></symbol></defs></svg>
 <aside id="sb">
  <div class="logo"><i><svg class="ic"><use href="#i-folderopen"/></svg></i>KHBD Cloud</div>
  <div class="acc"><div class="av">GV</div><div><b id="accN"></b><small id="accS"></small></div></div>
@@ -90,7 +94,7 @@ input[type=checkbox]:checked{border-color:var(--ac);background:var(--ac) url("da
   <section class="card head">
    <div class="ico"><svg class="ic"><use href="#i-drive"/></svg></div>
    <div style="flex:1;min-width:0"><h2 class="crumb" id="crumb"></h2><div class="meta" id="meta"></div><span class="tag"><svg class="ic"><use href="#i-drive"/></svg>lưu trên GitHub</span></div>
-   <button class="btn" data-a="share"><svg class="ic"><use href="#i-share"/></svg>Chia sẻ</button>
+   <button class="btn" data-a="share"><svg class="ic"><use href="#i-share"/></svg>Chia sẻ</button><button class="btn i" data-m="hd" title="Tùy chọn"><svg class="ic"><use href="#i-more"/></svg></button>
   </section>
   <section class="card bar">
    <input type="checkbox" id="all" title="Chọn tất cả"><span class="vd"></span>
@@ -98,10 +102,14 @@ input[type=checkbox]:checked{border-color:var(--ac);background:var(--ac) url("da
    <button class="btn" data-a="nf"><svg class="ic"><use href="#i-folderplus"/></svg>Thư mục mới</button>
    <button class="btn d" id="delSel" data-a="delSel" style="display:none"></button>
    <span class="sp"></span>
-   <label class="srch"><svg class="ic"><use href="#i-search"/></svg><input type="text" id="q" placeholder="Tìm tên tệp, môn, lớp, người tải…"></label>
-   <button class="btn i" data-a="srt" title="Sắp xếp"><svg class="ic"><use href="#i-sort"/></svg></button>
+   <button class="btn i" id="bS" data-a="tSearch" title="Tìm kiếm"><svg class="ic"><use href="#i-search"/></svg></button>
+   <button class="btn i" id="bF" data-a="tFilter" title="Lọc"><svg class="ic"><use href="#i-filter"/></svg></button>
+   <button class="btn i" data-m="sort" title="Sắp xếp"><svg class="ic"><use href="#i-sort"/></svg></button>
+   <button class="btn i" data-m="disp" title="Tùy chọn hiển thị"><svg class="ic"><use href="#i-sliders"/></svg></button>
    <button class="btn i" data-a="re" title="Tải lại"><svg class="ic"><use href="#i-refresh"/></svg></button>
   </section>
+  <section class="card fbar" id="sbar" style="display:none"><svg class="ic"><use href="#i-search"/></svg><input type="text" id="q" placeholder="Tìm tệp, thư mục, môn, lớp, người tải trong toàn bộ kho…"></section>
+  <section class="card fbar" id="fbar" style="display:none"><svg class="ic"><use href="#i-filter"/></svg><input type="text" id="fq" placeholder="Lọc theo tên hoặc nhãn (môn, lớp) trong thư mục này…"><button class="btn p" data-a="fApply">Áp dụng</button></section>
   <section class="card" id="list"></section>
  </div>
 </main>
@@ -112,7 +120,9 @@ input[type=checkbox]:checked{border-color:var(--ac);background:var(--ac) url("da
 const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
 const ic=n=>`<svg class="ic"><use href="#i-${n}"/></svg>`;
 const b64=s=>btoa(unescape(encodeURIComponent(s)));
-let db={folders:[],items:[]},cur='',sel=new Set(),q='',sort='date';
+let db={folders:[],items:[]},cur='',sel=new Set(),q='',fq='',sort='date',sdir=-1,showS=false,showF=false,vis=[],D={th:true,sz:48};
+try{D={...D,...JSON.parse(localStorage.getItem('khd')||'{}')}}catch(e){}
+const saveD=()=>{try{localStorage.setItem('khd',JSON.stringify(D))}catch(e){}};
 // Tự nhận repo khi chạy trên GitHub Pages (owner.github.io/repo)
 const auto={owner:'',repo:'',branch:'main',token:''};
 if(location.hostname.endsWith('.github.io')){auto.owner=location.hostname.split('.')[0];const s=location.pathname.split('/')[1];auto.repo=s&&s!=='index.html'?s:auto.owner+'.github.io'}
@@ -210,15 +220,17 @@ async function rmFile(i){
  db.items=db.items.filter(x=>x.id!==i.id)
 }
 
+const thumb=i=>['png','jpg','jpeg','gif','webp'].includes(ext(i.name))&&D.th?`<div class="fi" style="width:${D.sz}px;height:${D.sz}px;padding:0;overflow:hidden;background:#101b33"><img src="${url(i)}" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover"></div>`:badge(i.name);
 const fchips=f=>{const o=(db.fowner||{})[f],sh=(db.share||{})[f];return (o&&o!==S.name?'<span class="chip">Của '+esc(o)+'</span>':'')+(sh&&sh.length?'<span class="chip">Chia sẻ: '+esc(sh.join(', '))+'</span>':'')};
 function render(){
  if(S&&cur&&!canSeeF(cur))cur='';
- $('.bar').style.display=S?'':'none';
+ $('.bar').style.display=S?'':'none';$('#sbar').style.display=S&&showS?'':'none';$('#fbar').style.display=S&&showF?'':'none';$('#bS').classList.toggle('on',showS||!!q);$('#bF').classList.toggle('on',showF||!!fq);
  const parts=(cur&&S)?cur.split('/'):[];
  $('#crumb').innerHTML='<a data-p="">Kho KHBD</a>'+parts.map((p,i)=>' / <a data-p="'+esc(parts.slice(0,i+1).join('/'))+'">'+esc(p.split('~')[0])+'</a>').join('');
- const subs=(q||!S)?[]:db.folders.filter(f=>par(f)===cur&&canSeeF(f));
- let its=(q?db.items.filter(i=>(i.name+' '+(i.subject||'')+' '+(i.grade||'')+' '+(i.by||'')).toLowerCase().includes(q)):db.items.filter(i=>i.folder===cur)).filter(canView);
- its.sort((a,b)=>sort=='name'?a.name.localeCompare(b.name,'vi'):sort=='size'?b.size-a.size:b.date.localeCompare(a.date));
+ const subs=(q||!S)?[]:db.folders.filter(f=>par(f)===cur&&canSeeF(f)&&(!fq||dn(f).toLowerCase().includes(fq)));
+ let its=(q?db.items.filter(i=>(i.name+' '+(i.subject||'')+' '+(i.grade||'')+' '+(i.by||'')).toLowerCase().includes(q)):db.items.filter(i=>i.folder===cur)).filter(canView).filter(i=>!fq||(i.name+' '+(i.subject||'')+' lớp '+(i.grade||'')).toLowerCase().includes(fq));
+ const cmp={name:(a,b)=>a.name.localeCompare(b.name,'vi'),size:(a,b)=>a.size-b.size,date:(a,b)=>a.date.localeCompare(b.date),type:(a,b)=>ext(a.name).localeCompare(ext(b.name))||a.name.localeCompare(b.name,'vi')}[sort];
+ its.sort((a,b)=>cmp(a,b)*sdir);vis=its.map(i=>i.id);
  const last=db.items.filter(canView).map(i=>i.date).sort().pop();
  $('#meta').innerHTML=S?(last?'<span class="mi">'+ic('calendar')+fdate(last)+'</span>':'')+'<span class="mi">'+ic('copy')+(subs.length+its.length)+' mục</span>':'Cần đăng nhập để xem nội dung';
  const ad=S&&S.role=='admin';
@@ -230,11 +242,11 @@ function render(){
  let h=subs.map(f=>{const n=db.items.filter(i=>(i.folder===f||i.folder.startsWith(f+'/'))&&canView(i)).length;
   return `<div class="row"><span style="width:18px"></span><div class="fi" style="background:#3a3119;color:#ffc233">${ic('folder')}</div><div class="nm"><b data-p="${esc(f)}">${esc(dn(f))}</b><small>${n} tệp${fchips(f)}</small></div><div class="acts"><button class="btn i" data-m="f" data-id="${esc(f)}">${ic('more')}</button></div></div>`}).join('');
  h+=its.map(i=>{const pv=['pdf','png','jpg','jpeg','docx','pptx','xlsx'].includes(ext(i.name));
-  return `<div class="row"><input type="checkbox" data-s="${esc(i.id)}" ${sel.has(i.id)?'checked':''}>${badge(i.name)}<div class="nm"><b data-pv="${esc(i.id)}">${esc(i.name)}</b><small>${fdate(i.date)} · ${fsize(i.size)}${S&&i.by!==S.name?' · '+esc(i.by||'không rõ')+(UD[i.by]&&UD[i.by].team?' ('+esc(UD[i.by].team)+')':''):''}${i.subject?'<span class="chip">'+esc(i.subject)+'</span>':''}${i.grade?'<span class="chip">Lớp '+esc(i.grade)+'</span>':''}</small></div>
+  return `<div class="row"><input type="checkbox" data-s="${esc(i.id)}" ${sel.has(i.id)?'checked':''}>${thumb(i)}<div class="nm"><b data-pv="${esc(i.id)}">${esc(i.name)}</b><small>${fdate(i.date)} · ${fsize(i.size)}${S&&i.by!==S.name?' · '+esc(i.by||'không rõ')+(UD[i.by]&&UD[i.by].team?' ('+esc(UD[i.by].team)+')':''):''}${i.subject?'<span class="chip">'+esc(i.subject)+'</span>':''}${i.grade?'<span class="chip">Lớp '+esc(i.grade)+'</span>':''}</small></div>
   <div class="acts">${pv?`<button class="btn hide" data-pv="${esc(i.id)}">${ic('eye')}Xem trước</button>`:''}<a class="btn" style="text-decoration:none" href="${url(i)}" download="${esc(i.name)}">${ic('download')}Tải xuống</a><button class="btn i" data-m="i" data-id="${esc(i.id)}">${ic('more')}</button></div></div>`}).join('');
  $('#list').innerHTML=h||`<div class="empty">${q?'Không tìm thấy kết quả.':(S?'Chưa có tệp nào bạn được phép xem ở đây. Bấm “Tải lên” để thêm kế hoạch bài dạy.':'<p style="margin-bottom:14px">Vui lòng đăng nhập để xem kế hoạch bài dạy.</p><button class="btn p" data-a="login">'+ic('key')+' Đăng nhập</button>')}</div>`
 }
-function nav(p){cur=p;q='';$('#q').value='';sel.clear();location.hash=encodeURIComponent(p);render()}
+function nav(p){cur=p;q='';fq='';$('#q').value='';$('#fq').value='';sel.clear();location.hash=encodeURIComponent(p);render()}
 addEventListener('hashchange',()=>{cur=decodeURIComponent(location.hash.slice(1));render()});
 
 function modal(k,x){
@@ -286,15 +298,26 @@ document.addEventListener('click',async e=>{
  const t=e.target.closest('[data-a],[data-p],[data-pv],[data-m]');if(!t)return;
  if(t.dataset.p!==undefined)return nav(t.dataset.p);
  if(t.dataset.pv)return modal('pv',itemOf(t.dataset.pv));
+ if(['sort','disp','hd'].includes(t.dataset.m)){const r=t.getBoundingClientRect(),m=t.dataset.m,ck=v=>'<span class="ck">'+(v?ic('check'):'')+'</span>';let h='';
+  if(m=='sort')h='<div class="mh">Sắp xếp theo</div>'+[['date','Ngày tạo'],['name','Tên'],['size','Dung lượng'],['type','Loại tệp']].map(([k,l])=>'<button data-a="sortSet" data-id="'+k+'">'+ck(sort==k)+l+(sort==k?'<small style="margin-left:auto;color:var(--mu)">'+(k=='name'||k=='type'?(sdir>0?'A–Z':'Z–A'):(sdir>0?'↑':'↓'))+'</small>':'')+'</button>').join('');
+  if(m=='disp')h='<div class="mh">Tùy chọn hiển thị</div><button data-a="dTh">'+ck(D.th)+'Hiển thị hình thu nhỏ</button><div class="mh">Kích thước hình thu nhỏ</div>'+[[36,'Nhỏ'],[48,'Vừa'],[64,'Lớn']].map(([v,l])=>'<button data-a="dSz" data-id="'+v+'">'+ck(D.sz==v)+l+'</button>').join('');
+  if(m=='hd')h='<button data-a="selAll">'+ic('check')+' Chọn tất cả</button><button data-a="share">'+ic('link')+' Sao chép liên kết thư mục</button>';
+  box.innerHTML=h;box.style.minWidth='220px';box.style.display='block';box.style.top=r.bottom+4+'px';box.style.left=Math.max(8,r.right-box.offsetWidth)+'px';return}
  if(t.dataset.m){const r=t.getBoundingClientRect(),id=t.dataset.id,f=t.dataset.m=='f';
   box.innerHTML=(f?'<button data-a="rnF" data-id="'+esc(id)+'">'+ic('pencil')+' Đổi tên</button>'+(canShare(id)?'<button data-a="shr" data-id="'+esc(id)+'">'+ic('users')+' Chia sẻ cho khối</button>':''):'<button data-a="cp" data-id="'+esc(id)+'">'+ic('link')+' Sao chép liên kết</button><button data-a="rn" data-id="'+esc(id)+'">'+ic('pencil')+' Đổi tên</button>')+'<button data-a="'+(f?'delF':'delI')+'" data-id="'+esc(id)+'" style="color:#ff8b96">'+ic('trash')+' Xóa</button>';
-  box.style.display='block';box.style.top=r.bottom+4+'px';box.style.left=Math.max(8,r.right-170)+'px';return}
+  box.style.minWidth='';box.style.display='block';box.style.top=r.bottom+4+'px';box.style.left=Math.max(8,r.right-box.offsetWidth)+'px';return}
  const a=t.dataset.a,id=t.dataset.id,i=id&&itemOf(id);
  if(a=='x')close();
  if(a=='menu')$('#sb').classList.toggle('open');
  if(a=='home')nav('');
  if(a=='set'||a=='help')modal(a);
- if(a=='srt'){sort=sort=='date'?'name':sort=='name'?'size':'date';toast('Sắp xếp: '+{date:'Mới nhất',name:'Tên A–Z',size:'Dung lượng'}[sort]);render()}
+ if(a=='tSearch'){showS=!showS;if(!showS){q='';$('#q').value=''}render();if(showS)$('#q').focus()}
+ if(a=='tFilter'){showF=!showF;if(!showF){fq='';$('#fq').value=''}render();if(showF)$('#fq').focus()}
+ if(a=='fApply'){fq=$('#fq').value.trim().toLowerCase();render()}
+ if(a=='sortSet'){if(sort==id)sdir=-sdir;else{sort=id;sdir=(id=='name'||id=='type')?1:-1}render()}
+ if(a=='dTh'){D.th=!D.th;saveD();render()}
+ if(a=='dSz'){D.sz=+id;D.th=true;saveD();render()}
+ if(a=='selAll'){vis.forEach(x=>sel.add(x));render()}
  if(a=='re')load();
  if(a=='share'){navigator.clipboard.writeText(location.href);toast('Đã sao chép liên kết thư mục')}
  if(a=='cp'){navigator.clipboard.writeText(url(i));toast('Đã sao chép liên kết tệp')}
@@ -345,6 +368,7 @@ document.addEventListener('change',e=>{
  if(e.target.id=='all'){const ids=(q?db.items.filter(i=>(i.name+(i.subject||'')).toLowerCase().includes(q)):db.items.filter(i=>i.folder===cur)).filter(canView).map(i=>i.id);ids.forEach(id=>e.target.checked?sel.add(id):sel.delete(id));render()}
  if(e.target.id=='sort'){sort=e.target.value;render()}
 });
+$('#fq').addEventListener('keydown',e=>{if(e.key=='Enter'){fq=e.target.value.trim().toLowerCase();render()}});
 $('#q').addEventListener('input',e=>{q=e.target.value.trim().toLowerCase();render()});
 addEventListener('dragover',e=>e.preventDefault());
 addEventListener('drop',e=>{e.preventDefault();if(!e.dataTransfer.files.length)return;if(!can()){toast('Hãy đăng nhập để tải lên.');return modal('login')}if(cur&&!canPut(cur))return toast('Bạn không có quyền tải lên thư mục này.');modal('up');$('#uf').files=e.dataTransfer.files});
