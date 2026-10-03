@@ -3,8 +3,7 @@
   "SHARE",
   "BM",
   "SHARE~DoanKan",
-  "Tin học 3",
-  "GV1 Share"
+  "Tin học 3"
  ],
  "items": [
   {
@@ -56,8 +55,7 @@
   "SHARE": "admin",
   "BM": "DoanKan",
   "SHARE~DoanKan": "DoanKan",
-  "Tin học 3": "GV1",
-  "GV1 Share": "GV1"
+  "Tin học 3": "GV1"
  },
  "share": {
   "SHARE~DoanKan": [
