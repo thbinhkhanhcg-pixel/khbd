@@ -2,7 +2,19 @@
  "folders": [
   "SHARE"
  ],
- "items": [],
+ "items": [
+  {
+   "id": "1791034450644_KHDH_TinHoc_Lop3.docx",
+   "name": "KHDH_TinHoc_Lop3.docx",
+   "path": "1791034450644_KHDH_TinHoc_Lop3.docx",
+   "size": 62373,
+   "date": "2026-10-03T13:34:12.852Z",
+   "folder": "SHARE",
+   "subject": "Tin học",
+   "grade": "",
+   "by": "admin"
+  }
+ ],
  "fowner": {
   "SHARE": "admin"
  }
