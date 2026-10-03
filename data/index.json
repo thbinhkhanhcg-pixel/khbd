@@ -21,5 +21,10 @@
   "SHARE": "admin",
   "BM": "DoanKan",
   "SHARE~DoanKan": "DoanKan"
+ },
+ "share": {
+  "SHARE~DoanKan": [
+   "Bộ Môn"
+  ]
  }
 }
