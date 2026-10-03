@@ -2,7 +2,8 @@
  "folders": [
   "SHARE",
   "BM",
-  "SHARE~DoanKan"
+  "SHARE~DoanKan",
+  "Tin học 3"
  ],
  "items": [
   {
@@ -42,7 +43,8 @@
  "fowner": {
   "SHARE": "admin",
   "BM": "DoanKan",
-  "SHARE~DoanKan": "DoanKan"
+  "SHARE~DoanKan": "DoanKan",
+  "Tin học 3": "GV1"
  },
  "share": {
   "SHARE~DoanKan": [
