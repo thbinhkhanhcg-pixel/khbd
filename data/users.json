@@ -52,6 +52,17 @@
     "iv": "2mZv1iLsX+1miLzm",
     "ct": "Fq1nx9cumTtAnHGt6W1CtESWcjzsjh3UJq9t1y3OjwPGYm2e+x5imAZ+Lb+dqaBWcwheZkCQanGSX38XkrlPVjPmdzS3sbfuWW3Asxlo9RIsmtWWLQjttZqAvi/JzOVBkEKX13m8Wcv/sXCwQg=="
    }
+  },
+  {
+   "name": "KimLoan",
+   "role": "user",
+   "team": "Anh Văn",
+   "leader": true,
+   "w": {
+    "salt": "BRc3/RYTr1tKqClOvwdnBQ==",
+    "iv": "NAVAOK2khVwmofIq",
+    "ct": "WWtP8lvV4Ol45Hf2zXbRwnh2SiS6Uz7kG95+8XqdxzAKheCg1kN1CK2evIHXEoheYiZCksSAKZcxkfeu1Hioi8kaksZNYR3J1BUmDYiyWLdUiQPBMcB1Ikz84PBRCsI6BgfAQJF63OIbhDuOFA=="
+   }
   }
  ]
 }
