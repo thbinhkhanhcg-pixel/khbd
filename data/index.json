@@ -1,5 +1,9 @@
 {
- "folders": [],
+ "folders": [
+  "SHARE"
+ ],
  "items": [],
- "fowner": {}
+ "fowner": {
+  "SHARE": "admin"
+ }
 }
