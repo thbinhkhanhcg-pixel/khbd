@@ -1,6 +1,7 @@
 {
  "folders": [
-  "SHARE"
+  "SHARE",
+  "BM"
  ],
  "items": [
   {
@@ -16,6 +17,7 @@
   }
  ],
  "fowner": {
-  "SHARE": "admin"
+  "SHARE": "admin",
+  "BM": "DoanKan"
  }
 }
