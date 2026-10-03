@@ -4,7 +4,8 @@
   "BM",
   "SHARE~DoanKan",
   "Tin học 3",
-  "GV 2"
+  "GV 2",
+  "BGH Share"
  ],
  "items": [
   {
@@ -68,7 +69,8 @@
   "BM": "DoanKan",
   "SHARE~DoanKan": "DoanKan",
   "Tin học 3": "GV1",
-  "GV 2": "GV2"
+  "GV 2": "GV2",
+  "BGH Share": "BGH"
  },
  "share": {
   "SHARE~DoanKan": [
