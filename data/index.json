@@ -1,6 +1,6 @@
 {
  "folders": [
-  "SHARE",
+  "Admin SHARE",
   "BM",
   "SHARE~DoanKan",
   "Tin học 3",
@@ -14,7 +14,7 @@
    "path": "1791034450644_KHDH_TinHoc_Lop3.docx",
    "size": 62373,
    "date": "2026-10-03T13:34:12.852Z",
-   "folder": "SHARE",
+   "folder": "Admin SHARE",
    "subject": "Tin học",
    "grade": "",
    "by": "admin"
@@ -65,7 +65,7 @@
   }
  ],
  "fowner": {
-  "SHARE": "admin",
+  "Admin SHARE": "admin",
   "BM": "DoanKan",
   "SHARE~DoanKan": "DoanKan",
   "Tin học 3": "GV1",
