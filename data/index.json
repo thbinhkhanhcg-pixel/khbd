@@ -2,7 +2,7 @@
  "folders": [
   "Admin SHARE",
   "BM",
-  "SHARE~DoanKan",
+  "BM SHARE",
   "Tin học 3",
   "GV 2",
   "BGH Share"
@@ -25,7 +25,7 @@
    "path": "1791034687813_Thum2.jpg",
    "size": 269185,
    "date": "2026-10-03T13:38:10.287Z",
-   "folder": "SHARE~DoanKan",
+   "folder": "BM SHARE",
    "subject": "Tin học",
    "grade": "",
    "by": "DoanKan"
@@ -67,13 +67,13 @@
  "fowner": {
   "Admin SHARE": "admin",
   "BM": "DoanKan",
-  "SHARE~DoanKan": "DoanKan",
+  "BM SHARE": "DoanKan",
   "Tin học 3": "GV1",
   "GV 2": "GV2",
   "BGH Share": "BGH"
  },
  "share": {
-  "SHARE~DoanKan": [
+  "BM SHARE": [
    "Bộ Môn"
   ]
  }
