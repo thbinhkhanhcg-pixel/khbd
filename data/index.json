@@ -5,7 +5,7 @@
   "BM SHARE",
   "Tin học 3",
   "GV 2",
-  "BGH Share"
+  "BGH chia sẻ"
  ],
  "items": [
   {
@@ -81,7 +81,7 @@
   "BM SHARE": "DoanKan",
   "Tin học 3": "GV1",
   "GV 2": "GV2",
-  "BGH Share": "BGH"
+  "BGH chia sẻ": "BGH"
  },
  "share": {
   "BM SHARE": [
