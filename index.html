@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kho Kế hoạch bài dạy</title>
+<title>File Manager</title>
 <style>
 :root{--bg:#0d1526;--side:#131f38;--card:#17233f;--line:#243254;--tx:#e8edf7;--mu:#8b99b8;--ac:#2f6bff;--rd:#ef4f5f}
 *{box-sizing:border-box;margin:0}
@@ -102,7 +102,7 @@ footer .sep{margin:0 10px;opacity:.5}footer svg{width:16px;height:16px;fill:#ff3
  <div class="acc"><div class="av">GV</div><div><b id="accN"></b><small id="accS"></small></div></div>
  <div class="addacc" id="addAcc" data-a="addU" style="display:none"><i><svg class="ic"><use href="#i-plus"/></svg></i>Thêm tài khoản</div>
  <nav>
-  <a class="on" data-a="home"><svg class="ic"><use href="#i-folderopen"/></svg>Kho kế hoạch bài dạy</a>
+  <a class="on" data-a="home"><svg class="ic"><use href="#i-folderopen"/></svg>File Manager</a>
   <a data-a="users" id="nUsers" style="display:none"><svg class="ic"><use href="#i-users"/></svg>Quản lý tài khoản</a>
   <a data-a="pw" id="nPw" style="display:none"><svg class="ic"><use href="#i-lock"/></svg>Đổi mật khẩu</a>
   <a data-a="set"><svg class="ic"><use href="#i-sliders"/></svg>Cài đặt repo</a>
@@ -112,11 +112,11 @@ footer .sep{margin:0 10px;opacity:.5}footer svg{width:16px;height:16px;fill:#ff3
  </nav>
 </aside>
 <main>
- <header><button id="menu" data-a="menu"><svg class="ic"><use href="#i-menu"/></svg></button>Kế hoạch bài dạy</header>
+ <header><button id="menu" data-a="menu"><svg class="ic"><use href="#i-menu"/></svg></button>File Manager</header>
  <div class="wrap">
   <section class="card head">
    <div class="ico"><svg class="ic"><use href="#i-drive"/></svg></div>
-   <div style="flex:1;min-width:0"><h2 class="crumb" id="crumb"></h2><div class="meta" id="meta"></div><span class="tag"><svg class="ic"><use href="#i-drive"/></svg>lưu trên GitHub</span></div>
+   <div style="flex:1;min-width:0"><h2 class="crumb" id="crumb"></h2><div class="meta" id="meta"></div><span class="tag" id="ftag"><svg class="ic"><use href="#i-drive"/></svg>root folder</span></div>
    <button class="btn" data-a="share"><svg class="ic"><use href="#i-share"/></svg>Chia sẻ</button><button class="btn i" data-m="hd" title="Tùy chọn"><svg class="ic"><use href="#i-more"/></svg></button>
   </section>
   <section class="card bar">
@@ -276,7 +276,8 @@ function render(){
  if(S&&cur&&!canSeeF(cur))cur='';
  $('.bar').style.display=S?'':'none';$('#sbar').style.display=S&&showS?'':'none';$('#fbar').style.display=S&&showF?'':'none';$('#bS').classList.toggle('on',showS||!!q);$('#bF').classList.toggle('on',showF||!!fq);
  const parts=(cur&&S)?cur.split('/'):[];
- $('#crumb').innerHTML='<a data-p="">Kho KHBD</a>'+parts.map((p,i)=>' / <a data-p="'+esc(parts.slice(0,i+1).join('/'))+'">'+esc(p.split('~')[0])+'</a>').join('');
+ $('#ftag').innerHTML=ic((cur&&S)?'folder':'drive')+((cur&&S)?'folder':'root folder');
+ $('#crumb').innerHTML='<a data-p="">root</a>'+parts.map((p,i)=>' / <a data-p="'+esc(parts.slice(0,i+1).join('/'))+'">'+esc(p.split('~')[0])+'</a>').join('');
  const subs=(q||!S)?[]:db.folders.filter(f=>par(f)===cur&&canSeeF(f)&&(!fq||dn(f).toLowerCase().includes(fq)));
  let its=(q?db.items.filter(i=>(i.name+' '+(i.subject||'')+' '+(i.grade||'')+' '+(i.by||'')).toLowerCase().includes(q)):db.items.filter(i=>i.folder===cur)).filter(canView).filter(i=>!fq||(i.name+' '+(i.subject||'')+' lớp '+(i.grade||'')).toLowerCase().includes(fq));
  const cmp={name:(a,b)=>a.name.localeCompare(b.name,'vi'),size:(a,b)=>a.size-b.size,date:(a,b)=>a.date.localeCompare(b.date),type:(a,b)=>ext(a.name).localeCompare(ext(b.name))||a.name.localeCompare(b.name,'vi')}[sort];
@@ -294,7 +295,7 @@ function render(){
  h+=its.map(i=>{const pv=['pdf','png','jpg','jpeg','docx','pptx','xlsx'].includes(ext(i.name));
   return `<div class="row"><input type="checkbox" data-s="${esc(i.id)}" ${sel.has(i.id)?'checked':''}>${thumb(i)}<div class="nm"><b data-pv="${esc(i.id)}">${esc(i.name)}</b><small>${fdate(i.date)} · ${fsize(i.size)}${S&&i.by!==S.name?' · '+esc(i.by||'không rõ')+(UD[i.by]&&UD[i.by].team?' ('+esc(UD[i.by].team)+')':''):''}${i.subject?'<span class="chip">'+esc(i.subject)+'</span>':''}${i.grade?'<span class="chip">Lớp '+esc(i.grade)+'</span>':''}</small></div>
   <div class="acts">${pv?`<button class="btn hide" data-pv="${esc(i.id)}">${ic('eye')}Xem trước</button>`:''}<a class="btn" style="text-decoration:none" href="${url(i)}" download="${esc(i.name)}">${ic('download')}Tải xuống</a><button class="btn i" data-m="i" data-id="${esc(i.id)}">${ic('more')}</button></div></div>`}).join('');
- $('#list').innerHTML=h||`<div class="empty">${q?'Không tìm thấy kết quả.':(S?'Chưa có tệp nào bạn được phép xem ở đây. Bấm “Tải lên” để thêm kế hoạch bài dạy.':'<p style="margin-bottom:14px">Vui lòng đăng nhập để xem kế hoạch bài dạy.</p><button class="btn p" data-a="login">'+ic('key')+' Đăng nhập</button>')}</div>`
+ $('#list').innerHTML=h||`<div class="empty">${q?'Không tìm thấy kết quả.':(S?'Chưa có tệp nào bạn được phép xem ở đây. Bấm “Tải lên” để thêm tệp.':'<p style="margin-bottom:14px">Vui lòng đăng nhập để xem tệp.</p><button class="btn p" data-a="login">'+ic('key')+' Đăng nhập</button>')}</div>`
 }
 function nav(p){cur=p;q='';fq='';$('#q').value='';$('#fq').value='';sel.clear();location.hash=encodeURIComponent(p);render()}
 addEventListener('hashchange',()=>{cur=decodeURIComponent(location.hash.slice(1));render()});
@@ -315,9 +316,9 @@ function modal(k,x){
  if(k=='uedit')h=`<h3>Phân quyền: ${esc(x.name)}</h3><label>Vai trò<select id="er"><option value="user"${x.role=='user'?' selected':''}>Giáo viên</option><option value="bgh"${x.role=='bgh'?' selected':''}>Ban giám hiệu</option><option value="admin"${x.role=='admin'?' selected':''}>Admin</option></select></label><label>Tổ chuyên môn<select id="et">${teamOpts(x.team||'')}</select></label><label style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" id="el" style="width:18px" ${x.leader?'checked':''}> Phân công làm tổ trưởng</label><div class="fl"><button class="btn" data-a="uback">Quay lại</button><button class="btn p" data-a="uEditOk" data-id="${esc(x.name)}">Lưu</button></div>`;
  if(k=='pw')h=`<h3>Đổi mật khẩu</h3><label>Mật khẩu hiện tại<input type="password" id="p0"></label><label>Mật khẩu mới (≥ 8 ký tự)<input type="password" id="p1"></label><label>Nhập lại<input type="password" id="p2"></label><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" data-a="pwOk">Đổi mật khẩu</button></div>`;
  if(k=='help')h=`<h3>Hướng dẫn</h3><ol><li>Tạo repo public trên GitHub, tải <b>index.html</b> lên nhánh main.</li><li>Vào Settings → Pages, chọn nhánh main, thư mục root.</li><li>Tạo fine-grained token cho repo này (Contents: Read and write).</li><li>Mở trang, đăng nhập <b>admin</b> với mật khẩu mặc định, rồi nhập token và đặt mật khẩu mới. Admin tạo tài khoản cho giáo viên ở “Quản lý tài khoản”. Khách chỉ xem và tải.</li></ol><p>Tệp nằm ở <code>files/</code>, danh mục ở <code>data/index.json</code>. Sau khi tải lên, GitHub Pages cần khoảng 1 phút để tệp mới tải về được.</p><div class="fl"><button class="btn p" data-a="x">Đã hiểu</button></div>`;
- if(k=='up')h=`<h3>Tải lên kế hoạch bài dạy</h3><label>Tệp (Word, PDF, PowerPoint… tối đa 50 MB/tệp)<input type="file" id="uf" multiple></label>
- <label>Môn<select id="us"><option>Tin học</option><option>Công nghệ</option><option>Toán</option><option>Tiếng Việt</option><option>Khác</option></select></label>
- <label>Lớp<select id="ug"><option value="">Không chọn</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+ if(k=='up')h=`<h3>Tải lên tệp</h3><label>Tệp (Word, PDF, PowerPoint… tối đa 50 MB/tệp)<input type="file" id="uf" multiple></label>
+ <label>Môn (tùy chọn)<select id="us"><option value="">Không chọn</option><option>Tin học</option><option>Công nghệ</option><option>Toán</option><option>Tiếng Việt</option><option>Khác</option></select></label>
+ <label>Lớp (tùy chọn)<select id="ug"><option value="">Không chọn</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
  <p id="ust"></p><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" id="ub" data-a="upOk">Tải lên</button></div>`;
  if(k=='pv'){md.className='md big';const u=url(x),e=ext(x.name);
   h=`<div class="fl" style="justify-content:space-between;align-items:center"><b>${esc(x.name)}</b><button class="btn" data-a="x">Đóng</button></div>`+
