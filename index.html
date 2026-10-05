@@ -97,6 +97,15 @@ footer .sep{margin:0 10px;opacity:.5}footer svg{width:16px;height:16px;fill:#ff3
 .hg{display:flex;flex-direction:column;gap:6px}.hg h4{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--tx);margin-top:12px}
 .hg ul,.hg ol{padding-left:20px;display:flex;flex-direction:column;gap:7px}.hg li{font-size:13.5px;line-height:1.55;color:var(--mu)}.hg li b{color:var(--tx)}
 .more{justify-content:center;gap:16px;color:var(--mu);font-size:13px}
+.frow{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.fsel{display:flex;flex-direction:column;gap:4px;font-size:11.5px;color:var(--mu)}.fsel select{min-width:150px}
+.fpanel{padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+.fpanel #fq{flex:1;min-width:180px;background:#101b33;border:1px solid var(--line);border-radius:10px;padding:8px 12px;color:var(--tx)}
+.fic{color:var(--mu);display:inline-flex;align-self:center}
+.stsum{display:flex;align-items:center;gap:14px;margin:8px 0 4px}.bar2{flex:1;height:8px;border-radius:99px;background:#101b33;overflow:hidden}.bar2 i{display:block;height:100%;background:linear-gradient(90deg,#3fe0b5,#2f6bff)}
+.srow{display:grid;grid-template-columns:1fr 90px 200px;gap:10px;align-items:center;padding:9px 0;border-top:1px solid var(--line)}.srow .nm b{cursor:default}.srow small{color:var(--mu);font-size:12px}
+#stlist{max-height:46vh;overflow:auto}
+@media(max-width:560px){.srow{grid-template-columns:1fr auto}.srow small{grid-column:1/-1}}
 </style></head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></symbol><symbol id="i-folder" viewBox="0 0 24 24"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9L9.6 3.9A2 2 0 0 0 7.9 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol><symbol id="i-folderplus" viewBox="0 0 24 24"><path d="M12 10v6"/><path d="M9 13h6"/><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9L9.6 3.9A2 2 0 0 0 7.9 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol><symbol id="i-folderopen" viewBox="0 0 24 24"><path d="m6 14 1.5-2.9A2 2 0 0 1 9.2 10H20a2 2 0 0 1 1.9 2.5l-1.5 6a2 2 0 0 1-1.9 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.7.9l.8 1.2a2 2 0 0 0 1.7.9H18a2 2 0 0 1 2 2v2"/></symbol><symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></symbol><symbol id="i-more" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></symbol><symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4"/><path d="m15.4 6.5-6.8 4"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol><symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></symbol><symbol id="i-sort" viewBox="0 0 24 24"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></symbol><symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol><symbol id="i-drive" viewBox="0 0 24 24"><path d="M22 12H2"/><path d="M5.5 5.1 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.5-6.9A2 2 0 0 0 16.8 4H7.2a2 2 0 0 0-1.7 1.1Z"/><path d="M6 16h.01"/><path d="M10 16h.01"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol><symbol id="i-sliders" viewBox="0 0 24 24"><path d="M21 4h-7"/><path d="M10 4H3"/><path d="M21 12h-9"/><path d="M8 12H3"/><path d="M21 20h-5"/><path d="M12 20H3"/><path d="M14 2v4"/><path d="M8 10v4"/><path d="M16 18v4"/></symbol><symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol><symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></symbol><symbol id="i-key" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></symbol><symbol id="i-pencil" viewBox="0 0 24 24"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></symbol><symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></symbol><symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><path d="M10 11v6"/><path d="M14 11v6"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></symbol><symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 12h16"/><path d="M4 6h16"/><path d="M4 18h16"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol><symbol id="i-filter" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M7 12h10"/><path d="M10 18h4"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol></defs></svg>
@@ -135,7 +144,7 @@ footer .sep{margin:0 10px;opacity:.5}footer svg{width:16px;height:16px;fill:#ff3
    <button class="btn i" data-a="re" title="Tải lại"><svg class="ic"><use href="#i-refresh"/></svg></button>
   </section>
   <section class="card fbar" id="sbar" style="display:none"><svg class="ic"><use href="#i-search"/></svg><input type="text" id="q" placeholder="Tìm tệp, thư mục, môn, lớp, người tải trong toàn bộ kho…"></section>
-  <section class="card fbar" id="fbar" style="display:none"><svg class="ic"><use href="#i-filter"/></svg><input type="text" id="fq" placeholder="Lọc theo tên hoặc nhãn (môn, lớp) trong thư mục này…"><button class="btn p" data-a="fApply">Áp dụng</button></section>
+  <section class="card fpanel" id="fbar" style="display:none"><div class="frow" style="align-items:center"><span class="fic"><svg class="ic"><use href="#i-filter"/></svg></span><input type="text" id="fq" placeholder="Lọc theo tên tệp hoặc thư mục…"><button class="btn p" data-a="fApply">Áp dụng</button><button class="btn" data-a="fClear">Xóa bộ lọc</button></div><div class="frow" id="fsel"></div></section>
   <section class="card" id="list"></section>
  </div>
 <footer>Doan Kan © 2026<span class="sep">·</span>Built with <svg viewBox="0 0 24 24" aria-label="love"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> for the Community</footer>
@@ -148,7 +157,7 @@ footer .sep{margin:0 10px;opacity:.5}footer svg{width:16px;height:16px;fill:#ff3
 const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
 const ic=n=>`<svg class="ic"><use href="#i-${n}"/></svg>`;
 const b64=s=>btoa(unescape(encodeURIComponent(s)));
-let db={folders:[],items:[]},cur='',sel=new Set(),q='',fq='',sort='date',sdir=-1,showS=false,showF=false,vis=[],pg=1,lastSig='',PS=50,D={th:true,sz:48};
+let db={folders:[],items:[]},cur='',sel=new Set(),q='',fq='',sort='date',sdir=-1,showS=false,showF=false,vis=[],F={},SX={f:'',flt:'all'},pg=1,lastSig='',PS=50,D={th:true,sz:48};
 try{D={...D,...JSON.parse(localStorage.getItem('khd')||'{}')}}catch(e){}
 const saveD=()=>{try{localStorage.setItem('khd',JSON.stringify(D))}catch(e){}};
 // Tự nhận repo khi chạy trên GitHub Pages (owner.github.io/repo)
@@ -287,7 +296,7 @@ function placeMenu(r){const box=$('#menuBox');box.style.maxHeight='';box.style.d
  box.style.top=top+'px';box.style.left=Math.min(Math.max(8,r.right-w),Math.max(8,vw-w-8))+'px'}
 ['scroll','resize'].forEach(ev=>addEventListener(ev,e=>{const b=$('#menuBox');if(e.target!==b)b.style.display='none'},true));
 // Hướng dẫn theo vai trò
-const HC=[["Tải tệp lên","Mở thư mục cần lưu, bấm <b>Tải lên</b> (hoặc kéo thả tệp vào trang), chọn tệp, chọn môn và lớp nếu muốn rồi bấm Tải lên. Mỗi tệp tối đa 50 MB. Tệp mới cần khoảng 1 phút mới xem hoặc tải về được."],["Tạo thư mục","Bấm <b>Thư mục mới</b> và đặt tên. Tạo được ở ngoài cùng hoặc bên trong thư mục của chính bạn."],["Xem và tải về","Bấm tên tệp hoặc <b>Xem trước</b> để xem, bấm <b>Tải xuống</b> để lưu về máy."],["Đổi tên, xóa","Bấm <b>⋮</b> cạnh tệp hoặc thư mục, chọn Đổi tên hoặc Xóa. Chỉ làm được với mục do bạn tạo."],["Tìm nhanh","Thanh công cụ có kính lúp (tìm trong cả kho), phễu (lọc trong thư mục đang mở), hai mũi tên (sắp xếp) và thanh trượt (hình thu nhỏ)."],["Đổi mật khẩu","Chọn <b>Đổi mật khẩu</b> ở cột bên trái. Quên mật khẩu thì liên hệ Admin để được đặt lại."]];
+const HC=[["Tải tệp lên","Mở thư mục cần lưu, bấm <b>Tải lên</b> (hoặc kéo thả tệp vào trang), chọn tệp, chọn môn và lớp nếu muốn rồi bấm Tải lên. Mỗi tệp tối đa 50 MB. Tệp mới cần khoảng 1 phút mới xem hoặc tải về được."],["Tạo thư mục","Bấm <b>Thư mục mới</b> và đặt tên. Tạo được ở ngoài cùng hoặc bên trong thư mục của chính bạn."],["Xem và tải về","Bấm tên tệp hoặc <b>Xem trước</b> để xem, bấm <b>Tải xuống</b> để lưu về máy."],["Đổi tên, xóa","Bấm <b>⋮</b> cạnh tệp hoặc thư mục, chọn Đổi tên hoặc Xóa. Chỉ làm được với mục do bạn tạo."],["Tìm nhanh","Thanh công cụ có kính lúp (tìm trong cả kho), phễu (lọc theo nguồn, loại tệp, môn, lớp, người tải, khối… Lọc theo tên thì chỉ áp dụng trong thư mục đang mở, lọc theo các tiêu chí khác thì tìm trong cả kho), hai mũi tên (sắp xếp) và thanh trượt (hình thu nhỏ)."],["Đổi mật khẩu","Chọn <b>Đổi mật khẩu</b> ở cột bên trái. Quên mật khẩu thì liên hệ Admin để được đặt lại."]];
 const HELP={
 guest:{intro:"Bạn chưa đăng nhập nên chưa xem được tệp nào.",steps:[["Đăng nhập","Bấm <b>Đăng nhập</b> ở cột bên trái, nhập tên đăng nhập và mật khẩu do Admin cấp."],["Chưa có tài khoản?","Liên hệ Admin để được tạo tài khoản. Trang không có chức năng tự đăng ký."],["Sau khi đăng nhập","Mở lại mục Hướng dẫn để xem hướng dẫn riêng cho vai trò của bạn."]]},
 gv:{intro:"Bạn thấy và quản lý được tệp, thư mục do chính mình tạo, cùng các thư mục mà BGH hoặc tổ trưởng chia sẻ cho khối của bạn.",
@@ -296,15 +305,15 @@ gv:{intro:"Bạn thấy và quản lý được tệp, thư mục do chính mìn
  notes:["Bạn không thấy tệp của giáo viên khác, kể cả trong thư mục chung.","Biểu mẫu do người khác đăng chỉ xem và tải về, không sửa hoặc xóa được.","Trong thư mục chia sẻ của người khác, bạn chỉ tải tệp lên, không tạo được thư mục con.","Tên khối của bạn do Admin gán. Nếu không thấy thư mục cần thiết, hãy báo Admin kiểm tra."]},
 leader:{intro:"Ngoài quyền của giáo viên, bạn xem được tệp và thư mục của các thành viên cùng tổ, và chia sẻ thư mục cho khối của mình để phát biểu mẫu, thu tài liệu.",
  can:["Mọi thao tác của giáo viên","Xem tệp và thư mục của thành viên cùng tổ","Chia sẻ thư mục của mình cho khối bạn phụ trách"],
- steps:[["Phát biểu mẫu và thu tài liệu","Tạo thư mục (ví dụ “Biểu mẫu tuần 5”) và tải biểu mẫu vào. Bấm <b>⋮</b> cạnh thư mục, chọn <b>Chia sẻ cho khối</b>, tích khối của bạn rồi Lưu. Thành viên sẽ thấy thư mục, tải biểu mẫu và nộp bài. Bạn xem được bài đã nộp của cả tổ."],["Ngừng chia sẻ","Mở lại <b>Chia sẻ cho khối</b>, bỏ chọn hết rồi Lưu."]],
+ steps:[["Phát biểu mẫu và thu tài liệu","Tạo thư mục (ví dụ “Biểu mẫu tuần 5”) và tải biểu mẫu vào. Bấm <b>⋮</b> cạnh thư mục, chọn <b>Chia sẻ cho khối</b>, tích khối của bạn rồi Lưu. Thành viên sẽ thấy thư mục, tải biểu mẫu và nộp bài. Bạn xem được bài đã nộp của cả tổ."],["Ngừng chia sẻ","Mở lại <b>Chia sẻ cho khối</b>, bỏ chọn hết rồi Lưu."],["Xem ai đã nộp, ai chưa nộp","Bấm <b>⋮</b> cạnh thư mục đã chia sẻ, chọn <b>Trạng thái nộp bài</b>. Danh sách thành viên trong khối hiện kèm Đã nộp hoặc Chưa nộp, số tệp và lần nộp cuối. Bấm <b>Sao chép danh sách chưa nộp</b> để nhắc nhở."]],
  notes:["Bạn chỉ chia sẻ được cho khối của mình. Thành viên không thấy bài của nhau.","Bạn chỉ sửa, xóa được tệp do mình tải lên.","Xóa thư mục của mình sẽ xóa cả tệp thành viên đã nộp bên trong. Hộp thoại sẽ báo số tệp trước khi xóa.","Khối và chức tổ trưởng do Admin gán. Sai thì báo Admin."]},
 bgh:{intro:"Bạn xem được toàn bộ tệp và thư mục của mọi giáo viên, tạo thư mục và chia sẻ cho một hoặc nhiều khối.",
  can:["Xem và tải về mọi tệp, mọi thư mục trong kho","Tải lên và tạo thư mục ở bất kỳ vị trí nào","Chia sẻ thư mục cho nhiều khối cùng lúc, hoặc chọn <b>Tất cả</b>","Sửa, xóa tệp và thư mục do chính mình tạo"],
- steps:[["Phát biểu mẫu hoặc thông báo cho các khối","Tạo thư mục, tải tệp vào, bấm <b>⋮</b> rồi <b>Chia sẻ cho khối</b>, tích các khối (hoặc Tất cả) và Lưu. Giáo viên trong các khối đó xem được tệp bạn đăng và nộp bài vào thư mục."],["Xem bài nộp","Mở thư mục để thấy bài của từng người. Tên người tải và tổ hiện cạnh tệp. Dùng kính lúp để tìm theo tên người tải."]],
+ steps:[["Phát biểu mẫu hoặc thông báo cho các khối","Tạo thư mục, tải tệp vào, bấm <b>⋮</b> rồi <b>Chia sẻ cho khối</b>, tích các khối (hoặc Tất cả) và Lưu. Giáo viên trong các khối đó xem được tệp bạn đăng và nộp bài vào thư mục."],["Xem bài nộp","Mở thư mục để thấy bài của từng người. Tên người tải và tổ hiện cạnh tệp. Dùng kính lúp hoặc bộ lọc để tìm theo người tải, khối. Muốn biết ai chưa nộp, bấm <b>⋮</b> cạnh thư mục đã chia sẻ và chọn <b>Trạng thái nộp bài</b>."]],
  notes:["Bạn xem được tất cả nhưng chỉ sửa, xóa được tệp và thư mục do mình tạo.","Bạn không quản lý tài khoản. Cần thêm hoặc đổi quyền tài khoản thì liên hệ Admin."]},
 admin:{intro:"Bạn có toàn quyền: xem, sửa, xóa mọi tệp và thư mục, chia sẻ mọi thư mục và quản lý tài khoản.",
  can:["Xem, sửa, xóa mọi tệp và thư mục","Chia sẻ bất kỳ thư mục nào, kể cả thư mục cũ chưa có chủ","Thêm tài khoản, phân quyền, đặt lại mật khẩu, xóa tài khoản"],
- steps:[["Thêm tài khoản","Bấm nút <b>Thêm tài khoản</b> dưới thẻ tài khoản, nhập tên đăng nhập, mật khẩu (từ 8 ký tự), vai trò và tổ chuyên môn. Tích “Phân công làm tổ trưởng” nếu cần. Báo mật khẩu cho người dùng, họ tự đổi ở mục Đổi mật khẩu."],["Quản lý tài khoản","Mở <b>Quản lý tài khoản</b> để xem danh sách, lọc theo tổ, bấm <b>Phân quyền</b> (đổi vai trò, tổ, tổ trưởng), <b>Đặt lại MK</b> hoặc <b>Xóa</b>. Màu nhãn: Admin đỏ, Ban giám hiệu tím, Tổ trưởng xanh ngọc, Giáo viên xanh dương."],["Chia sẻ thư mục","Bấm <b>⋮</b> rồi <b>Chia sẻ cho khối</b>. Thư mục cũ chưa có chủ chỉ Admin và BGH thấy cho tới khi bạn chia sẻ."]],
+ steps:[["Thêm tài khoản","Bấm nút <b>Thêm tài khoản</b> dưới thẻ tài khoản, nhập tên đăng nhập, mật khẩu (từ 8 ký tự), vai trò và tổ chuyên môn. Tích “Phân công làm tổ trưởng” nếu cần. Báo mật khẩu cho người dùng, họ tự đổi ở mục Đổi mật khẩu."],["Quản lý tài khoản","Mở <b>Quản lý tài khoản</b> để xem danh sách, lọc theo tổ, bấm <b>Phân quyền</b> (đổi vai trò, tổ, tổ trưởng), <b>Đặt lại MK</b> hoặc <b>Xóa</b>. Màu nhãn: Admin đỏ, Ban giám hiệu tím, Tổ trưởng xanh ngọc, Giáo viên xanh dương."],["Chia sẻ thư mục","Bấm <b>⋮</b> rồi <b>Chia sẻ cho khối</b>. Thư mục cũ chưa có chủ chỉ Admin và BGH thấy cho tới khi bạn chia sẻ. Dùng <b>Trạng thái nộp bài</b> trong cùng menu để xem ai đã nộp."]],
  notes:["Bảo quản kỹ GitHub token và mật khẩu Admin. Mất cả hai phải thiết lập lại từ đầu. Token hết hạn thì tạo token mới và thiết lập lại.","Kho đang công khai nên việc ẩn tệp chỉ có tác dụng trên giao diện.","GitHub Pages giới hạn khoảng 1 GB. Nên tải theo đợt nhỏ, mỗi đợt 5 đến 10 tệp. Xóa tệp không giảm dung lượng kho vì GitHub giữ lịch sử.","Dữ liệu nằm ở <code>files/</code> (tệp), <code>data/index.json</code> (danh mục) và <code>data/users.json</code> (tài khoản)."]}};
 function helpHtml(){const k=S?rk(S):['guest','Khách'],g=HELP[k[0]],li=a=>a.map(x=>'<li>'+x+'</li>').join(''),st=a=>'<ol>'+a.map(x=>'<li><b>'+x[0]+".</b> "+x[1]+'</li>').join('')+'</ol>';
  return '<h3>Hướng dẫn dành cho '+(S?k[1]:'khách')+'</h3>'+(S?'<div>'+uBadges(S)+'</div>':'')+'<p>'+g.intro+'</p><div class="hg">'+(g.can?'<h4>Bạn có thể</h4><ul>'+li(g.can)+'</ul>':'')+(S?'<h4>Thao tác cơ bản</h4>'+st(HC):'')+'<h4>'+(S?'Dành riêng cho vai trò '+k[1]:'Các bước')+'</h4>'+st(g.steps)+(g.notes?'<h4>Lưu ý</h4><ul>'+li(g.notes)+'</ul>':'')+'</div><div class="fl"><button class="btn p" data-a="x">Đã hiểu</button></div>'}
@@ -319,20 +328,69 @@ function dlg(o){return new Promise(res=>{
  document.addEventListener('keydown',kd,true);
  ov.onclick=e=>{if(e.target===ov)return done(null);const t=e.target.closest('[data-d]');if(t)done(t.dataset.d=='ok'?(inp?inp.value:true):null)};
 })}
+const SUBJ=['Tin học','Công nghệ','Toán','Tiếng Việt','Khác'];
+const EXT={pdf:['pdf'],word:['doc','docx'],excel:['xls','xlsx','csv'],ppt:['ppt','pptx'],image:['png','jpg','jpeg','gif','webp']};
+const structOn=()=>Object.values(F).some(Boolean);
+const effShare=f=>{const r=shRoot(f);return r?db.share[r]:[]};
+const pchip=p=>(q||structOn())&&p?'<span class="chip">'+esc(p.split('/').map(x=>x.split('~')[0]).join(' / '))+'</span>':'';
+// Bộ lọc theo tiêu chí (nguồn, khối, chia sẻ, người tải, loại, môn, lớp)
+function matchF(f){
+ if(F.subject||F.grade)return false;
+ if(F.type&&F.type!='folder')return false;
+ const ow=(db.fowner||{})[f],o=UD[ow];
+ if(F.src=='mine'&&ow!==S.name)return false;
+ if(F.src=='shared'&&(ow===S.name||!inShare(f)))return false;
+ if(F.src=='sharing'&&!(db.share[f]&&db.share[f].length&&(S.role=='admin'||ow===S.name)))return false;
+ if(F.team&&!(o&&o.team===F.team))return false;
+ if(F.shareTo&&!effShare(f).includes(F.shareTo))return false;
+ if(F.by&&ow!==F.by)return false;
+ return true}
+function matchI(i){
+ if(F.type=='folder')return false;
+ if(F.type&&EXT[F.type]&&!EXT[F.type].includes(ext(i.name)))return false;
+ if(F.subject&&i.subject!==F.subject)return false;
+ if(F.grade&&String(i.grade)!==F.grade)return false;
+ const mine=i.by===S.name,o=UD[i.by],r=shRoot(i.folder);
+ if(F.src=='mine'&&!mine)return false;
+ if(F.src=='shared'&&(mine||!inShare(i.folder)))return false;
+ if(F.src=='sharing'&&!(r&&(S.role=='admin'||(db.fowner||{})[r]===S.name)))return false;
+ if(F.team&&!(o&&o.team===F.team))return false;
+ if(F.shareTo&&!effShare(i.folder).includes(F.shareTo))return false;
+ if(F.by&&i.by!==F.by)return false;
+ return true}
+function renderFilters(){
+ if(!S)return;
+ const wide=S.role=='admin'||S.role=='bgh',canSh=wide||S.leader;
+ const us=Object.values(UD).filter(u=>wide||(S.leader&&u.team&&u.team===S.team)).map(u=>u.name).sort((a,b)=>a.localeCompare(b,'vi'));
+ const mk=(k,lb,ops)=>`<label class="fsel">${lb}<select class="fs" data-k="${k}">${ops.map(([v,t])=>`<option value="${esc(v)}"${(F[k]||'')===v?' selected':''}>${esc(t)}</option>`).join('')}</select></label>`;
+ const T=TEAMS.map(t=>[t,t]);
+ let h=mk('src','Nguồn',[['','Tất cả'],['mine','Của tôi'],...(wide?[]:[['shared','Được chia sẻ cho tôi']]),...(canSh?[['sharing','Tôi đang chia sẻ']]:[])]);
+ if(wide)h+=mk('team','Của khối',[['','Tất cả khối'],...T])+mk('shareTo','Chia sẻ cho khối',[['','Tất cả'],...T]);
+ if(canSh)h+=mk('by','Người tải',[['','Tất cả'],...us.map(u=>[u,u])]);
+ h+=mk('type','Loại',[['','Tất cả'],['folder','Thư mục'],['file','Tệp'],['pdf','PDF'],['word','Word'],['excel','Excel'],['ppt','PowerPoint'],['image','Ảnh']])+mk('subject','Môn',[['','Tất cả'],...SUBJ.map(t=>[t,t])])+mk('grade','Lớp',[['','Tất cả'],...[1,2,3,4,5].map(n=>[String(n),'Lớp '+n])]);
+ $('#fsel').innerHTML=h}
+// Trạng thái nộp bài của một thư mục đã chia sẻ
+const canStatus=f=>!!S&&!!db.share&&!!db.share[f]&&db.share[f].length>0&&(S.role=='admin'||S.role=='bgh'||(S.leader&&(db.fowner||{})[f]===S.name));
+function statusData(f){const sh=db.share[f]||[],ow=(db.fowner||{})[f],sub=p=>p===f||p.startsWith(f+'/');
+ return Object.values(UD).filter(u=>u.role=='user'&&sh.includes(u.team)&&u.name!==ow&&(S.role=='admin'||S.role=='bgh'||u.team===S.team))
+ .map(u=>{const its=db.items.filter(i=>i.by===u.name&&sub(i.folder));return{u,n:its.length,last:its.map(i=>i.date).sort().pop()}})
+ .sort((a,b)=>(a.n>0)-(b.n>0)||(a.u.team||'').localeCompare(b.u.team||'','vi')||a.u.name.localeCompare(b.u.name,'vi'))}
+function statusHtml(){const d=statusData(SX.f),done=d.filter(x=>x.n>0).length,rows=d.filter(x=>SX.flt=='all'||(SX.flt=='done')==(x.n>0)),pct=d.length?Math.round(done*100/d.length):0;
+ return `<div class="stsum"><span><b style="color:var(--tx)">${done}/${d.length}</b> đã nộp</span><div class="bar2"><i style="width:${pct}%"></i></div><span>${pct}%</span></div><div id="stlist">`+(rows.map(x=>`<div class="srow"><div class="nm"><b>${esc(x.u.name)}</b><small>${esc(x.u.team||'')}${x.u.leader?' · Tổ trưởng':''}</small></div><span class="rb ${x.n?'r-leader':'r-admin'}" style="justify-self:start">${x.n?'Đã nộp':'Chưa nộp'}</span><small>${x.n?x.n+' tệp · '+fdate(x.last):'Chưa có tệp nào'}</small></div>`).join('')||'<div class="empty" style="padding:24px">Không có thành viên nào trong danh sách.</div>')+'</div>'}
 const fchips=f=>{const o=(db.fowner||{})[f],sh=(db.share||{})[f];return (o&&o!==S.name?'<span class="chip">Của '+esc(o)+'</span>':'')+(sh&&sh.length?'<span class="chip">Chia sẻ: '+esc(sh.join(', '))+'</span>':'')};
 function render(){
  if(S&&cur&&!canSeeF(cur))cur='';
- const sig=cur+'|'+q+'|'+fq+'|'+sort+sdir;if(sig!==lastSig){pg=1;lastSig=sig}const lim=pg*PS;
- $('.bar').style.display=S?'':'none';$('#sbar').style.display=S&&showS?'':'none';$('#fbar').style.display=S&&showF?'':'none';$('#bS').classList.toggle('on',showS||!!q);$('#bF').classList.toggle('on',showF||!!fq);
+ const sig=cur+'|'+q+'|'+fq+'|'+sort+sdir+JSON.stringify(F);if(sig!==lastSig){pg=1;lastSig=sig}const lim=pg*PS;
+ $('.bar').style.display=S?'':'none';$('#sbar').style.display=S&&showS?'':'none';$('#fbar').style.display=S&&showF?'':'none';$('#bS').classList.toggle('on',showS||!!q);$('#bF').classList.toggle('on',showF||!!fq||structOn());if(S&&showF)renderFilters();
  const parts=(cur&&S)?cur.split('/'):[];
  $('#ftag').innerHTML=ic((cur&&S)?'folder':'drive')+((cur&&S)?'folder':'root folder');
  $('#crumb').innerHTML='<a data-p="">root</a>'+parts.map((p,i)=>' / <a data-p="'+esc(parts.slice(0,i+1).join('/'))+'">'+esc(p.split('~')[0])+'</a>').join('');
- const subs=(q||!S)?[]:db.folders.filter(f=>par(f)===cur&&canSeeF(f)&&(!fq||dn(f).toLowerCase().includes(fq)));
- let its=(q?db.items.filter(i=>(i.name+' '+(i.subject||'')+' '+(i.grade||'')+' '+(i.by||'')).toLowerCase().includes(q)):db.items.filter(i=>i.folder===cur)).filter(canView).filter(i=>!fq||(i.name+' '+(i.subject||'')+' lớp '+(i.grade||'')).toLowerCase().includes(fq));
+ const subs=(q||!S)?[]:db.folders.filter(f=>(structOn()||par(f)===cur)&&canSeeF(f)&&matchF(f)&&(!fq||dn(f).toLowerCase().includes(fq)));
+ let its=(q?db.items.filter(i=>(i.name+' '+(i.subject||'')+' '+(i.grade||'')+' '+(i.by||'')).toLowerCase().includes(q)):structOn()?db.items:db.items.filter(i=>i.folder===cur)).filter(canView).filter(matchI).filter(i=>!fq||(i.name+' '+(i.subject||'')+' lớp '+(i.grade||'')).toLowerCase().includes(fq));
  const cmp={name:(a,b)=>a.name.localeCompare(b.name,'vi'),size:(a,b)=>a.size-b.size,date:(a,b)=>a.date.localeCompare(b.date),type:(a,b)=>ext(a.name).localeCompare(ext(b.name))||a.name.localeCompare(b.name,'vi')}[sort];
  its.sort((a,b)=>cmp(a,b)*sdir);vis=its.slice(0,Math.max(0,lim-subs.length)).map(i=>i.id);
  const last=db.items.filter(canView).map(i=>i.date).sort().pop();
- $('#meta').innerHTML=S?(last?'<span class="mi">'+ic('calendar')+fdate(last)+'</span>':'')+'<span class="mi">'+ic('copy')+(subs.length+its.length)+' mục</span>':'Cần đăng nhập để xem nội dung';
+ $('#meta').innerHTML=S?(last?'<span class="mi">'+ic('calendar')+fdate(last)+'</span>':'')+'<span class="mi">'+ic('copy')+(subs.length+its.length)+' mục</span>'+((structOn()||fq||q)?'<span class="mi" style="color:#ffc233">Đang lọc</span>':''):'Cần đăng nhập để xem nội dung';
  const ad=S&&S.role=='admin';
  $('#accN').textContent=S?S.name:'Khách';$('#accS').innerHTML=S?uBadges(S):'Chế độ chỉ xem';
  $('.av').textContent=S?S.name.slice(0,2).toUpperCase():'GV';
@@ -340,14 +398,14 @@ function render(){
  $('#delSel').style.display=sel.size?'':'none';$('#delSel').innerHTML=ic('trash')+'Xóa ('+sel.size+')';
  $('#all').checked=vis.length>0&&vis.every(id=>sel.has(id));
  let h=subs.slice(0,lim).map(f=>{const n=db.items.filter(i=>(i.folder===f||i.folder.startsWith(f+'/'))&&canView(i)).length;
-  return `<div class="row"><span style="width:18px"></span><div class="fi" style="background:#3a3119;color:#ffc233">${ic('folder')}</div><div class="nm"><b data-p="${esc(f)}">${esc(dn(f))}</b><small>${n} tệp${fchips(f)}</small></div><div class="acts"><button class="btn i" data-m="f" data-id="${esc(f)}">${ic('more')}</button></div></div>`}).join('');
+  return `<div class="row"><span style="width:18px"></span><div class="fi" style="background:#3a3119;color:#ffc233">${ic('folder')}</div><div class="nm"><b data-p="${esc(f)}">${esc(dn(f))}</b><small>${n} tệp${pchip(par(f))}${fchips(f)}</small></div><div class="acts"><button class="btn i" data-m="f" data-id="${esc(f)}">${ic('more')}</button></div></div>`}).join('');
  h+=its.slice(0,Math.max(0,lim-subs.length)).map(i=>{const pv=['pdf','png','jpg','jpeg','docx','pptx','xlsx'].includes(ext(i.name));
-  return `<div class="row"><input type="checkbox" data-s="${esc(i.id)}" ${sel.has(i.id)?'checked':''}>${thumb(i)}<div class="nm"><b data-pv="${esc(i.id)}">${esc(i.name)}</b><small>${fdate(i.date)} · ${fsize(i.size)}${S&&i.by!==S.name?' · '+esc(i.by||'không rõ')+(UD[i.by]&&UD[i.by].team?' ('+esc(UD[i.by].team)+')':''):''}${i.subject?'<span class="chip">'+esc(i.subject)+'</span>':''}${i.grade?'<span class="chip">Lớp '+esc(i.grade)+'</span>':''}</small></div>
+  return `<div class="row"><input type="checkbox" data-s="${esc(i.id)}" ${sel.has(i.id)?'checked':''}>${thumb(i)}<div class="nm"><b data-pv="${esc(i.id)}">${esc(i.name)}</b><small>${fdate(i.date)} · ${fsize(i.size)}${S&&i.by!==S.name?' · '+esc(i.by||'không rõ')+(UD[i.by]&&UD[i.by].team?' ('+esc(UD[i.by].team)+')':''):''}${pchip(i.folder)}${i.subject?'<span class="chip">'+esc(i.subject)+'</span>':''}${i.grade?'<span class="chip">Lớp '+esc(i.grade)+'</span>':''}</small></div>
   <div class="acts">${pv?`<button class="btn hide" data-pv="${esc(i.id)}">${ic('eye')}Xem trước</button>`:''}<a class="btn" style="text-decoration:none" href="${url(i)}" download="${esc(i.name)}">${ic('download')}Tải xuống</a><button class="btn i" data-m="i" data-id="${esc(i.id)}">${ic('more')}</button></div></div>`}).join('');
  if(subs.length+its.length>lim)h+='<div class="row more"><span>Đang hiển thị '+Math.min(lim,subs.length+its.length)+' / '+(subs.length+its.length)+' mục</span><button class="btn" data-a="more">Hiển thị thêm</button></div>';
- $('#list').innerHTML=h||`<div class="empty">${q?'Không tìm thấy kết quả.':(S?'Chưa có tệp nào bạn được phép xem ở đây. Bấm “Tải lên” để thêm tệp.':'<p style="margin-bottom:14px">Vui lòng đăng nhập để xem tệp.</p><button class="btn p" data-a="login">'+ic('key')+' Đăng nhập</button>')}</div>`
+ $('#list').innerHTML=h||`<div class="empty">${(q||fq||structOn())?'Không có mục nào khớp bộ lọc.':(S?'Chưa có tệp nào bạn được phép xem ở đây. Bấm “Tải lên” để thêm tệp.':'<p style="margin-bottom:14px">Vui lòng đăng nhập để xem tệp.</p><button class="btn p" data-a="login">'+ic('key')+' Đăng nhập</button>')}</div>`
 }
-function nav(p){cur=p;q='';fq='';$('#q').value='';$('#fq').value='';sel.clear();location.hash=encodeURIComponent(p);render()}
+function nav(p){cur=p;q='';fq='';F={};$('#q').value='';$('#fq').value='';sel.clear();location.hash=encodeURIComponent(p);render()}
 addEventListener('hashchange',()=>{cur=decodeURIComponent(location.hash.slice(1));render()});
 
 function modal(k,x){
@@ -361,6 +419,8 @@ function modal(k,x){
  if(k=='users'){UL=x;md.className='md wide';
   h=`<h3>Quản lý tài khoản</h3><label>Lọc theo tổ chuyên môn<select id="uf"><option value="">Tất cả tổ chuyên môn</option>${TEAMS.map(t=>`<option${UF===t?' selected':''}>${t}</option>`).join('')}<option value="__none"${UF=='__none'?' selected':''}>Chưa phân tổ</option></select></label><div id="ulist">${usersHtml()}</div><div class="fl"><button class="btn p" data-a="x">Đóng</button></div>`}
  if(k=='newu')h=`<h3>Thêm tài khoản</h3><label>Tên đăng nhập mới<input type="text" id="nn"></label><label>Mật khẩu (≥ 8 ký tự)<input type="password" id="np"></label><label>Vai trò<select id="nr"><option value="user">Giáo viên: chỉ xem, sửa, xóa tệp của mình</option><option value="bgh">Ban giám hiệu: xem tất cả tệp</option><option value="admin">Admin: toàn quyền</option></select></label><label>Tổ chuyên môn<select id="nt">${teamOpts('')}</select></label><label style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" id="nl" style="width:18px"> Phân công làm tổ trưởng của tổ này</label><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" data-a="uAdd">Tạo tài khoản</button></div>`;
+ if(k=='status'){SX={f:x,flt:'all'};md.className='md wide';
+  h=`<h3>Trạng thái nộp bài</h3><p>Thư mục <b style="color:var(--tx)">${esc(dn(x))}</b> · chia sẻ cho ${esc((db.share[x]||[]).join(', '))}</p><div class="frow"><label class="fsel" style="flex:1">Hiển thị<select id="sfl" style="width:100%"><option value="all">Tất cả</option><option value="pending">Chưa nộp</option><option value="done">Đã nộp</option></select></label><button class="btn" data-a="stCopy">${ic('copy')}Sao chép danh sách chưa nộp</button><button class="btn" data-a="stRefresh">${ic('refresh')}Làm mới</button></div><div id="stwrap">${statusHtml()}</div><div class="fl"><button class="btn p" data-a="x">Đóng</button></div>`}
  if(k=='shr'){const c2=(db.share||{})[x]||[],ops=S.role=='admin'||S.role=='bgh'?TEAMS:[S.team];
   h=`<h3>Chia sẻ thư mục “${esc(dn(x))}”</h3><p>Thành viên các khối được chọn sẽ thấy thư mục này, xem biểu mẫu bạn đăng và tải tài liệu của họ lên. Họ không thấy tệp của nhau. Bỏ chọn hết để ngừng chia sẻ.</p>`+(ops.length>1?`<label style="flex-direction:row;align-items:center;gap:8px;font-weight:700;color:var(--tx);padding-bottom:10px;border-bottom:1px solid var(--line)"><input type="checkbox" id="stall" style="width:18px" ${ops.every(t=>c2.includes(t))?'checked':''}> Tất cả</label>`:'')+ops.map(t=>`<label style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" class="st" value="${esc(t)}" style="width:18px" ${c2.includes(t)?'checked':''}> ${esc(t)}</label>`).join('')+`<div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" data-a="shrOk" data-id="${esc(x)}">Lưu</button></div>`}
  if(k=='uedit')h=`<h3>Phân quyền: ${esc(x.name)}</h3><label>Vai trò<select id="er"><option value="user"${x.role=='user'?' selected':''}>Giáo viên</option><option value="bgh"${x.role=='bgh'?' selected':''}>Ban giám hiệu</option><option value="admin"${x.role=='admin'?' selected':''}>Admin</option></select></label><label>Tổ chuyên môn<select id="et">${teamOpts(x.team||'')}</select></label><label style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" id="el" style="width:18px" ${x.leader?'checked':''}> Phân công làm tổ trưởng</label><div class="fl"><button class="btn" data-a="uback">Quay lại</button><button class="btn p" data-a="uEditOk" data-id="${esc(x.name)}">Lưu</button></div>`;
@@ -403,10 +463,10 @@ document.addEventListener('click',async e=>{
  if(['sort','disp','hd'].includes(t.dataset.m)){const r=t.getBoundingClientRect(),m=t.dataset.m,ck=v=>'<span class="ck">'+(v?ic('check'):'')+'</span>';let h='';
   if(m=='sort')h='<div class="mh">Sắp xếp theo</div>'+[['date','Ngày tạo'],['name','Tên'],['size','Dung lượng'],['type','Loại tệp']].map(([k,l])=>'<button data-a="sortSet" data-id="'+k+'">'+ck(sort==k)+l+(sort==k?'<small style="margin-left:auto;color:var(--mu)">'+(k=='name'||k=='type'?(sdir>0?'A–Z':'Z–A'):(sdir>0?'↑':'↓'))+'</small>':'')+'</button>').join('');
   if(m=='disp')h='<div class="mh">Tùy chọn hiển thị</div><button data-a="dTh">'+ck(D.th)+'Hiển thị hình thu nhỏ</button><div class="mh">Kích thước hình thu nhỏ</div>'+[[36,'Nhỏ'],[48,'Vừa'],[64,'Lớn']].map(([v,l])=>'<button data-a="dSz" data-id="'+v+'">'+ck(D.sz==v)+l+'</button>').join('');
-  if(m=='hd')h='<button data-a="selAll">'+ic('check')+' Chọn tất cả</button><button data-a="share">'+ic('link')+' Sao chép liên kết thư mục</button>';
+  if(m=='hd')h='<button data-a="selAll">'+ic('check')+' Chọn tất cả</button><button data-a="share">'+ic('link')+' Sao chép liên kết thư mục</button>'+(cur&&canStatus(cur)?'<button data-a="stOpen" data-id="'+esc(cur)+'">'+ic('check')+' Trạng thái nộp bài</button>':'');
   box.innerHTML=h;box.style.minWidth='220px';placeMenu(r);return}
  if(t.dataset.m){const r=t.getBoundingClientRect(),id=t.dataset.id,f=t.dataset.m=='f';
-  box.innerHTML=(f?'<button data-a="rnF" data-id="'+esc(id)+'">'+ic('pencil')+' Đổi tên</button>'+(canShare(id)?'<button data-a="shr" data-id="'+esc(id)+'">'+ic('users')+' Chia sẻ cho khối</button>':''):'<button data-a="cp" data-id="'+esc(id)+'">'+ic('link')+' Sao chép liên kết</button><button data-a="rn" data-id="'+esc(id)+'">'+ic('pencil')+' Đổi tên</button>')+'<button data-a="'+(f?'delF':'delI')+'" data-id="'+esc(id)+'" style="color:#ff8b96">'+ic('trash')+' Xóa</button>';
+  box.innerHTML=(f?'<button data-a="rnF" data-id="'+esc(id)+'">'+ic('pencil')+' Đổi tên</button>'+(canShare(id)?'<button data-a="shr" data-id="'+esc(id)+'">'+ic('users')+' Chia sẻ cho khối</button>':'')+(canStatus(id)?'<button data-a="stOpen" data-id="'+esc(id)+'">'+ic('check')+' Trạng thái nộp bài</button>':''):'<button data-a="cp" data-id="'+esc(id)+'">'+ic('link')+' Sao chép liên kết</button><button data-a="rn" data-id="'+esc(id)+'">'+ic('pencil')+' Đổi tên</button>')+'<button data-a="'+(f?'delF':'delI')+'" data-id="'+esc(id)+'" style="color:#ff8b96">'+ic('trash')+' Xóa</button>';
   box.style.minWidth='';placeMenu(r);return}
  const a=t.dataset.a,id=t.dataset.id,i=id&&itemOf(id);
  if(a=='x')close();
@@ -415,7 +475,11 @@ document.addEventListener('click',async e=>{
  if(a=='set'||a=='help')modal(a);
  if(a=='more'){pg++;render()}
  if(a=='tSearch'){showS=!showS;if(!showS){q='';$('#q').value=''}render();if(showS)$('#q').focus()}
- if(a=='tFilter'){showF=!showF;if(!showF){fq='';$('#fq').value=''}render();if(showF)$('#fq').focus()}
+ if(a=='tFilter'){showF=!showF;if(!showF){fq='';F={};$('#fq').value=''}render();if(showF)$('#fq').focus()}
+ if(a=='fClear'){F={};fq='';$('#fq').value='';render()}
+ if(a=='stOpen'&&canStatus(id))modal('status',id);
+ if(a=='stRefresh'){await load();modal('status',SX.f)}
+ if(a=='stCopy'){const d=statusData(SX.f).filter(x=>!x.n).map(x=>x.u.name+(x.u.team?' ('+x.u.team+')':''));navigator.clipboard.writeText(d.join('\n'));toast(d.length?'Đã sao chép '+d.length+' người chưa nộp':'Mọi người đều đã nộp')}
  if(a=='fApply'){fq=$('#fq').value.trim().toLowerCase();render()}
  if(a=='sortSet'){if(sort==id)sdir=-sdir;else{sort=id;sdir=(id=='name'||id=='type')?1:-1}render()}
  if(a=='dTh'){D.th=!D.th;saveD();render()}
@@ -472,6 +536,8 @@ document.addEventListener('change',e=>{
  if(e.target.id=='sort'){sort=e.target.value;render()}
  if(e.target.id=='stall')document.querySelectorAll('.st').forEach(c=>c.checked=e.target.checked);
  if(e.target.classList.contains('st')){const al=$('#stall');if(al)al.checked=[...document.querySelectorAll('.st')].every(c=>c.checked)}
+ if(e.target.classList.contains('fs')){F[e.target.dataset.k]=e.target.value;render()}
+ if(e.target.id=='sfl'){SX.flt=e.target.value;$('#stwrap').innerHTML=statusHtml()}
  if(e.target.id=='uf'){UF=e.target.value;$('#ulist').innerHTML=usersHtml()}
 });
 $('#fq').addEventListener('keydown',e=>{if(e.key=='Enter'){fq=e.target.value.trim().toLowerCase();render()}});
