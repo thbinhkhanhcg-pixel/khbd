@@ -296,7 +296,7 @@ function placeMenu(r){const box=$('#menuBox');box.style.maxHeight='';box.style.d
  box.style.top=top+'px';box.style.left=Math.min(Math.max(8,r.right-w),Math.max(8,vw-w-8))+'px'}
 ['scroll','resize'].forEach(ev=>addEventListener(ev,e=>{const b=$('#menuBox');if(e.target!==b)b.style.display='none'},true));
 // Hướng dẫn theo vai trò
-const HC=[["Tải tệp lên","Mở thư mục cần lưu, bấm <b>Tải lên</b> (hoặc kéo thả tệp vào trang), chọn tệp, chọn môn và lớp nếu muốn rồi bấm Tải lên. Mỗi tệp tối đa 50 MB. Tệp mới cần khoảng 1 phút mới xem hoặc tải về được."],["Tạo thư mục","Bấm <b>Thư mục mới</b> và đặt tên. Tạo được ở ngoài cùng hoặc bên trong thư mục của chính bạn."],["Xem và tải về","Bấm tên tệp hoặc <b>Xem trước</b> để xem, bấm <b>Tải xuống</b> để lưu về máy."],["Đổi tên, xóa","Bấm <b>⋮</b> cạnh tệp hoặc thư mục, chọn Đổi tên hoặc Xóa. Chỉ làm được với mục do bạn tạo."],["Tìm nhanh","Thanh công cụ có kính lúp (tìm trong cả kho), phễu (lọc theo nguồn, loại tệp, môn, lớp, người tải, khối… Lọc theo tên thì chỉ áp dụng trong thư mục đang mở, lọc theo các tiêu chí khác thì tìm trong cả kho), hai mũi tên (sắp xếp) và thanh trượt (hình thu nhỏ)."],["Đổi mật khẩu","Chọn <b>Đổi mật khẩu</b> ở cột bên trái. Quên mật khẩu thì liên hệ Admin để được đặt lại."]];
+const HC=[["Tải tệp lên","Mở thư mục cần lưu, bấm <b>Tải lên</b> (hoặc kéo thả tệp vào trang), chọn tệp, chọn môn và lớp nếu muốn rồi bấm Tải lên. Mỗi tệp tối đa 50 MB. Tệp mới cần khoảng 1 phút mới xem hoặc tải về được."],["Tạo thư mục","Bấm <b>Thư mục mới</b> và đặt tên. Tạo được ở ngoài cùng hoặc bên trong thư mục của chính bạn."],["Xem và tải về","Bấm tên tệp hoặc <b>Xem trước</b> để xem, bấm <b>Tải xuống</b> để lưu về máy."],["Đổi tên, xóa","Bấm <b>⋮</b> cạnh tệp hoặc thư mục, chọn Đổi tên hoặc Xóa. Chỉ làm được với mục do bạn tạo."],["Tìm nhanh","Thanh công cụ có kính lúp (tìm trong cả kho), phễu (lọc theo nguồn: của tôi hoặc từng khối, loại tệp và môn học. Lọc theo tên thì chỉ áp dụng trong thư mục đang mở, lọc theo ba tiêu chí còn lại thì tìm trong cả kho), hai mũi tên (sắp xếp) và thanh trượt (hình thu nhỏ)."],["Đổi mật khẩu","Chọn <b>Đổi mật khẩu</b> ở cột bên trái. Quên mật khẩu thì liên hệ Admin để được đặt lại."]];
 const HELP={
 guest:{intro:"Bạn chưa đăng nhập nên chưa xem được tệp nào.",steps:[["Đăng nhập","Bấm <b>Đăng nhập</b> ở cột bên trái, nhập tên đăng nhập và mật khẩu do Admin cấp."],["Chưa có tài khoản?","Liên hệ Admin để được tạo tài khoản. Trang không có chức năng tự đăng ký."],["Sau khi đăng nhập","Mở lại mục Hướng dẫn để xem hướng dẫn riêng cho vai trò của bạn."]]},
 gv:{intro:"Bạn thấy và quản lý được tệp, thư mục do chính mình tạo, cùng các thư mục mà BGH hoặc tổ trưởng chia sẻ cho khối của bạn.",
@@ -309,7 +309,7 @@ leader:{intro:"Ngoài quyền của giáo viên, bạn xem được tệp và th
  notes:["Bạn chỉ chia sẻ được cho khối của mình. Thành viên không thấy bài của nhau.","Bạn chỉ sửa, xóa được tệp do mình tải lên.","Xóa thư mục của mình sẽ xóa cả tệp thành viên đã nộp bên trong. Hộp thoại sẽ báo số tệp trước khi xóa.","Khối và chức tổ trưởng do Admin gán. Sai thì báo Admin."]},
 bgh:{intro:"Bạn xem được toàn bộ tệp và thư mục của mọi giáo viên, tạo thư mục và chia sẻ cho một hoặc nhiều khối.",
  can:["Xem và tải về mọi tệp, mọi thư mục trong kho","Tải lên và tạo thư mục ở bất kỳ vị trí nào","Chia sẻ thư mục cho nhiều khối cùng lúc, hoặc chọn <b>Tất cả</b>","Sửa, xóa tệp và thư mục do chính mình tạo"],
- steps:[["Phát biểu mẫu hoặc thông báo cho các khối","Tạo thư mục, tải tệp vào, bấm <b>⋮</b> rồi <b>Chia sẻ cho khối</b>, tích các khối (hoặc Tất cả) và Lưu. Giáo viên trong các khối đó xem được tệp bạn đăng và nộp bài vào thư mục."],["Xem bài nộp","Mở thư mục để thấy bài của từng người. Tên người tải và tổ hiện cạnh tệp. Dùng kính lúp hoặc bộ lọc để tìm theo người tải, khối. Muốn biết ai chưa nộp, bấm <b>⋮</b> cạnh thư mục đã chia sẻ và chọn <b>Trạng thái nộp bài</b>."]],
+ steps:[["Phát biểu mẫu hoặc thông báo cho các khối","Tạo thư mục, tải tệp vào, bấm <b>⋮</b> rồi <b>Chia sẻ cho khối</b>, tích các khối (hoặc Tất cả) và Lưu. Giáo viên trong các khối đó xem được tệp bạn đăng và nộp bài vào thư mục."],["Xem bài nộp","Mở thư mục để thấy bài của từng người. Tên người tải và tổ hiện cạnh tệp. Dùng kính lúp (tìm theo tên người tải) hoặc bộ lọc theo khối để tìm nhanh. Muốn biết ai chưa nộp, bấm <b>⋮</b> cạnh thư mục đã chia sẻ và chọn <b>Trạng thái nộp bài</b>."]],
  notes:["Bạn xem được tất cả nhưng chỉ sửa, xóa được tệp và thư mục do mình tạo.","Bạn không quản lý tài khoản. Cần thêm hoặc đổi quyền tài khoản thì liên hệ Admin."]},
 admin:{intro:"Bạn có toàn quyền: xem, sửa, xóa mọi tệp và thư mục, chia sẻ mọi thư mục và quản lý tài khoản.",
  can:["Xem, sửa, xóa mọi tệp và thư mục","Chia sẻ bất kỳ thư mục nào, kể cả thư mục cũ chưa có chủ","Thêm tài khoản, phân quyền, đặt lại mật khẩu, xóa tài khoản"],
@@ -328,47 +328,35 @@ function dlg(o){return new Promise(res=>{
  document.addEventListener('keydown',kd,true);
  ov.onclick=e=>{if(e.target===ov)return done(null);const t=e.target.closest('[data-d]');if(t)done(t.dataset.d=='ok'?(inp?inp.value:true):null)};
 })}
-const SUBJ=['Tin học','Công nghệ','Toán','Tiếng Việt','Khác'];
+const SUBJ=['Tiếng Việt','Toán','Đạo đức','Tự nhiên và Xã hội','Lịch sử và Địa lý','Khoa học','Tin học','Công nghệ','Âm nhạc','Mỹ thuật','Giáo dục thể chất','Hoạt động trải nghiệm','Ngoại ngữ'];
 const EXT={pdf:['pdf'],word:['doc','docx'],excel:['xls','xlsx','csv'],ppt:['ppt','pptx'],image:['png','jpg','jpeg','gif','webp']};
 const structOn=()=>Object.values(F).some(Boolean);
 const effShare=f=>{const r=shRoot(f);return r?db.share[r]:[]};
 const pchip=p=>(q||structOn())&&p?'<span class="chip">'+esc(p.split('/').map(x=>x.split('~')[0]).join(' / '))+'</span>':'';
 // Bộ lọc theo tiêu chí (nguồn, khối, chia sẻ, người tải, loại, môn, lớp)
 function matchF(f){
- if(F.subject||F.grade)return false;
+ if(F.subject)return false;
  if(F.type&&F.type!='folder')return false;
  const ow=(db.fowner||{})[f],o=UD[ow];
- if(F.src=='mine'&&ow!==S.name)return false;
- if(F.src=='shared'&&(ow===S.name||!inShare(f)))return false;
- if(F.src=='sharing'&&!(db.share[f]&&db.share[f].length&&(S.role=='admin'||ow===S.name)))return false;
- if(F.team&&!(o&&o.team===F.team))return false;
- if(F.shareTo&&!effShare(f).includes(F.shareTo))return false;
- if(F.by&&ow!==F.by)return false;
+ if(F.src=='mine')return ow===S.name;
+ if(F.src)return !!(o&&o.team===F.src);
  return true}
 function matchI(i){
  if(F.type=='folder')return false;
  if(F.type&&EXT[F.type]&&!EXT[F.type].includes(ext(i.name)))return false;
  if(F.subject&&i.subject!==F.subject)return false;
- if(F.grade&&String(i.grade)!==F.grade)return false;
- const mine=i.by===S.name,o=UD[i.by],r=shRoot(i.folder);
- if(F.src=='mine'&&!mine)return false;
- if(F.src=='shared'&&(mine||!inShare(i.folder)))return false;
- if(F.src=='sharing'&&!(r&&(S.role=='admin'||(db.fowner||{})[r]===S.name)))return false;
- if(F.team&&!(o&&o.team===F.team))return false;
- if(F.shareTo&&!effShare(i.folder).includes(F.shareTo))return false;
- if(F.by&&i.by!==F.by)return false;
+ const o=UD[i.by];
+ if(F.src=='mine')return i.by===S.name;
+ if(F.src)return !!(o&&o.team===F.src);
  return true}
+// Bảng lọc gồm 3 ô: Nguồn (Của tôi hoặc từng khối), Loại, Môn
 function renderFilters(){
  if(!S)return;
- const wide=S.role=='admin'||S.role=='bgh',canSh=wide||S.leader;
- const us=Object.values(UD).filter(u=>wide||(S.leader&&u.team&&u.team===S.team)).map(u=>u.name).sort((a,b)=>a.localeCompare(b,'vi'));
+ const wide=S.role=='admin'||S.role=='bgh',teams=wide?TEAMS:(S.team?[S.team]:[]);
  const mk=(k,lb,ops)=>`<label class="fsel">${lb}<select class="fs" data-k="${k}">${ops.map(([v,t])=>`<option value="${esc(v)}"${(F[k]||'')===v?' selected':''}>${esc(t)}</option>`).join('')}</select></label>`;
- const T=TEAMS.map(t=>[t,t]);
- let h=mk('src','Nguồn',[['','Tất cả'],['mine','Của tôi'],...(wide?[]:[['shared','Được chia sẻ cho tôi']]),...(canSh?[['sharing','Tôi đang chia sẻ']]:[])]);
- if(wide)h+=mk('team','Của khối',[['','Tất cả khối'],...T])+mk('shareTo','Chia sẻ cho khối',[['','Tất cả'],...T]);
- if(canSh)h+=mk('by','Người tải',[['','Tất cả'],...us.map(u=>[u,u])]);
- h+=mk('type','Loại',[['','Tất cả'],['folder','Thư mục'],['file','Tệp'],['pdf','PDF'],['word','Word'],['excel','Excel'],['ppt','PowerPoint'],['image','Ảnh']])+mk('subject','Môn',[['','Tất cả'],...SUBJ.map(t=>[t,t])])+mk('grade','Lớp',[['','Tất cả'],...[1,2,3,4,5].map(n=>[String(n),'Lớp '+n])]);
- $('#fsel').innerHTML=h}
+ $('#fsel').innerHTML=mk('src','Nguồn',[['','Tất cả'],['mine','Của tôi'],...teams.map(t=>[t,t])])
+  +mk('type','Loại',[['','Tất cả'],['folder','Thư mục'],['file','Tệp'],['pdf','PDF'],['word','Word'],['excel','Excel'],['ppt','PowerPoint'],['image','Ảnh']])
+  +mk('subject','Môn',[['','Tất cả'],...SUBJ.map(t=>[t,t])])}
 // Trạng thái nộp bài của một thư mục đã chia sẻ
 const canStatus=f=>!!S&&!!db.share&&!!db.share[f]&&db.share[f].length>0&&(S.role=='admin'||S.role=='bgh'||(S.leader&&(db.fowner||{})[f]===S.name));
 function statusData(f){const sh=db.share[f]||[],ow=(db.fowner||{})[f],sub=p=>p===f||p.startsWith(f+'/');
@@ -427,7 +415,7 @@ function modal(k,x){
  if(k=='pw')h=`<h3>Đổi mật khẩu</h3><label>Mật khẩu hiện tại<input type="password" id="p0"></label><label>Mật khẩu mới (≥ 8 ký tự)<input type="password" id="p1"></label><label>Nhập lại<input type="password" id="p2"></label><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" data-a="pwOk">Đổi mật khẩu</button></div>`;
  if(k=='help'){md.className='md wide';h=helpHtml()}
  if(k=='up')h=`<h3>Tải lên tệp</h3><label>Tệp (Word, PDF, PowerPoint… tối đa 50 MB/tệp)<input type="file" id="uf" multiple></label>
- <label>Môn (tùy chọn)<select id="us"><option value="">Không chọn</option><option>Tin học</option><option>Công nghệ</option><option>Toán</option><option>Tiếng Việt</option><option>Khác</option></select></label>
+ <label>Môn (tùy chọn)<select id="us"><option value="">Không chọn</option>${SUBJ.map(t=>`<option>${t}</option>`).join('')}</select></label>
  <label>Lớp (tùy chọn)<select id="ug"><option value="">Không chọn</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
  <p id="ust"></p><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" id="ub" data-a="upOk">Tải lên</button></div>`;
  if(k=='pv'){md.className='md big';const u=url(x),e=ext(x.name);
