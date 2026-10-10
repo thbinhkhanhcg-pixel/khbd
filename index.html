@@ -117,7 +117,7 @@ footer .sep{margin:0 10px;opacity:.5}footer svg{width:16px;height:16px;fill:#ff3
   <a class="on" data-a="home"><svg class="ic"><use href="#i-folderopen"/></svg>File Manager</a>
   <a data-a="users" id="nUsers" style="display:none"><svg class="ic"><use href="#i-users"/></svg>Quản lý tài khoản</a>
   <a data-a="pw" id="nPw" style="display:none"><svg class="ic"><use href="#i-lock"/></svg>Đổi mật khẩu</a>
-  <a data-a="set"><svg class="ic"><use href="#i-sliders"/></svg>Cài đặt repo</a>
+  <a data-a="set" id="nSet" style="display:none"><svg class="ic"><use href="#i-sliders"/></svg>Cài đặt repo</a>
   <a data-a="help"><svg class="ic"><use href="#i-help"/></svg>Hướng dẫn</a>
   <a data-a="login" id="nLog"><svg class="ic"><use href="#i-key"/></svg>Đăng nhập</a>
   <a data-a="logout" id="nOut" style="display:none"><svg class="ic"><use href="#i-logout"/></svg>Đăng xuất</a>
@@ -167,6 +167,8 @@ let C={...auto};try{C={...auto,...JSON.parse(localStorage.getItem('khbd')||'{}')
 const DEF='0977889090';
 let S=null;try{S=JSON.parse(sessionStorage.getItem('khs')||'null')}catch(e){}
 const can=()=>!!(S&&C.owner&&C.repo);
+// Cài đặt repo: chỉ Admin thấy. Ngoại lệ: khi trang không chạy trên github.io hoặc chưa có thông tin repo thì ai cũng cần nhập để dùng được.
+const canCfg=()=>!!(S&&S.role=='admin')||!location.hostname.endsWith('.github.io')||!C.owner||!C.repo;
 let UD={};
 const TEAMS=['Khối 1','Khối 2','Khối 3','Khối 4','Khối 5','Anh Văn','Bộ Môn'];
 const teamOpts=v=>'<option value="">— Không chọn —</option>'+(v&&!TEAMS.includes(v)?`<option selected>${esc(v)}</option>`:'')+TEAMS.map(t=>`<option${t===v?' selected':''}>${t}</option>`).join('');
@@ -382,7 +384,7 @@ function render(){
  const ad=S&&S.role=='admin';
  $('#accN').textContent=S?S.name:'Khách';$('#accS').innerHTML=S?uBadges(S):'Chế độ chỉ xem';
  $('.av').textContent=S?S.name.slice(0,2).toUpperCase():'GV';
- $('#nUsers').style.display=ad?'':'none';$('#addAcc').style.display=ad?'':'none';$('#nPw').style.display=S?'':'none';$('#nOut').style.display=S?'':'none';$('#nLog').style.display=S?'none':'';
+ $('#nUsers').style.display=ad?'':'none';$('#nSet').style.display=canCfg()?'':'none';$('#addAcc').style.display=ad?'':'none';$('#nPw').style.display=S?'':'none';$('#nOut').style.display=S?'':'none';$('#nLog').style.display=S?'none':'';
  $('#delSel').style.display=sel.size?'':'none';$('#delSel').innerHTML=ic('trash')+'Xóa ('+sel.size+')';
  $('#all').checked=vis.length>0&&vis.every(id=>sel.has(id));
  let h=subs.slice(0,lim).map(f=>{const n=db.items.filter(i=>(i.folder===f||i.folder.startsWith(f+'/'))&&canView(i)).length;
@@ -460,7 +462,7 @@ document.addEventListener('click',async e=>{
  if(a=='x')close();
  if(a=='menu')$('#sb').classList.toggle('open');
  if(a=='home')nav('');
- if(a=='set'||a=='help')modal(a);
+ if((a=='set'&&canCfg())||a=='help')modal(a);
  if(a=='more'){pg++;render()}
  if(a=='tSearch'){showS=!showS;if(!showS){q='';$('#q').value=''}render();if(showS)$('#q').focus()}
  if(a=='tFilter'){showF=!showF;if(!showF){fq='';F={};defF={};$('#fq').value=''}render();if(showF)$('#fq').focus()}
