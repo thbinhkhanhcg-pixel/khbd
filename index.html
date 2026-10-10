@@ -157,7 +157,7 @@ footer .sep{margin:0 10px;opacity:.5}footer svg{width:16px;height:16px;fill:#ff3
 const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
 const ic=n=>`<svg class="ic"><use href="#i-${n}"/></svg>`;
 const b64=s=>btoa(unescape(encodeURIComponent(s)));
-let db={folders:[],items:[]},cur='',sel=new Set(),q='',fq='',sort='date',sdir=-1,showS=false,showF=false,vis=[],F={},SX={f:'',flt:'all'},pg=1,lastSig='',PS=50,D={th:true,sz:48};
+let db={folders:[],items:[]},cur='',sel=new Set(),q='',fq='',sort='date',sdir=-1,showS=false,showF=false,vis=[],F={},defSrc='mine',SX={f:'',flt:'all'},pg=1,lastSig='',PS=50,D={th:true,sz:48};
 try{D={...D,...JSON.parse(localStorage.getItem('khd')||'{}')}}catch(e){}
 const saveD=()=>{try{localStorage.setItem('khd',JSON.stringify(D))}catch(e){}};
 // Tự nhận repo khi chạy trên GitHub Pages (owner.github.io/repo)
@@ -243,7 +243,7 @@ const Store=(()=>{
    if(!(await r.json()).permissions?.push)throw new Error('Token chưa có quyền ghi (Contents: Read and write)')}
  }})();
 const getUsers=()=>Store.users();
-const signIn=u=>{S=u;sessionStorage.setItem('khs',JSON.stringify(u));close();toast('Xin chào '+u.name);return load()};
+const signIn=u=>{S=u;defSrc='mine';F={src:'mine'};showF=true;sessionStorage.setItem('khs',JSON.stringify(u));close();toast('Xin chào '+u.name);return load()};
 async function doLogin(n,p){
  if(!n||!p)throw new Error('Nhập tên đăng nhập và mật khẩu');
  const L=await getUsers();
@@ -296,7 +296,7 @@ function placeMenu(r){const box=$('#menuBox');box.style.maxHeight='';box.style.d
  box.style.top=top+'px';box.style.left=Math.min(Math.max(8,r.right-w),Math.max(8,vw-w-8))+'px'}
 ['scroll','resize'].forEach(ev=>addEventListener(ev,e=>{const b=$('#menuBox');if(e.target!==b)b.style.display='none'},true));
 // Hướng dẫn theo vai trò
-const HC=[["Tải tệp lên","Mở thư mục cần lưu, bấm <b>Tải lên</b> (hoặc kéo thả tệp vào trang), chọn tệp, chọn môn và lớp nếu muốn rồi bấm Tải lên. Mỗi tệp tối đa 50 MB. Tệp mới cần khoảng 1 phút mới xem hoặc tải về được."],["Tạo thư mục","Bấm <b>Thư mục mới</b> và đặt tên. Tạo được ở ngoài cùng hoặc bên trong thư mục của chính bạn."],["Xem và tải về","Bấm tên tệp hoặc <b>Xem trước</b> để xem, bấm <b>Tải xuống</b> để lưu về máy."],["Đổi tên, xóa","Bấm <b>⋮</b> cạnh tệp hoặc thư mục, chọn Đổi tên hoặc Xóa. Chỉ làm được với mục do bạn tạo."],["Tìm nhanh","Thanh công cụ có kính lúp (tìm trong cả kho), phễu (lọc theo nguồn: của tôi hoặc từng khối, loại tệp và môn học. Lọc theo tên thì chỉ áp dụng trong thư mục đang mở, lọc theo ba tiêu chí còn lại thì tìm trong cả kho), hai mũi tên (sắp xếp) và thanh trượt (hình thu nhỏ)."],["Đổi mật khẩu","Chọn <b>Đổi mật khẩu</b> ở cột bên trái. Quên mật khẩu thì liên hệ Admin để được đặt lại."]];
+const HC=[["Tải tệp lên","Mở thư mục cần lưu, bấm <b>Tải lên</b> (hoặc kéo thả tệp vào trang), chọn tệp, chọn môn và lớp nếu muốn rồi bấm Tải lên. Mỗi tệp tối đa 50 MB. Tệp mới cần khoảng 1 phút mới xem hoặc tải về được."],["Tạo thư mục","Bấm <b>Thư mục mới</b> và đặt tên. Tạo được ở ngoài cùng hoặc bên trong thư mục của chính bạn."],["Xem và tải về","Bấm tên tệp hoặc <b>Xem trước</b> để xem, bấm <b>Tải xuống</b> để lưu về máy."],["Đổi tên, xóa","Bấm <b>⋮</b> cạnh tệp hoặc thư mục, chọn Đổi tên hoặc Xóa. Chỉ làm được với mục do bạn tạo."],["Bộ lọc mặc định","Khi đăng nhập, trang mặc định chỉ hiện thư mục và tệp do bạn tạo (Nguồn: Của tôi). Muốn xem thư mục được chia sẻ hoặc toàn bộ nội dung bạn có quyền xem, bấm icon phễu rồi chọn <b>Nguồn: Tất cả</b>."],["Tìm nhanh","Thanh công cụ có kính lúp (tìm trong cả kho), phễu (lọc theo nguồn: của tôi hoặc từng khối, loại tệp và môn học. Lọc theo tên thì chỉ áp dụng trong thư mục đang mở, lọc theo ba tiêu chí còn lại thì tìm trong cả kho), hai mũi tên (sắp xếp) và thanh trượt (hình thu nhỏ)."],["Đổi mật khẩu","Chọn <b>Đổi mật khẩu</b> ở cột bên trái. Quên mật khẩu thì liên hệ Admin để được đặt lại."]];
 const HELP={
 guest:{intro:"Bạn chưa đăng nhập nên chưa xem được tệp nào.",steps:[["Đăng nhập","Bấm <b>Đăng nhập</b> ở cột bên trái, nhập tên đăng nhập và mật khẩu do Admin cấp."],["Chưa có tài khoản?","Liên hệ Admin để được tạo tài khoản. Trang không có chức năng tự đăng ký."],["Sau khi đăng nhập","Mở lại mục Hướng dẫn để xem hướng dẫn riêng cho vai trò của bạn."]]},
 gv:{intro:"Bạn thấy và quản lý được tệp, thư mục do chính mình tạo, cùng các thư mục mà BGH hoặc tổ trưởng chia sẻ cho khối của bạn.",
@@ -391,9 +391,9 @@ function render(){
   return `<div class="row"><input type="checkbox" data-s="${esc(i.id)}" ${sel.has(i.id)?'checked':''}>${thumb(i)}<div class="nm"><b data-pv="${esc(i.id)}">${esc(i.name)}</b><small>${fdate(i.date)} · ${fsize(i.size)}${S&&i.by!==S.name?' · '+esc(i.by||'không rõ')+(UD[i.by]&&UD[i.by].team?' ('+esc(UD[i.by].team)+')':''):''}${pchip(i.folder)}${i.subject?'<span class="chip">'+esc(i.subject)+'</span>':''}${i.grade?'<span class="chip">Lớp '+esc(i.grade)+'</span>':''}</small></div>
   <div class="acts">${pv?`<button class="btn hide" data-pv="${esc(i.id)}">${ic('eye')}Xem trước</button>`:''}<a class="btn" style="text-decoration:none" href="${url(i)}" download="${esc(i.name)}">${ic('download')}Tải xuống</a><button class="btn i" data-m="i" data-id="${esc(i.id)}">${ic('more')}</button></div></div>`}).join('');
  if(subs.length+its.length>lim)h+='<div class="row more"><span>Đang hiển thị '+Math.min(lim,subs.length+its.length)+' / '+(subs.length+its.length)+' mục</span><button class="btn" data-a="more">Hiển thị thêm</button></div>';
- $('#list').innerHTML=h||`<div class="empty">${(q||fq||structOn())?'Không có mục nào khớp bộ lọc.':(S?'Chưa có tệp nào bạn được phép xem ở đây. Bấm “Tải lên” để thêm tệp.':'<p style="margin-bottom:14px">Vui lòng đăng nhập để xem tệp.</p><button class="btn p" data-a="login">'+ic('key')+' Đăng nhập</button>')}</div>`
+ $('#list').innerHTML=h||`<div class="empty">${(q||fq||structOn())?(F.src=='mine'&&!q&&!fq&&Object.values(F).filter(Boolean).length==1?'Bạn chưa tạo thư mục hay tải tệp nào. Chọn <b>Nguồn: Tất cả</b> trong bộ lọc để xem các mục được chia sẻ cho bạn.':'Không có mục nào khớp bộ lọc.'):(S?'Chưa có tệp nào bạn được phép xem ở đây. Bấm “Tải lên” để thêm tệp.':'<p style="margin-bottom:14px">Vui lòng đăng nhập để xem tệp.</p><button class="btn p" data-a="login">'+ic('key')+' Đăng nhập</button>')}</div>`
 }
-function nav(p){cur=p;q='';fq='';F={};$('#q').value='';$('#fq').value='';sel.clear();location.hash=encodeURIComponent(p);render()}
+function nav(p){cur=p;q='';fq='';F=(p===''&&defSrc)?{src:defSrc}:{};if(p===''&&defSrc)showF=true;$('#q').value='';$('#fq').value='';sel.clear();location.hash=encodeURIComponent(p);render()}
 addEventListener('hashchange',()=>{cur=decodeURIComponent(location.hash.slice(1));render()});
 
 function modal(k,x){
@@ -463,8 +463,8 @@ document.addEventListener('click',async e=>{
  if(a=='set'||a=='help')modal(a);
  if(a=='more'){pg++;render()}
  if(a=='tSearch'){showS=!showS;if(!showS){q='';$('#q').value=''}render();if(showS)$('#q').focus()}
- if(a=='tFilter'){showF=!showF;if(!showF){fq='';F={};$('#fq').value=''}render();if(showF)$('#fq').focus()}
- if(a=='fClear'){F={};fq='';$('#fq').value='';render()}
+ if(a=='tFilter'){showF=!showF;if(!showF){fq='';F={};defSrc='';$('#fq').value=''}render();if(showF)$('#fq').focus()}
+ if(a=='fClear'){F={};defSrc='';fq='';$('#fq').value='';render()}
  if(a=='stOpen'&&canStatus(id))modal('status',id);
  if(a=='stRefresh'){await load();modal('status',SX.f)}
  if(a=='stCopy'){const d=statusData(SX.f).filter(x=>!x.n).map(x=>x.u.name+(x.u.team?' ('+x.u.team+')':''));navigator.clipboard.writeText(d.join('\n'));toast(d.length?'Đã sao chép '+d.length+' người chưa nộp':'Mọi người đều đã nộp')}
@@ -478,7 +478,7 @@ document.addEventListener('click',async e=>{
  if(a=='cp'){navigator.clipboard.writeText(url(i));toast('Đã sao chép liên kết tệp')}
  if(a=='setOk'){C={owner:$('#c1').value.trim(),repo:$('#c2').value.trim(),branch:$('#c3').value.trim()||'main'};localStorage.setItem('khbd',JSON.stringify(C));close();toast('Đã lưu kết nối');load()}
  if(a=='login')modal('login');
- if(a=='logout'){S=null;sessionStorage.removeItem('khs');toast('Đã đăng xuất');load()}
+ if(a=='logout'){S=null;F={};defSrc='mine';showF=false;sessionStorage.removeItem('khs');toast('Đã đăng xuất');load()}
  if(a=='loginOk')try{await doLogin($('#ln').value.trim(),$('#lp').value)}catch(er){toast(er.message)}
  if(a=='setupOk')try{await doSetup($('#st').value.trim(),$('#s1').value,$('#s2').value)}catch(er){toast(er.message)}
  if(a=='users')try{modal('users',(await getUsers())||{users:[]})}catch(er){toast(er.message)}
@@ -524,7 +524,7 @@ document.addEventListener('change',e=>{
  if(e.target.id=='sort'){sort=e.target.value;render()}
  if(e.target.id=='stall')document.querySelectorAll('.st').forEach(c=>c.checked=e.target.checked);
  if(e.target.classList.contains('st')){const al=$('#stall');if(al)al.checked=[...document.querySelectorAll('.st')].every(c=>c.checked)}
- if(e.target.classList.contains('fs')){F[e.target.dataset.k]=e.target.value;render()}
+ if(e.target.classList.contains('fs')){F[e.target.dataset.k]=e.target.value;if(e.target.dataset.k=='src')defSrc=e.target.value;render()}
  if(e.target.id=='sfl'){SX.flt=e.target.value;$('#stwrap').innerHTML=statusHtml()}
  if(e.target.id=='uf'){UF=e.target.value;$('#ulist').innerHTML=usersHtml()}
 });
@@ -533,5 +533,6 @@ $('#q').addEventListener('input',e=>{q=e.target.value.trim().toLowerCase();rende
 addEventListener('dragover',e=>e.preventDefault());
 addEventListener('drop',e=>{e.preventDefault();if(!e.dataTransfer.files.length)return;if(!can()){toast('Hãy đăng nhập để tải lên.');return modal('login')}if(cur&&!canPut(cur))return toast('Bạn không có quyền tải lên thư mục này.');modal('up');$('#uf').files=e.dataTransfer.files});
 $('#ov').addEventListener('keydown',e=>{if(e.key=='Enter'&&e.target.tagName=='INPUT'&&e.target.type!='file'){const b=$('#md .btn.p');b&&b.click()}});
+if(S&&!location.hash.slice(1)){F={src:'mine'};showF=true}
 cur=decodeURIComponent(location.hash.slice(1));load();
 </script></body></html>
