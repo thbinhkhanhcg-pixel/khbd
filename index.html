@@ -43,8 +43,8 @@ input[type=checkbox]{width:18px;height:18px;accent-color:var(--ac);cursor:pointe
 .nt details{margin-top:8px;color:var(--mu);font-size:12.5px}.nt details div{padding:2px 0}.nt .nact{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
 .ntd{font-size:12px;font-weight:700;color:var(--mu);margin:14px 0 2px}.ntd::first-letter{text-transform:uppercase}.nlist{max-height:56vh;overflow:auto;padding-right:2px}
 #nBadge{background:#e5484d;color:#fff;border-radius:99px;font-size:11px;padding:1px 7px;margin-left:auto;font-weight:700}
-.rcp{max-height:210px;overflow:auto;border:1px solid var(--line);border-radius:10px;padding:6px 10px}.rcp label{flex-direction:row!important;align-items:center;gap:8px!important;padding:4px 0;font-size:13.5px!important}.rcp label small{margin-left:auto;font-size:11.5px}
-textarea{background:#101b33;border:1px solid var(--line);border-radius:10px;padding:10px 12px;outline:none;font:inherit;color:inherit;resize:vertical;min-height:96px}textarea:focus{border-color:var(--ac)}
+.rcp{flex:none;min-height:220px;max-height:46vh;overflow:auto;border:1px solid var(--line);border-radius:10px;padding:6px 10px}.rcp label{flex-direction:row!important;align-items:center;gap:8px!important;padding:4px 0;font-size:13.5px!important}.rcp label small{margin-left:auto;font-size:11.5px}
+#nb1{flex:none}textarea{background:#101b33;border:1px solid var(--line);border-radius:10px;padding:10px 12px;outline:none;font:inherit;color:inherit;resize:vertical;min-height:76px}textarea:focus{border-color:var(--ac)}
 .chip.req,.mi.req{background:#5a1f2d;color:#ff8b8b;font-weight:700;border:1px solid #a23a50;border-radius:5px;padding:0 7px}.mi.req{padding:1px 8px;font-size:12px}
 .chip{background:#23396b;border-radius:5px;padding:0 7px;margin-left:6px;font-size:11px;color:#b9c9ee}
 .acts{display:flex;gap:8px;align-items:center}
@@ -318,7 +318,7 @@ async function finishDelete(id,mode,to){
  await syncUsers();modal('users',(await getUsers())||{users:[]});await load();
  toast(mode=='move'?'Đã xóa tài khoản và chuyển dữ liệu cho '+to:mode=='purge'?'Đã xóa tài khoản và toàn bộ dữ liệu':'Đã xóa tài khoản')}
 // ===== Thông báo / ghi chú (Admin, BGH, Tổ trưởng gửi; người nhận thấy khi đăng nhập và xem lại trong mục Thông báo) =====
-let NT={notes:[]},NC={sel:new Set(),flt:''},NP=[],NPOP=new Set(),NTAB='in',NT_T=0;
+let NT={notes:[]},NC={sel:new Set(),flt:'',q:''},NP=[],NPOP=new Set(),NTAB='in',NT_T=0;
 const canNote=()=>!!S&&(S.role=='admin'||S.role=='bgh'||!!S.leader);
 const rcpPool=()=>Object.values(UD).filter(u=>S&&u.name!==S.name&&!u.lock&&(S.role=='admin'||S.role=='bgh'||(u.role=='user'&&u.team&&u.team===S.team))).sort((a,b)=>(a.team||'~').localeCompare(b.team||'~','vi')||a.name.localeCompare(b.name,'vi'));
 const unreadN=()=>S?NT.notes.filter(n=>(n.to||[]).includes(S.name)&&!(n.seen&&n.seen[S.name])):[];
@@ -337,8 +337,9 @@ function noteListHtml(list,mode,newSet){
  if(!list.length)return '<div class="empty" style="padding:28px">'+(mode=='in'?'Chưa có thông báo nào gửi cho bạn.':'Bạn chưa gửi thông báo nào.')+'</div>';
  let out='',last='';
  list.slice().sort((a,b)=>b.date.localeCompare(a.date)).forEach(n=>{const k=new Date(n.date).toDateString();if(k!=last){last=k;out+='<div class="ntd">'+esc(dayLbl(n.date))+'</div>'}out+=noteCard(n,mode,newSet&&newSet.has(n.id))});return out}
+const rcVis=()=>rcpPool().filter(u=>(!NC.flt||(NC.flt=='__none'?!u.team:u.team===NC.flt))&&(!NC.q||(u.name+' '+(u.fn||'')).toLowerCase().includes(NC.q)));
 function rcListHtml(){
- const pool=rcpPool().filter(u=>!NC.flt||(NC.flt=='__none'?!u.team:u.team===NC.flt));
+ const pool=rcVis();
  return pool.map(u=>'<label><input type="checkbox" class="rc" value="'+esc(u.name)+'"'+(NC.sel.has(u.name)?' checked':'')+'><span style="color:var(--tx)">'+esc(u.name)+(u.fn?' – '+esc(u.fn):'')+'</span><small>'+esc(info(u))+'</small></label>').join('')||'<div class="empty" style="padding:14px">Không có người nhận phù hợp.</div>'}
 function rcFileOpts(){const cur=($('#nf')||{}).value||'',l=db.items.filter(i=>NC.sel.has(i.by)).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,150);
  return '<option value="">— Không đính kèm —</option>'+l.map(i=>'<option value="'+esc(i.id)+'"'+(i.id===cur?' selected':'')+'>'+esc(i.name)+' ('+esc(i.by)+')</option>').join('')}
@@ -348,9 +349,9 @@ function noteModal(k,md){
  if(k=='notePop')return '<h3>Bạn có '+NP.length+' thông báo mới</h3><div class="nlist">'+noteListHtml(NP,'in',new Set(NP.map(n=>n.id)))+'</div><div class="fl"><button class="btn p" data-a="notePopOk">Đã đọc, đóng</button></div>';
  if(k=='noteNew'){
   const teams=[...new Set(rcpPool().map(u=>u.team||'__none'))],sw=S.role=='admin'||S.role=='bgh';
-  return '<h3>Tạo thông báo</h3><label>Loại<select id="nk"><option value="info">Thông báo</option><option value="fix">Cần điều chỉnh (góp ý kế hoạch bài dạy)</option><option value="ok">Đã duyệt</option></select></label><label>Tiêu đề<input type="text" id="nt1" maxlength="120" placeholder="Ví dụ: KHBD tuần 5 cần chỉnh sửa"></label><label>Nội dung ghi chú<textarea id="nb1" rows="5" placeholder="Những điểm cần điều chỉnh hoặc nội dung thông báo"></textarea></label>'
+  return '<h3>Tạo thông báo</h3><label>Loại<select id="nk"><option value="info">Thông báo</option><option value="fix">Cần điều chỉnh (góp ý kế hoạch bài dạy)</option><option value="ok">Đã duyệt</option></select></label><label>Tiêu đề<input type="text" id="nt1" maxlength="120" placeholder="Ví dụ: KHBD tuần 5 cần chỉnh sửa"></label><label>Nội dung ghi chú<textarea id="nb1" rows="3" placeholder="Những điểm cần điều chỉnh hoặc nội dung thông báo"></textarea></label>'
    +'<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap"><b style="color:var(--tx);font-size:13.5px">Người nhận</b><span id="rcn" style="color:var(--mu);font-size:12.5px">Đã chọn 0 người</span></div>'
-   +'<div class="frow">'+(sw&&teams.length>1?'<select id="nrf" style="flex:1"><option value="">Tất cả tổ chuyên môn</option>'+teams.map(t=>t=='__none'?'<option value="__none">Chưa phân tổ</option>':'<option>'+esc(t)+'</option>').join('')+'</select>':'')+'<button class="btn" data-a="noteAll">Chọn tất cả đang hiển thị</button><button class="btn" data-a="noteNone">Bỏ chọn</button></div>'
+   +'<div class="frow"><input type="text" id="rcq" placeholder="Tìm theo tên..." style="flex:1;min-width:140px">'+(sw&&teams.length>1?'<select id="nrf" style="flex:1"><option value="">Tất cả tổ chuyên môn</option>'+teams.map(t=>t=='__none'?'<option value="__none">Chưa phân tổ</option>':'<option>'+esc(t)+'</option>').join('')+'</select>':'')+'<button class="btn" data-a="noteAll">Chọn tất cả đang hiển thị</button><button class="btn" data-a="noteNone">Bỏ chọn</button></div>'
    +'<div class="rcp" id="rcl">'+rcListHtml()+'</div><label>Tệp liên quan (không bắt buộc, liệt kê tệp của người nhận đã chọn)<select id="nf">'+rcFileOpts()+'</select></label><div class="fl"><button class="btn" data-a="notes">Quay lại</button><button class="btn p" data-a="noteSend">Gửi</button></div>'}
  const inb=NT.notes.filter(n=>(n.to||[]).includes(S.name)),out=NT.notes.filter(n=>n.by===S.name),nw=new Set(unreadN().map(n=>n.id)),cn=canNote(),tab=cn?NTAB:'in';
  return '<h3>Thông báo</h3>'+(cn?'<div class="tabs"><button class="tab'+(tab=='in'?' on':'')+'" data-a="noteTab" data-id="in">Đã nhận ('+inb.length+')</button><button class="tab'+(tab=='out'?' on':'')+'" data-a="noteTab" data-id="out">Đã gửi ('+out.length+')</button></div><div class="frow"><button class="btn p" data-a="noteNew">'+ic('plus')+'Tạo thông báo</button></div>':'')
@@ -714,8 +715,8 @@ document.addEventListener('click',async e=>{
  if(a=='pwfOk')try{await doPwForce($('#f1').value,$('#f2').value)}catch(er){toast(er.message)}
  if(a=='notes'&&S){NTAB=NTAB||'in';modal('notes');const u=unreadN();if((!canNote()||NTAB=='in')&&u.length)markSeen(u.map(n=>n.id))}
  if(a=='noteTab'){NTAB=id;modal('notes')}
- if(a=='noteNew'&&canNote()){NC={sel:new Set(),flt:''};modal('noteNew')}
- if(a=='noteAll'){rcpPool().filter(u=>!NC.flt||(NC.flt=='__none'?!u.team:u.team===NC.flt)).forEach(u=>NC.sel.add(u.name));rcRefresh()}
+ if(a=='noteNew'&&canNote()){NC={sel:new Set(),flt:'',q:''};modal('noteNew')}
+ if(a=='noteAll'){rcVis().forEach(u=>NC.sel.add(u.name));rcRefresh()}
  if(a=='noteNone'){NC.sel.clear();rcRefresh()}
  if(a=='noteSend')try{await sendNote()}catch(er){toast(er.message)}
  if(a=='notePopOk'){const ids=NP.map(n=>n.id);close();markSeen(ids)}
@@ -771,6 +772,7 @@ document.addEventListener('change',e=>{
  if(e.target.id=='uf'){UF=e.target.value;$('#ulist').innerHTML=usersHtml()}
 });
 $('#fq').addEventListener('keydown',e=>{if(e.key=='Enter'){fq=e.target.value.trim().toLowerCase();render()}});
+document.addEventListener('input',e=>{if(e.target.id=='rcq'){NC.q=e.target.value.trim().toLowerCase();const l=$('#rcl');if(l)l.innerHTML=rcListHtml()}});
 $('#q').addEventListener('input',e=>{q=e.target.value.trim().toLowerCase();render()});
 addEventListener('dragover',e=>e.preventDefault());
 addEventListener('drop',e=>{e.preventDefault();if(!e.dataTransfer.files.length)return;if(!can()){toast('Hãy đăng nhập để tải lên.');return modal('login')}if(cur&&!canPut(cur))return toast('Bạn không có quyền tải lên thư mục này.');modal('up');$('#uf').files=e.dataTransfer.files});
