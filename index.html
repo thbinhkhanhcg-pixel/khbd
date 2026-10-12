@@ -73,13 +73,14 @@ input[type=checkbox]:checked{border-color:var(--ac);background:var(--ac) url("da
 .btn.i.on{background:#22345e;color:#fff}
 .md.wide{width:min(720px,100%)}
 .rb{display:inline-block;border-radius:6px;padding:1px 9px;font-size:11.5px;font-weight:700;margin-right:6px}
-.r-admin{color:#ff8b8b;background:#43202b}.r-bgh{color:#c4a4ff;background:#2e2352}.r-leader{color:#3fe0b5;background:#12403a}.r-warn{color:#ffc233;background:#3a3119}.r-gv{color:#8fb4ff;background:#1b2f57}
+.r-admin{color:#ff8b8b;background:#43202b}.r-bgh{color:#c4a4ff;background:#2e2352}.r-leader{color:#3fe0b5;background:#12403a}.r-warn{color:#ffc233;background:#3a3119}.r-gv{color:#8fb4ff;background:#1b2f57}.r-lock{color:#aab4cf;background:#2a3350}
+.rad{display:flex;flex-direction:row!important;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:10px;cursor:pointer;text-align:left}.rad input{width:auto;margin-top:4px;flex:none}.rad span{display:block;color:var(--tx);font-size:14px}.rad small{display:block;color:var(--mu);font-size:12.5px;margin-top:2px;line-height:1.45}.rad+select{margin:-4px 0 0}
 .rt{display:inline-block;border:1px solid var(--line);border-radius:6px;padding:0 8px;font-size:11.5px;color:var(--mu)}
-.urow{display:grid;grid-template-columns:1fr 112px 112px 72px;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.urow{display:grid;grid-template-columns:1fr 100px 100px 84px 64px;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
 .urow .btn{width:100%;padding:8px 6px}.urow .nm b{cursor:default}
 .ucnt{color:var(--mu);font-size:12.5px;padding:2px 0 8px}
 #ulist{max-height:50vh;overflow:auto}
-@media(max-width:560px){.urow{grid-template-columns:1fr 1fr 1fr}.urow .nm{grid-column:1/-1}}
+@media(max-width:560px){.urow{grid-template-columns:1fr 1fr}.urow .nm{grid-column:1/-1}}
 #menuBox{max-width:calc(100vw - 16px);overflow:auto;overscroll-behavior:contain}
 .wrap{padding-bottom:72px}
 main{display:flex;flex-direction:column}
@@ -181,27 +182,27 @@ let S=null;try{S=JSON.parse(sessionStorage.getItem('khs')||'null')}catch(e){}
 const can=()=>!!(S&&C.owner&&C.repo);
 // Cài đặt repo: chỉ Admin thấy. Ngoại lệ: khi trang không chạy trên github.io hoặc chưa có thông tin repo thì ai cũng cần nhập để dùng được.
 const canCfg=()=>!!(S&&S.role=='admin')||!location.hostname.endsWith('.github.io')||!C.owner||!C.repo;
-let UD={};
+let UD={},RT={};const ud=n=>UD[n]||RT[n];
 const TEAMS=['Khối 1','Khối 2','Khối 3','Khối 4','Khối 5','Anh Văn','Bộ Môn'];
 const teamOpts=v=>'<option value="">— Không chọn —</option>'+(v&&!TEAMS.includes(v)?`<option selected>${esc(v)}</option>`:'')+TEAMS.map(t=>`<option${t===v?' selected':''}>${t}</option>`).join('');
 let UL={users:[]},UF='';
 const rk=u=>u.role=='admin'?['admin','Admin']:u.role=='bgh'?['bgh','Ban giám hiệu']:u.leader?['leader','Tổ trưởng']:['gv','Giáo viên'];
 const uBadges=u=>{const k=rk(u);return '<span class="rb r-'+k[0]+'">'+k[1]+'</span>'+(u.team?'<span class="rt">'+esc(u.team)+'</span>':'')};
 const usersHtml=()=>{const L=UL.users.filter(u=>!UF||(UF=='__none'?!u.team:u.team===UF));
- return '<div class="ucnt">'+L.length+' tài khoản</div>'+(L.map(u=>'<div class="urow"><div class="nm"><b>'+esc(u.name)+'</b>'+(u.fn?'<span class="fnm">'+esc(u.fn)+'</span>':'')+'<small>'+uBadges(u)+(u.mc?'<span class="rb r-warn" title="Vẫn đang dùng mật khẩu ban đầu (trùng tên đăng nhập)">Chưa đổi mật khẩu</span>':'')+'</small></div><button class="btn" data-a="uEdit" data-id="'+esc(u.name)+'">Phân quyền</button><button class="btn" data-a="uReset" data-id="'+esc(u.name)+'">Đặt lại MK</button>'+(u.name==S.name?'<span></span>':'<button class="btn d" data-a="uDel" data-id="'+esc(u.name)+'">Xóa</button>')+'</div>').join('')||'<div class="empty" style="padding:24px">Không có tài khoản nào trong tổ này.</div>')};
+ return '<div class="ucnt">'+L.length+' tài khoản</div>'+(L.map(u=>'<div class="urow"><div class="nm"><b>'+esc(u.name)+'</b>'+(u.fn?'<span class="fnm">'+esc(u.fn)+'</span>':'')+'<small>'+uBadges(u)+(u.lock?'<span class="rb r-lock">Đã khóa</span>':'')+(u.mc?'<span class="rb r-warn" title="Vẫn đang dùng mật khẩu ban đầu (trùng tên đăng nhập)">Chưa đổi mật khẩu</span>':'')+'</small></div><button class="btn" data-a="uEdit" data-id="'+esc(u.name)+'">Phân quyền</button><button class="btn" data-a="uReset" data-id="'+esc(u.name)+'">Đặt lại MK</button>'+(u.name==S.name?'<span></span><span></span>':'<button class="btn" data-a="uLock" data-id="'+esc(u.name)+'">'+(u.lock?'Mở khóa':'Khóa')+'</button><button class="btn d" data-a="uDel" data-id="'+esc(u.name)+'">Xóa</button>')+'</div>').join('')||'<div class="empty" style="padding:24px">Không có tài khoản nào trong tổ này.</div>')};
 const info=u=>(u.role=='admin'?'Admin':u.role=='bgh'?'Ban giám hiệu':'Giáo viên')+(u.team?' · '+u.team:'')+(u.leader?' · Tổ trưởng':'');
 // Quyền xem: Admin và BGH xem tất cả; Tổ trưởng xem tệp của cả tổ; Giáo viên chỉ xem tệp của mình
 const dn=f=>f.split('/').pop().split('~')[0];
 const shRoot=f=>{while(f){if(db.share&&db.share[f])return f;f=par(f)}return ''};
 const inShare=f=>{const r=shRoot(f);return !!(r&&S&&S.team&&db.share[r].includes(S.team))};
-const canSeeF=f=>{if(!S)return false;if(S.role=='admin'||S.role=='bgh')return true;const ow=(db.fowner||{})[f];if(ow===S.name)return true;const o=UD[ow];if(S.leader&&S.team&&o&&o.team===S.team)return true;return inShare(f)};
+const canSeeF=f=>{if(!S)return false;if(S.role=='admin'||S.role=='bgh')return true;const ow=(db.fowner||{})[f];if(ow===S.name)return true;const o=ud(ow);if(S.leader&&S.team&&o&&o.team===S.team)return true;return inShare(f)};
 const canPut=f=>!!S&&(S.role=='admin'||S.role=='bgh'||(db.fowner||{})[f]===S.name||inShare(f));
 const canShare=f=>!!S&&(S.role=='admin'||((S.role=='bgh'||S.leader)&&(db.fowner||{})[f]===S.name));
 // Tệp xem được: của mình; Admin/BGH xem tất cả; Tổ trưởng xem tệp cả tổ; thành viên xem tệp biểu mẫu (do chủ thư mục, Admin, BGH đăng) trong thư mục được chia sẻ
-const canView=i=>{if(!S)return false;if(S.role=='admin'||S.role=='bgh'||i.by===S.name)return true;const o=UD[i.by];if(S.leader&&S.team&&o&&o.team===S.team)return true;
+const canView=i=>{if(!S)return false;if(S.role=='admin'||S.role=='bgh'||i.by===S.name)return true;const o=ud(i.by);if(S.leader&&S.team&&o&&o.team===S.team)return true;
  if(inShare(i.folder))return i.by===(db.fowner||{})[shRoot(i.folder)]||!!(o&&(o.role=='admin'||o.role=='bgh'));return false};
-async function syncUsers(){try{const L=await getUsers();UD={};(L?L.users:[]).forEach(u=>UD[u.name]=u);
- if(S){const u=UD[S.name];if(!u){S=null;sessionStorage.removeItem('khs')}else{S={...S,role:u.role,team:u.team||'',leader:!!u.leader,mc:!!u.mc};sessionStorage.setItem('khs',JSON.stringify(S))}}}catch(e){}}
+async function syncUsers(){try{const L=await getUsers();UD={};RT=(L&&L.retired)||{};(L?L.users:[]).forEach(u=>UD[u.name]=u);
+ if(S){const u=UD[S.name];if(!u||u.lock){S=null;sessionStorage.removeItem('khs')}else{S={...S,role:u.role,team:u.team||'',leader:!!u.leader,mc:!!u.mc};sessionStorage.setItem('khs',JSON.stringify(S))}}}catch(e){}}
 const chkPw=p=>{if(p.length<8||p===DEF)throw new Error('Mật khẩu tối thiểu 8 ký tự và khác mật khẩu mặc định.')};
 // Mã hóa token GitHub bằng mật khẩu từng người (PBKDF2 + AES-GCM). Sai mật khẩu thì không giải mã được.
 const te=new TextEncoder(),bin=b=>btoa(String.fromCharCode(...new Uint8Array(b))),unb=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
@@ -265,6 +266,7 @@ async function doLogin(n,p){
  const u=L.users.find(x=>x.name.toLowerCase()===n.toLowerCase());let t=u&&await unwrap(p,u.w);
  if(!t&&u&&u.mc&&p.toLowerCase()===u.name.toLowerCase())t=await unwrap(u.name,u.w);
  if(!t)throw new Error('Sai tên đăng nhập hoặc mật khẩu');
+ if(u.lock)throw new Error('Tài khoản đã bị khóa. Vui lòng liên hệ Admin.');
  await signIn({name:u.name,role:u.role,team:u.team||'',leader:!!u.leader,mc:!!u.mc,token:t});
  if(u.mc){lockModal=true;modal('pwforce')}}
 async function doSetup(tok,p1,p2){
@@ -276,6 +278,34 @@ async function doSetup(tok,p1,p2){
 async function doPw(o,n,n2){chkPw(n);if(n!==n2)throw new Error('Hai mật khẩu không khớp');
  const L=await getUsers(),u=L&&L.users.find(x=>x.name===S.name);if(!u||!(await unwrap(o,u.w)))throw new Error('Mật khẩu hiện tại không đúng');
  const nw=await wrap(n,S.token);await Store.updateUsers(L2=>{const v=L2.users.find(x=>x.name===S.name);if(!v)throw new Error('Tài khoản không còn tồn tại');v.w=nw;delete v.mc},'Đổi mật khẩu');close();toast('Đã đổi mật khẩu')}
+const dataNames=()=>{const t=new Set();Object.values(db.fowner||{}).forEach(n=>t.add(String(n).toLowerCase()));(db.items||[]).forEach(i=>{if(i.by)t.add(String(i.by).toLowerCase())});return t};
+async function askDelete(id){
+ const own=Object.keys(db.fowner||{}).filter(p=>db.fowner[p]===id),sub=p=>own.some(o=>p===o||p.startsWith(o+'/')),
+  its=db.items.filter(x=>x.by===id||sub(x.folder)),mine=db.items.filter(x=>x.by===id).length,oth=its.length-mine;
+ if(!own.length&&!its.length){if(!await dlg({title:'Xóa tài khoản',msg:'Xóa tài khoản <b>'+esc(id)+'</b>? Người này chưa có thư mục hay tệp nào và sẽ không đăng nhập được nữa.',ok:'Xóa',danger:1}))return;return finishDelete(id,'none')}
+ const me=UD[id]||{},c=Object.values(UD).filter(u=>u.name!==id&&!u.lock),def=c.find(u=>me.team&&u.team===me.team&&u.leader)||c.find(u=>u.role=='admin')||c[0];
+ const opts=c.map(u=>'<option value="'+esc(u.name)+'"'+(def&&u.name===def.name?' selected':'')+'>'+esc(u.name+(u.fn?' – '+u.fn:'')+' ('+info(u)+')')+'</option>').join('');
+ const html='<label class="rad"><input type="radio" name="dm" value="keep" checked><span><b>Giữ lại dữ liệu</b><small>Admin và BGH vẫn xem được. Tên đăng nhập này sẽ không được dùng lại cho người khác.</small></span></label>'
+  +'<label class="rad"><input type="radio" name="dm" value="move"><span><b>Chuyển cho người khác</b><small>Thư mục và tệp thuộc về tài khoản nhận, người nhận toàn quyền như dữ liệu của mình.</small></span></label>'
+  +'<select id="dmT" disabled>'+opts+'</select>'
+  +'<label class="rad"><input type="radio" name="dm" value="purge"><span><b>Xóa toàn bộ dữ liệu</b><small>Xóa vĩnh viễn thư mục và tệp của người này, không thể hoàn tác.</small></span></label>';
+ const r=await dlg({title:'Xóa tài khoản',msg:'Tài khoản <b>'+esc(id)+'</b> đang có <b>'+own.length+' thư mục</b> và <b>'+its.length+' tệp</b>'+(oth?' (trong đó '+oth+' tệp do người khác nộp vào thư mục của người này)':'')+'. Bạn muốn xử lý dữ liệu này thế nào?',html,ok:'Tiếp tục',collect:md=>({mode:md.querySelector('[name=dm]:checked').value,to:(md.querySelector('#dmT')||{}).value})});
+ if(!r)return;
+ if(r.mode=='move'&&!r.to)throw new Error('Chưa có tài khoản nào để nhận dữ liệu.');
+ if(r.mode=='purge'&&!await dlg({title:'Xóa vĩnh viễn dữ liệu',msg:'Xóa tài khoản <b>'+esc(id)+'</b> cùng <b>'+own.length+' thư mục</b> và <b>'+its.length+' tệp</b>? Không thể hoàn tác.',ok:'Xóa vĩnh viễn',danger:1}))return;
+ return finishDelete(id,r.mode,r.to)}
+async function finishDelete(id,mode,to){
+ const own=Object.keys(db.fowner||{}).filter(p=>db.fowner[p]===id),sub=p=>own.some(o=>p===o||p.startsWith(o+'/'));
+ if(mode=='purge'){
+  const its=db.items.filter(x=>x.by===id||sub(x.folder));
+  await Store.removeItems(its,'Xóa dữ liệu của '+id);
+  await Store.update(d=>{d.folders=d.folders.filter(f=>!sub(f));d.items=d.items.filter(x=>x.by!==id&&!sub(x.folder));['fowner','share'].forEach(m=>{Object.keys(d[m]||{}).forEach(p=>{if(sub(p))delete d[m][p]})})},'Xóa dữ liệu của '+id)
+ }else if(mode=='move'){
+  await Store.update(d=>{Object.keys(d.fowner).forEach(p=>{if(d.fowner[p]===id)d.fowner[p]=to});d.items.forEach(x=>{if(x.by===id)x.by=to})},'Chuyển dữ liệu của '+id+' cho '+to)}
+ await Store.updateUsers(L=>{const u=L.users.find(x=>x.name==id);if(u&&u.role=='admin'&&!L.users.some(x=>x.role=='admin'&&x!==u))throw new Error('Không thể xóa Admin cuối cùng');
+  L.users=L.users.filter(x=>x.name!=id);L.retired=L.retired||{};if(mode=='keep'&&u)L.retired[id]={team:u.team||'',fn:u.fn||''};else delete L.retired[id]},'Xóa tài khoản '+id);
+ await syncUsers();modal('users',(await getUsers())||{users:[]});await load();
+ toast(mode=='move'?'Đã xóa tài khoản và chuyển dữ liệu cho '+to:mode=='purge'?'Đã xóa tài khoản và toàn bộ dữ liệu':'Đã xóa tài khoản')}
 async function mutU(fn){if(!S||S.role!='admin')throw new Error('Chỉ Admin được quản lý tài khoản');
  const L=await Store.updateUsers(fn,'Cập nhật tài khoản');modal('users',L)}
 const fdeny=f=>{if(!S){modal('login');return true}if(S.role!='admin'&&(db.fowner||{})[f]!==S.name){toast('Bạn chỉ được sửa/xóa thư mục do mình tạo.');return true}return false};
@@ -329,7 +359,7 @@ bgh:{intro:"Bạn xem được toàn bộ tệp và thư mục của mọi giáo
  notes:["Bạn xem được tất cả nhưng chỉ sửa, xóa được tệp và thư mục do mình tạo.","Bạn không quản lý tài khoản. Cần thêm hoặc đổi quyền tài khoản thì liên hệ Admin."]},
 admin:{intro:"Bạn có toàn quyền: xem, sửa, xóa mọi tệp và thư mục, chia sẻ mọi thư mục và quản lý tài khoản.",
  can:["Xem, sửa, xóa mọi tệp và thư mục","Chia sẻ bất kỳ thư mục nào, kể cả thư mục cũ chưa có chủ","Thêm tài khoản, phân quyền, đặt lại mật khẩu, xóa tài khoản"],
- steps:[["Thêm tài khoản","Bấm nút <b>Thêm tài khoản</b> dưới thẻ tài khoản, nhập tên đăng nhập, mật khẩu (từ 8 ký tự), vai trò và tổ chuyên môn. Tích “Phân công làm tổ trưởng” nếu cần. Báo mật khẩu cho người dùng, họ tự đổi ở mục Đổi mật khẩu. Muốn tạo nhiều tài khoản cùng lúc, chọn thẻ <b>Từ file Excel</b>: bấm Tải file mẫu, điền Họ và Tên, Chức vụ, Tổ trưởng và Tổ chuyên môn của từng người (một file có thể gồm nhiều tổ; giáo viên bắt buộc có tổ, Ban giám hiệu thì để trống), rồi chọn file. Tên đăng nhập tự tạo (Đoàn Thanh Cang thành Cangdt), mật khẩu ban đầu giống tên đăng nhập và người dùng phải đổi ở lần đăng nhập đầu tiên."],["Quản lý tài khoản","Mở <b>Quản lý tài khoản</b> để xem danh sách, lọc theo tổ, bấm <b>Phân quyền</b> (đổi vai trò, tổ, tổ trưởng), <b>Đặt lại MK</b> hoặc <b>Xóa</b>. Màu nhãn: Admin đỏ, Ban giám hiệu tím, Tổ trưởng xanh ngọc, Giáo viên xanh dương."],["Chia sẻ thư mục","Bấm <b>⋮</b> rồi <b>Chia sẻ cho khối</b>. Thư mục cũ chưa có chủ chỉ Admin và BGH thấy cho tới khi bạn chia sẻ. Dùng <b>Trạng thái nộp bài</b> trong cùng menu để xem ai đã nộp."]],
+ steps:[["Thêm tài khoản","Bấm nút <b>Thêm tài khoản</b> dưới thẻ tài khoản, nhập tên đăng nhập, mật khẩu (từ 8 ký tự), vai trò và tổ chuyên môn. Tích “Phân công làm tổ trưởng” nếu cần. Báo mật khẩu cho người dùng, họ tự đổi ở mục Đổi mật khẩu. Muốn tạo nhiều tài khoản cùng lúc, chọn thẻ <b>Từ file Excel</b>: bấm Tải file mẫu, điền Họ và Tên, Chức vụ, Tổ trưởng và Tổ chuyên môn của từng người (một file có thể gồm nhiều tổ; giáo viên bắt buộc có tổ, Ban giám hiệu thì để trống), rồi chọn file. Tên đăng nhập tự tạo (Đoàn Thanh Cang thành Cangdt), mật khẩu ban đầu giống tên đăng nhập và người dùng phải đổi ở lần đăng nhập đầu tiên."],["Quản lý tài khoản","Mở <b>Quản lý tài khoản</b> để xem danh sách, lọc theo tổ, bấm <b>Phân quyền</b> (đổi vai trò, tổ, tổ trưởng), <b>Đặt lại MK</b> hoặc <b>Xóa</b>. Màu nhãn: Admin đỏ, Ban giám hiệu tím, Tổ trưởng xanh ngọc, Giáo viên xanh dương."],["Khóa hoặc xóa tài khoản","<b>Khóa</b> dùng khi người dùng nghỉ tạm thời: họ không đăng nhập được nhưng dữ liệu giữ nguyên, bấm <b>Mở khóa</b> khi họ quay lại. Khi <b>Xóa</b> tài khoản đang có dữ liệu, bạn chọn: giữ lại dữ liệu, chuyển cho người khác (ví dụ tổ trưởng hoặc giáo viên thay thế) hoặc xóa toàn bộ dữ liệu. Tên đăng nhập còn dữ liệu sẽ không được tạo lại cho người khác."],["Chia sẻ thư mục","Bấm <b>⋮</b> rồi <b>Chia sẻ cho khối</b>. Thư mục cũ chưa có chủ chỉ Admin và BGH thấy cho tới khi bạn chia sẻ. Dùng <b>Trạng thái nộp bài</b> trong cùng menu để xem ai đã nộp."]],
  notes:["Bảo quản kỹ GitHub token và mật khẩu Admin. Mất cả hai phải thiết lập lại từ đầu. Token hết hạn thì tạo token mới và thiết lập lại.","Kho đang công khai nên việc ẩn tệp chỉ có tác dụng trên giao diện.","GitHub Pages giới hạn khoảng 1 GB. Nên tải theo đợt nhỏ, mỗi đợt 5 đến 10 tệp. Xóa tệp không giảm dung lượng kho vì GitHub giữ lịch sử.","Dữ liệu nằm ở <code>files/</code> (tệp), <code>data/index.json</code> (danh mục) và <code>data/users.json</code> (tài khoản)."]}};
 function helpHtml(){const k=S?rk(S):['guest','Khách'],g=HELP[k[0]],li=a=>a.map(x=>'<li>'+x+'</li>').join(''),st=a=>'<ol>'+a.map(x=>'<li><b>'+x[0]+".</b> "+x[1]+'</li>').join('')+'</ol>';
  return '<h3>Hướng dẫn dành cho '+(S?k[1]:'khách')+'</h3>'+(S?'<div>'+uBadges(S)+'</div>':'')+'<p>'+g.intro+'</p><div class="hg">'+(g.can?'<h4>Bạn có thể</h4><ul>'+li(g.can)+'</ul>':'')+(S?'<h4>Thao tác cơ bản</h4>'+st(HC):'')+'<h4>'+(S?'Dành riêng cho vai trò '+k[1]:'Các bước')+'</h4>'+st(g.steps)+(g.notes?'<h4>Lưu ý</h4><ul>'+li(g.notes)+'</ul>':'')+'</div><div class="fl"><button class="btn p" data-a="x">Đã hiểu</button></div>'}
@@ -384,7 +414,7 @@ async function impLoad(file){
  }catch(e){IMP.rows=[];box.innerHTML='<div class="empty" style="padding:16px;color:#ff8b8b">'+esc(e.message)+'</div>';$('#impGo').disabled=true;$('#impHint').textContent=''}
 }
 function impPlan(){
- const taken=new Set(IMP.users.map(u=>u.name.toLowerCase())),have=new Set(IMP.users.filter(u=>u.fn).map(u=>fold(u.fn))),seen=new Set();
+ const taken=new Set([...IMP.users.map(u=>u.name.toLowerCase()),...dataNames()]),have=new Set(IMP.users.filter(u=>u.fn).map(u=>fold(u.fn))),seen=new Set();
  return IMP.rows.map((r,i)=>{
   const p={i,name:r.name,role:'',leader:false,team:'',user:'',status:'new',msg:''},fr=fold(r.role);let te='';
   if(!fr){p.status='err';p.msg='Thiếu chức vụ';return p}
@@ -432,11 +462,11 @@ async function doPwForce(n,n2){chkPw(n);if(n!==n2)throw new Error('Hai mật kh�
 // Hộp thoại nhập liệu / xác nhận giữa màn hình (thay cho prompt và confirm của trình duyệt)
 function dlg(o){return new Promise(res=>{
  const ov=$('#ov2'),md=$('#md2');
- md.innerHTML=`<div class="dh"><h3>${esc(o.title)}</h3><button class="btn i" data-d="x" title="Đóng">${ic('x')}</button></div><div class="db">${o.msg?`<p>${o.msg}</p>`:''}${o.input?`<label>${esc(o.label||'')}<input id="dIn" type="${o.type||'text'}" value="${esc(o.value||'')}" autocomplete="off"></label>`:''}</div><div class="df"><button class="btn t" data-d="x">Hủy</button><button class="btn ${o.danger?'dng':'p'}" data-d="ok">${esc(o.ok||'Lưu')}</button></div>`;
+ md.innerHTML=`<div class="dh"><h3>${esc(o.title)}</h3><button class="btn i" data-d="x" title="Đóng">${ic('x')}</button></div><div class="db">${o.msg?`<p>${o.msg}</p>`:''}${o.html||''}${o.input?`<label>${esc(o.label||'')}<input id="dIn" type="${o.type||'text'}" value="${esc(o.value||'')}" autocomplete="off"></label>`:''}</div><div class="df"><button class="btn t" data-d="x">Hủy</button><button class="btn ${o.danger?'dng':'p'}" data-d="ok">${esc(o.ok||'Lưu')}</button></div>`;
  ov.classList.add('on');const inp=$('#dIn');
  if(inp){inp.focus();const v=inp.value,k=v.lastIndexOf('.');inp.setSelectionRange(0,o.base&&k>0?k:v.length)}else md.querySelector('[data-d=ok]').focus();
  const kd=e=>{if(e.key=='Escape'){e.stopPropagation();done(null)}else if(e.key=='Enter'){e.preventDefault();e.stopPropagation();done(inp?inp.value:true)}};
- const done=v=>{ov.classList.remove('on');md.innerHTML='';ov.onclick=null;document.removeEventListener('keydown',kd,true);res(v)};
+ const done=v=>{if(v&&o.collect)v=o.collect(md);ov.classList.remove('on');md.innerHTML='';ov.onclick=null;document.removeEventListener('keydown',kd,true);res(v)};
  document.addEventListener('keydown',kd,true);
  ov.onclick=e=>{if(e.target===ov)return done(null);const t=e.target.closest('[data-d]');if(t)done(t.dataset.d=='ok'?(inp?inp.value:true):null)};
 })}
@@ -449,7 +479,7 @@ const pchip=p=>(q||structOn())&&p?'<span class="chip">'+esc(p.split('/').map(x=>
 function matchF(f){
  if(F.subject)return false;
  if(F.type&&F.type!='folder')return false;
- const ow=(db.fowner||{})[f],o=UD[ow];
+ const ow=(db.fowner||{})[f],o=ud(ow);
  if(F.src=='mine')return ow===S.name;
  if(F.src)return !!(o&&o.team===F.src);
  return true}
@@ -457,7 +487,7 @@ function matchI(i){
  if(F.type=='folder')return false;
  if(F.type&&EXT[F.type]&&!EXT[F.type].includes(ext(i.name)))return false;
  if(F.subject&&i.subject!==F.subject)return false;
- const o=UD[i.by];
+ const o=ud(i.by);
  if(F.src=='mine')return i.by===S.name;
  if(F.src)return !!(o&&o.team===F.src);
  return true}
@@ -472,7 +502,7 @@ function renderFilters(){
 // Trạng thái nộp bài của một thư mục đã chia sẻ
 const canStatus=f=>!!S&&!!db.share&&!!db.share[f]&&db.share[f].length>0&&(S.role=='admin'||S.role=='bgh'||(S.leader&&(db.fowner||{})[f]===S.name));
 function statusData(f){const sh=db.share[f]||[],ow=(db.fowner||{})[f],sub=p=>p===f||p.startsWith(f+'/');
- return Object.values(UD).filter(u=>u.role=='user'&&sh.includes(u.team)&&u.name!==ow&&(S.role=='admin'||S.role=='bgh'||u.team===S.team))
+ return Object.values(UD).filter(u=>u.role=='user'&&!u.lock&&sh.includes(u.team)&&u.name!==ow&&(S.role=='admin'||S.role=='bgh'||u.team===S.team))
  .map(u=>{const its=db.items.filter(i=>i.by===u.name&&sub(i.folder));return{u,n:its.length,last:its.map(i=>i.date).sort().pop()}})
  .sort((a,b)=>(a.n>0)-(b.n>0)||(a.u.team||'').localeCompare(b.u.team||'','vi')||a.u.name.localeCompare(b.u.name,'vi'))}
 function statusHtml(){const d=statusData(SX.f),done=d.filter(x=>x.n>0).length,rows=d.filter(x=>SX.flt=='all'||(SX.flt=='done')==(x.n>0)),pct=d.length?Math.round(done*100/d.length):0;
@@ -500,7 +530,7 @@ function render(){
  let h=subs.slice(0,lim).map(f=>{const n=db.items.filter(i=>(i.folder===f||i.folder.startsWith(f+'/'))&&canView(i)).length;
   return `<div class="row"><span style="width:18px"></span><div class="fi" style="background:#3a3119;color:#ffc233">${ic('folder')}</div><div class="nm"><b data-p="${esc(f)}">${esc(dn(f))}</b><small>${n} tệp${pchip(par(f))}${fchips(f)}</small></div><div class="acts"><button class="btn i" data-m="f" data-id="${esc(f)}">${ic('more')}</button></div></div>`}).join('');
  h+=its.slice(0,Math.max(0,lim-subs.length)).map(i=>{const pv=['pdf','png','jpg','jpeg','docx','pptx','xlsx'].includes(ext(i.name));
-  return `<div class="row"><input type="checkbox" data-s="${esc(i.id)}" ${sel.has(i.id)?'checked':''}>${thumb(i)}<div class="nm"><b data-pv="${esc(i.id)}">${esc(i.name)}</b><small>${fdate(i.date)} · ${fsize(i.size)}${S&&i.by!==S.name?' · '+esc(i.by||'không rõ')+(UD[i.by]&&UD[i.by].team?' ('+esc(UD[i.by].team)+')':''):''}${pchip(i.folder)}${i.subject?'<span class="chip">'+esc(i.subject)+'</span>':''}${i.grade?'<span class="chip">Lớp '+esc(i.grade)+'</span>':''}</small></div>
+  return `<div class="row"><input type="checkbox" data-s="${esc(i.id)}" ${sel.has(i.id)?'checked':''}>${thumb(i)}<div class="nm"><b data-pv="${esc(i.id)}">${esc(i.name)}</b><small>${fdate(i.date)} · ${fsize(i.size)}${S&&i.by!==S.name?' · '+esc(i.by||'không rõ')+(ud(i.by)&&ud(i.by).team?' ('+esc(ud(i.by).team)+')':''):''}${pchip(i.folder)}${i.subject?'<span class="chip">'+esc(i.subject)+'</span>':''}${i.grade?'<span class="chip">Lớp '+esc(i.grade)+'</span>':''}</small></div>
   <div class="acts">${pv?`<button class="btn hide" data-pv="${esc(i.id)}">${ic('eye')}Xem trước</button>`:''}<a class="btn" style="text-decoration:none" href="${url(i)}" download="${esc(i.name)}">${ic('download')}Tải xuống</a><button class="btn i" data-m="i" data-id="${esc(i.id)}">${ic('more')}</button></div></div>`}).join('');
  if(subs.length+its.length>lim)h+='<div class="row more"><span>Đang hiển thị '+Math.min(lim,subs.length+its.length)+' / '+(subs.length+its.length)+' mục</span><button class="btn" data-a="more">Hiển thị thêm</button></div>';
  $('#list').innerHTML=h||`<div class="empty">${(q||fq||structOn())?(F.src=='mine'&&!q&&!fq&&Object.keys(F).filter(k=>F[k]&&k!='src'&&k!='type').length==0?'Bạn chưa tạo thư mục nào. Bấm <b>Thư mục mới</b> để tạo. Muốn xem thư mục được chia sẻ hoặc tệp, đổi <b>Nguồn</b> hoặc <b>Loại</b> sang <b>Tất cả</b> trong bộ lọc.':'Không có mục nào khớp bộ lọc.'):(S?'Chưa có tệp nào bạn được phép xem ở đây. Bấm “Tải lên” để thêm tệp.':'<p style="margin-bottom:14px">Vui lòng đăng nhập để xem tệp.</p><button class="btn p" data-a="login">'+ic('key')+' Đăng nhập</button>')}</div>`
@@ -598,7 +628,7 @@ document.addEventListener('click',async e=>{
  if(a=='pw')modal('pw');
  if(a=='pwOk')try{await doPw($('#p0').value,$('#p1').value,$('#p2').value)}catch(er){toast(er.message)}
  if(a=='uAdd')try{const n=$('#nn').value.trim(),p=$('#np').value,r=$('#nr').value,tm=$('#nt').value.trim(),ld=$('#nl').checked;chkPw(p);if(ld&&!tm)throw new Error('Hãy chọn tổ cho tổ trưởng');if(!/^[\w.-]{3,30}$/.test(n))throw new Error('Tên đăng nhập 3–30 ký tự: chữ không dấu, số, . _ -');
-  const w=await wrap(p,S.token);await mutU(L=>{if(L.users.some(u=>u.name.toLowerCase()==n.toLowerCase()))throw new Error('Tên đăng nhập đã tồn tại');L.users.push({name:n,role:r,team:tm,leader:ld,w})});close();toast('Đã tạo tài khoản '+n)}catch(er){toast(er.message)}
+  const w=await wrap(p,S.token);await mutU(L=>{if(L.users.some(u=>u.name.toLowerCase()==n.toLowerCase()))throw new Error('Tên đăng nhập đã tồn tại');if(dataNames().has(n.toLowerCase()))throw new Error('Tên này còn dữ liệu của người đã nghỉ. Hãy chọn tên khác, hoặc chuyển/xóa dữ liệu cũ trước.');L.users.push({name:n,role:r,team:tm,leader:ld,w})});close();toast('Đã tạo tài khoản '+n)}catch(er){toast(er.message)}
  if(a=='addU'&&S&&S.role=='admin'){IMP={rows:[],users:[]};modal('newu')}
  if(a=='nuTab'){const xl=id=='xl';$('#nuOne').style.display=xl?'none':'';$('#nuXl').style.display=xl?'':'none';document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.id==id))}
  if(a=='impTpl')impTemplate();
@@ -611,7 +641,10 @@ document.addEventListener('click',async e=>{
  if(a=='uEditOk')try{const tm=$('#et').value.trim(),ld=$('#el').checked,r=$('#er').value;if(ld&&!tm)throw new Error('Hãy chọn tổ cho tổ trưởng');if(id==S.name&&r!='admin')throw new Error('Không thể tự hạ quyền Admin của chính mình');
   await mutU(L=>{const u=L.users.find(x=>x.name==id);u.role=r;u.team=tm;u.leader=ld});toast('Đã cập nhật phân quyền')}catch(er){toast(er.message)}
  if(a=='uReset')try{const p=await dlg({title:'Đặt lại mật khẩu',label:'Mật khẩu mới cho '+id+' (tối thiểu 8 ký tự)',type:'password',ok:'Đặt lại',input:1});if(!p)return;chkPw(p);const w=await wrap(p,S.token);await mutU(L=>{const v=L.users.find(u=>u.name==id);v.w=w;v.mc=id!=S.name});toast('Đã đặt lại mật khẩu')}catch(er){toast(er.message)}
- if(a=='uDel'&&await dlg({title:'Xóa tài khoản',msg:'Xóa tài khoản <b>'+esc(id)+'</b>? Người này sẽ không đăng nhập được nữa.',ok:'Xóa',danger:1}))try{await mutU(L=>{L.users=L.users.filter(u=>u.name!=id)});toast('Đã xóa tài khoản')}catch(er){toast(er.message)}
+ if(a=='uDel')try{await syncUsers();await askDelete(id)}catch(er){toast(er.message)}
+ if(a=='uLock')try{const cu=(UL.users||[]).find(u=>u.name==id);if(!cu)return;
+  if(!cu.lock&&!await dlg({title:'Khóa tài khoản',msg:'Khóa tài khoản <b>'+esc(id)+'</b>? Người này sẽ không đăng nhập được nữa nhưng thư mục và tệp vẫn được giữ nguyên. Bạn có thể mở khóa bất cứ lúc nào.',ok:'Khóa'}))return;
+  const on=!cu.lock;await mutU(L=>{const u=L.users.find(x=>x.name==id);if(!u)throw new Error('Tài khoản không còn tồn tại');if(on){if(u.role=='admin'&&!L.users.some(x=>x.role=='admin'&&!x.lock&&x!==u))throw new Error('Không thể khóa Admin cuối cùng');u.lock=true}else delete u.lock});await syncUsers();toast(on?'Đã khóa tài khoản':'Đã mở khóa tài khoản')}catch(er){toast(er.message)}
  if(a=='up'){if(!can()){toast('Hãy đăng nhập để tải lên.');return modal('login')}if(cur&&!canPut(cur))return toast('Bạn không có quyền tải lên thư mục này.');modal('up')}
  if(a=='upOk'){const f=$('#uf').files;if(!f.length)return toast('Hãy chọn ít nhất một tệp');doUpload(f,$('#us').value,$('#ug').value)}
  if(a=='nf'){const n=await dlg({title:'Thư mục mới',label:'Tên thư mục (ví dụ: Lớp 3)',ok:'Tạo',input:1});if(!n||!n.trim())return;
@@ -647,6 +680,7 @@ document.addEventListener('change',e=>{
  if(e.target.id=='sfl'){SX.flt=e.target.value;$('#stwrap').innerHTML=statusHtml()}
  if(e.target.id=='impFile'&&e.target.files[0])impLoad(e.target.files[0]);
  
+ if(e.target.name=='dm'){const t=$('#dmT');if(t)t.disabled=e.target.value!='move'}
  if(e.target.id=='uf'){UF=e.target.value;$('#ulist').innerHTML=usersHtml()}
 });
 $('#fq').addEventListener('keydown',e=>{if(e.key=='Enter'){fq=e.target.value.trim().toLowerCase();render()}});
