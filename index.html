@@ -135,12 +135,12 @@ footer .sep{margin:0 10px;opacity:.5}footer svg{width:16px;height:16px;fill:#ff3
  <div class="acc"><div class="av">GV</div><div><b id="accN"></b><small id="accS"></small></div></div>
  <div class="addacc" id="addAcc" data-a="addU" style="display:none"><i><svg class="ic"><use href="#i-plus"/></svg></i>Thêm tài khoản</div>
  <nav>
-  <a class="on" data-a="home"><svg class="ic"><use href="#i-folderopen"/></svg>File Manager</a>
+  <a class="on" data-a="home" id="nHome"><svg class="ic"><use href="#i-folderopen"/></svg>File Manager</a>
   <a data-a="notes" id="nNote" style="display:none"><svg class="ic"><use href="#i-bell"/></svg>Thông báo<b id="nBadge" style="display:none"></b></a>
   <a data-a="users" id="nUsers" style="display:none"><svg class="ic"><use href="#i-users"/></svg>Quản lý tài khoản</a>
   <a data-a="pw" id="nPw" style="display:none"><svg class="ic"><use href="#i-lock"/></svg>Đổi mật khẩu</a>
   <a data-a="set" id="nSet" style="display:none"><svg class="ic"><use href="#i-sliders"/></svg>Cài đặt repo</a>
-  <a data-a="help"><svg class="ic"><use href="#i-help"/></svg>Hướng dẫn</a>
+  <a data-a="help" id="nHelp"><svg class="ic"><use href="#i-help"/></svg>Hướng dẫn</a>
   <a data-a="login" id="nLog"><svg class="ic"><use href="#i-key"/></svg>Đăng nhập</a>
   <a data-a="logout" id="nOut" style="display:none"><svg class="ic"><use href="#i-logout"/></svg>Đăng xuất</a>
  </nav>
@@ -323,7 +323,7 @@ const canNote=()=>!!S&&(S.role=='admin'||S.role=='bgh'||!!S.leader);
 const rcpPool=()=>Object.values(UD).filter(u=>S&&u.name!==S.name&&!u.lock&&(S.role=='admin'||S.role=='bgh'||(u.role=='user'&&u.team&&u.team===S.team))).sort((a,b)=>(a.team||'~').localeCompare(b.team||'~','vi')||a.name.localeCompare(b.name,'vi'));
 const unreadN=()=>S?NT.notes.filter(n=>(n.to||[]).includes(S.name)&&!(n.seen&&n.seen[S.name])):[];
 const kindInfo={info:['r-gv','Thông báo'],fix:['r-admin','Cần điều chỉnh'],ok:['r-leader','Đã duyệt']};
-function updBadge(){const b=$('#nBadge');if(!b)return;const n=unreadN().length;b.style.display=S&&n?'':'none';b.textContent=n>99?'99+':n}
+function updBadge(){const b=$('#nBadge');if(!b)return;const n=unreadN().length;b.style.display=S&&n?'':'none';b.textContent=n?(n>99?'99+':n):''}
 async function loadNotes(){if(!S||!can())return;try{const c=await Store.notes();NT={notes:(c&&c.notes)||[]}}catch(e){}NT_T=Date.now()}
 const dayLbl=d=>{const t=new Date(d),n=new Date(),k=x=>x.toDateString();if(k(t)==k(n))return 'Hôm nay';const y=new Date(n);y.setDate(n.getDate()-1);if(k(t)==k(y))return 'Hôm qua';return t.toLocaleDateString('vi-VN',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric'})};
 function noteCard(n,mode,isNew){
@@ -641,9 +641,13 @@ function modal(k,x){
   h=`<div class="fl" style="justify-content:space-between;align-items:center"><b>${esc(x.name)}</b><button class="btn" data-a="x">Đóng</button></div>`+
   (['png','jpg','jpeg'].includes(e)?`<img src="${u}">`:e=='pdf'?`<iframe src="${u}"></iframe>`:`<iframe src="https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(u)}"></iframe>`)}
  if(k=='notes'||k=='notePop'||k=='noteNew')h=noteModal(k,md);
+ if(NAVK[k])setNav(NAVK[k]);else if(k=='noteNew')setNav('nNote');
  md.innerHTML=h;$('#ov').classList.add('on')
 }
-const close=()=>{lockModal=false;$('#ov').classList.remove('on');$('#md').innerHTML=''};
+// Tô sáng mục menu trái theo cửa sổ đang mở; đóng cửa sổ thì quay về File Manager
+const NAVK={notes:'nNote',users:'nUsers',newu:'nUsers',uedit:'nUsers',pw:'nPw',pwforce:'nPw',set:'nSet',help:'nHelp',login:'nLog'};
+const setNav=id=>document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.id===id));
+const close=()=>{setNav('nHome');lockModal=false;$('#ov').classList.remove('on');$('#md').innerHTML=''};
 
 async function doUpload(files,subject,grade){
  const st=$('#ust'),bt=$('#ub'),dir=cur,added=[];bt.disabled=true;let err=null;
