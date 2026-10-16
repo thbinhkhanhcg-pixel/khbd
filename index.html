@@ -243,7 +243,7 @@ async function rpc0(a,x){
  APIBAD=false;
  if(!j||!j.ok){const er=new Error((j&&j.e)||'Lỗi máy chủ');er.code=j&&j.c;if(er.code=='auth'&&S)expire(er.message);throw er}
  return j.d}
-const retry=async(fn,n=3)=>{for(let k=1;;k++){try{return await fn()}catch(e){if(k>=n||e.code)throw e;await new Promise(r=>setTimeout(r,800*k))}}};
+const retry=async(fn,n=3)=>{for(let k=1;;k++){try{return await fn()}catch(e){if(k>=n||(e.code&&e.code!='server'&&e.code!='busy'))throw e;await new Promise(r=>setTimeout(r,800*k))}}};
 const getUsers=async()=>{const d=await rpc('users.list');applyUsers(d);return d};
 // ===== Tệp: tải về từng phần từ máy chủ, ghép thành Blob trong trình duyệt =====
 const BC=new Map();let BCB=0;
@@ -627,7 +627,7 @@ const NAVK={notes:'nNote',users:'nUsers',newu:'nUsers',uedit:'nUsers',pw:'nPw',p
 const setNav=id=>document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.id===id));
 const close=()=>{setNav('nHome');lockModal=false;$('#ov').classList.remove('on');$('#md').innerHTML=''};
 
-const PART=3000000;
+const PART=3000000,UP_PAR=3;
 async function doUpload(files,subject,grade){
  const st=$('#ust'),bt=$('#ub'),dir=cur;bt.disabled=true;let err=null,okc=0;
  const b64f=blob=>new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result.split(',')[1]);fr.readAsDataURL(blob)});
@@ -637,9 +637,13 @@ async function doUpload(files,subject,grade){
    if(!f.size)throw new Error(f.name+' là tệp rỗng');
    const lbl=`Đang tải ${n+1}/${files.length}: ${f.name}`;st.textContent=lbl;
    if(f.size<=PART){const data=await b64f(f);await retry(()=>rpc('file.add',{folder:dir,name:f.name,subject,grade,data}),2)}
-   else{const parts=[],np=Math.ceil(f.size/PART);
-    for(let k=0;k<np;k++){st.textContent=lbl+` (phần ${k+1}/${np})`;const data=await b64f(f.slice(k*PART,(k+1)*PART));parts.push((await retry(()=>rpc('file.put',{data}))).h)}
-    st.textContent=lbl+' (đang ghép tệp…)';await rpc('file.add',{folder:dir,name:f.name,subject,grade,parts})}
+   else{const np=Math.ceil(f.size/PART),parts=new Array(np);let next=0,done=0,fail=null;
+    const show=()=>{st.textContent=lbl+` – ${Math.round(done*100/np)}% (${done}/${np} phần)`};show();
+    // Gửi nhiều phần cùng lúc (UP_PAR phần) để nhanh hơn nhiều so với gửi lần lượt
+    const worker=async()=>{while(!fail){const k=next++;if(k>=np)return;
+     try{const data=await b64f(f.slice(k*PART,(k+1)*PART));parts[k]=(await retry(()=>rpc('file.put',{data}),4)).h;done++;show()}catch(e){fail=e}}};
+    await Promise.all(Array.from({length:Math.min(UP_PAR,np)},worker));if(fail)throw fail;
+    st.textContent=lbl+' – đang ghép tệp…';await rpc('file.add',{folder:dir,name:f.name,subject,grade,parts})}
    okc++
   }catch(e){err=e;break}}
  if(err){bt.disabled=false;st.textContent='';toast('Lỗi: '+err.message+(okc?' (đã tải được '+okc+' tệp)':''))}else{close();toast('Đã tải lên '+files.length+' tệp')}
