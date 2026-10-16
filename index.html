@@ -127,6 +127,7 @@ footer .sep{margin:0 10px;opacity:.5}footer svg{width:16px;height:16px;fill:#ff3
 @media(max-width:560px){.irow{grid-template-columns:24px 1fr auto}.irow .iu{grid-column:2/-1}.irow>.rb,.irow>.rt,.irow .iu:empty~.rb,.irow .iu:empty~.rt{grid-column:2/-1}}
 .irow .iu:empty{display:none}
 .irow .iu:empty~.rb,.irow .iu:empty~.rt{grid-column:3/-1}
+#busy{position:fixed;top:0;left:0;right:0;height:3px;z-index:999;display:none;background:linear-gradient(90deg,transparent,var(--ac),transparent) no-repeat;background-size:40% 100%;animation:bz 1s linear infinite;pointer-events:none}@keyframes bz{from{background-position:-40% 0}to{background-position:140% 0}}
 </style></head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></symbol><symbol id="i-folder" viewBox="0 0 24 24"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9L9.6 3.9A2 2 0 0 0 7.9 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol><symbol id="i-folderplus" viewBox="0 0 24 24"><path d="M12 10v6"/><path d="M9 13h6"/><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9L9.6 3.9A2 2 0 0 0 7.9 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol><symbol id="i-folderopen" viewBox="0 0 24 24"><path d="m6 14 1.5-2.9A2 2 0 0 1 9.2 10H20a2 2 0 0 1 1.9 2.5l-1.5 6a2 2 0 0 1-1.9 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.7.9l.8 1.2a2 2 0 0 0 1.7.9H18a2 2 0 0 1 2 2v2"/></symbol><symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></symbol><symbol id="i-more" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></symbol><symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4"/><path d="m15.4 6.5-6.8 4"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol><symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></symbol><symbol id="i-sort" viewBox="0 0 24 24"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></symbol><symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol><symbol id="i-drive" viewBox="0 0 24 24"><path d="M22 12H2"/><path d="M5.5 5.1 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.5-6.9A2 2 0 0 0 16.8 4H7.2a2 2 0 0 0-1.7 1.1Z"/><path d="M6 16h.01"/><path d="M10 16h.01"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol><symbol id="i-sliders" viewBox="0 0 24 24"><path d="M21 4h-7"/><path d="M10 4H3"/><path d="M21 12h-9"/><path d="M8 12H3"/><path d="M21 20h-5"/><path d="M12 20H3"/><path d="M14 2v4"/><path d="M8 10v4"/><path d="M16 18v4"/></symbol><symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol><symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></symbol><symbol id="i-key" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></symbol><symbol id="i-pencil" viewBox="0 0 24 24"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></symbol><symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></symbol><symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><path d="M10 11v6"/><path d="M14 11v6"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></symbol><symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 12h16"/><path d="M4 6h16"/><path d="M4 18h16"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol><symbol id="i-filter" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M7 12h10"/><path d="M10 18h4"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol></defs></svg>
@@ -139,7 +140,7 @@ footer .sep{margin:0 10px;opacity:.5}footer svg{width:16px;height:16px;fill:#ff3
   <a data-a="notes" id="nNote" style="display:none"><svg class="ic"><use href="#i-bell"/></svg>Thông báo<b id="nBadge" style="display:none"></b></a>
   <a data-a="users" id="nUsers" style="display:none"><svg class="ic"><use href="#i-users"/></svg>Quản lý tài khoản</a>
   <a data-a="pw" id="nPw" style="display:none"><svg class="ic"><use href="#i-lock"/></svg>Đổi mật khẩu</a>
-  <a data-a="set" id="nSet" style="display:none"><svg class="ic"><use href="#i-sliders"/></svg>Cài đặt repo</a>
+  <a data-a="set" id="nSet" style="display:none"><svg class="ic"><use href="#i-sliders"/></svg>Cài đặt máy chủ</a>
   <a data-a="help" id="nHelp"><svg class="ic"><use href="#i-help"/></svg>Hướng dẫn</a>
   <a data-a="login" id="nLog"><svg class="ic"><use href="#i-key"/></svg>Đăng nhập</a>
   <a data-a="logout" id="nOut" style="display:none"><svg class="ic"><use href="#i-logout"/></svg>Đăng xuất</a>
@@ -173,7 +174,7 @@ footer .sep{margin:0 10px;opacity:.5}footer svg{width:16px;height:16px;fill:#ff3
 </main>
 <div class="ov" id="ov"><div class="md" id="md"></div></div>
 <div class="ov" id="ov2"><div class="md dlg" id="md2"></div></div>
-<div id="menuBox"></div><div id="toast"></div>
+<div id="busy"></div><div id="menuBox"></div><div id="toast"></div>
 <input type="file" id="file" multiple hidden>
 <script>
 const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
@@ -182,15 +183,19 @@ const b64=s=>btoa(unescape(encodeURIComponent(s)));
 let db={folders:[],items:[]},cur='',sel=new Set(),q='',fq='',sort='date',sdir=-1,showS=false,showF=false,vis=[],F={},DEF0={src:'mine',type:'folder'},defF={...DEF0},SX={f:'',flt:'all'},pg=1,lastSig='',PS=50,D={th:true,sz:48};
 try{D={...D,...JSON.parse(localStorage.getItem('khd')||'{}')}}catch(e){}
 const saveD=()=>{try{localStorage.setItem('khd',JSON.stringify(D))}catch(e){}};
-// Tự nhận repo khi chạy trên GitHub Pages (owner.github.io/repo)
-const auto={owner:'',repo:'',branch:'main',token:''};
-if(location.hostname.endsWith('.github.io')){auto.owner=location.hostname.split('.')[0];const s=location.pathname.split('/')[1];auto.repo=s&&s!=='index.html'?s:auto.owner+'.github.io'}
-let C={...auto};try{C={...auto,...JSON.parse(localStorage.getItem('khbd')||'{}')}}catch(e){}
+// ===== Kết nối máy chủ Google Apps Script. Địa chỉ lấy từ config.json (cùng thư mục với trang) hoặc từ mục Cài đặt máy chủ =====
+const DEFAULT_API='';
+let API='',APIBAD=false;
 const DEF='0977889090';
 let S=null;try{S=JSON.parse(sessionStorage.getItem('khs')||'null')}catch(e){}
-const can=()=>!!(S&&C.owner&&C.repo);
-// Cài đặt repo: chỉ Admin thấy. Ngoại lệ: khi trang không chạy trên github.io hoặc chưa có thông tin repo thì ai cũng cần nhập để dùng được.
-const canCfg=()=>!!(S&&S.role=='admin')||!location.hostname.endsWith('.github.io')||!C.owner||!C.repo;
+const saveS=()=>{try{sessionStorage.setItem('khs',JSON.stringify(S))}catch(e){}};
+const can=()=>!!S;
+// Cài đặt máy chủ: chỉ Admin thấy. Ngoại lệ: chưa có địa chỉ hoặc không kết nối được thì ai cũng cần nhập để dùng được.
+const canCfg=()=>!!(S&&S.role=='admin')||!API||APIBAD;
+async function loadApi(){let o='';try{o=localStorage.getItem('fcapi')||''}catch(e){}
+ if(o){API=o;return}
+ try{const r=await fetch('config.json?t='+Date.now());if(r.ok){const j=await r.json();if(j&&typeof j.api=='string')API=j.api.trim()}}catch(e){}
+ if(!API)API=DEFAULT_API}
 let UD={},RT={};const ud=n=>UD[n]||RT[n];
 const TEAMS=['Khối 1','Khối 2','Khối 3','Khối 4','Khối 5','Anh Văn','Bộ Môn'];
 const teamOpts=v=>'<option value="">— Không chọn —</option>'+(v&&!TEAMS.includes(v)?`<option selected>${esc(v)}</option>`:'')+TEAMS.map(t=>`<option${t===v?' selected':''}>${t}</option>`).join('');
@@ -210,85 +215,71 @@ const canShare=f=>!!S&&(S.role=='admin'||((S.role=='bgh'||S.leader)&&(db.fowner|
 // Tệp xem được: của mình; Admin/BGH xem tất cả; Tổ trưởng xem tệp cả tổ; thành viên xem tệp biểu mẫu (do chủ thư mục, Admin, BGH đăng) trong thư mục được chia sẻ
 const canView=i=>{if(!S)return false;if(S.role=='admin'||S.role=='bgh'||i.by===S.name)return true;const o=ud(i.by);if(S.leader&&S.team&&o&&o.team===S.team)return true;
  if(inShare(i.folder))return i.by===(db.fowner||{})[shRoot(i.folder)]||!!(o&&(o.role=='admin'||o.role=='bgh'));return false};
-async function syncUsers(){try{const L=await getUsers();UD={};RT=(L&&L.retired)||{};(L?L.users:[]).forEach(u=>UD[u.name]=u);
- if(S){const u=UD[S.name];if(!u||u.lock){S=null;sessionStorage.removeItem('khs')}else{S={...S,role:u.role,team:u.team||'',leader:!!u.leader,mc:!!u.mc};sessionStorage.setItem('khs',JSON.stringify(S))}}}catch(e){}}
+const normDb=d=>{d=d||{};d.folders=d.folders||[];d.items=d.items||[];d.fowner=d.fowner||{};d.share=d.share||{};d.track=d.track||{};return d};
+// Nhận dữ liệu đã được máy chủ lọc theo quyền của người đang đăng nhập
+function applyBundle(b){if(!b)return;
+ if(b.me&&S){S={...S,...b.me,mc:!!b.me.mc};saveS()}
+ if(b.mc)return;
+ if(b.db)db=normDb(b.db);
+ if(b.dir){UD={};b.dir.forEach(u=>UD[u.name]=u);RT=b.retired||{}}
+ if(b.notes){NT={notes:b.notes};NT_T=Date.now()}}
+function applyUsers(d){UD={};(d.users||[]).forEach(u=>UD[u.name]=u);RT=d.retired||{}}
 const chkPw=p=>{if(p.length<8||p===DEF)throw new Error('Mật khẩu tối thiểu 8 ký tự và khác mật khẩu mặc định.')};
-// Mã hóa token GitHub bằng mật khẩu từng người (PBKDF2 + AES-GCM). Sai mật khẩu thì không giải mã được.
-const te=new TextEncoder(),bin=b=>btoa(String.fromCharCode(...new Uint8Array(b))),unb=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
-async function dk(pw,salt){const k=await crypto.subtle.importKey('raw',te.encode(pw),'PBKDF2',false,['deriveKey']);return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:310000,hash:'SHA-256'},k,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])}
-async function wrap(pw,tok){const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));return{salt:bin(salt),iv:bin(iv),ct:bin(await crypto.subtle.encrypt({name:'AES-GCM',iv},await dk(pw,salt),te.encode(tok)))}}
-async function unwrap(pw,w){try{return new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:unb(w.iv)},await dk(pw,unb(w.salt)),unb(w.ct)))}catch(e){return null}}
-// ===== Lớp truy cập dữ liệu: toàn bộ việc đọc/ghi GitHub nằm trong đối tượng Store.
-// Sau này muốn chuyển sang nơi lưu khác (Google Drive...) chỉ cần viết lại Store, phần giao diện giữ nguyên. =====
-const Store=(()=>{
- const api=(p,o={})=>fetch(`https://api.github.com/repos/${C.owner}/${C.repo}/${p}`,{...o,headers:{Accept:'application/vnd.github+json','Content-Type':'application/json',...(S?{Authorization:'Bearer '+S.token}:{}),...(o.headers||{})}});
- const dec=c=>JSON.parse(decodeURIComponent(escape(atob(c.replace(/\s/g,'')))));
- const norm=d=>{d=d||{};d.folders=d.folders||[];d.items=d.items||[];d.fowner=d.fowner||{};d.share=d.share||{};d.track=d.track||{};return d};
- const wait=ms=>new Promise(r=>setTimeout(r,ms));
- async function read(path){
-  const r=await api(`contents/${path}?ref=${C.branch}&t=${Date.now()}`);
-  if(r.status==404)return null;
-  if(!r.ok)throw new Error('Không đọc được '+path+' ('+r.status+'). Kiểm tra cài đặt repo.');
-  const j=await r.json();let data;
-  if(j.content&&j.encoding=='base64')data=dec(j.content);
-  else{const r2=await api(`contents/${path}?ref=${C.branch}&t=${Date.now()}`,{headers:{Accept:'application/vnd.github.raw+json'}});if(!r2.ok)throw new Error('Không đọc được '+path);data=await r2.json()}
-  return{data,sha:j.sha}}
- async function write(path,obj,msg,sha){
-  const w=await api('contents/'+path,{method:'PUT',body:JSON.stringify({message:msg,content:b64(JSON.stringify(obj)),branch:C.branch,sha})});
-  if(w.ok)return;
-  const e=await w.json().catch(()=>({}));const err=new Error(e.message||('Lỗi ghi dữ liệu ('+w.status+')'));err.conflict=w.status==409||w.status==422;throw err}
- // Đọc bản mới nhất, áp dụng thay đổi rồi ghi lại. Nếu có người khác vừa ghi thì đọc lại và làm lại (tối đa 5 lần)
- async function mutate(path,fn,msg){
-  for(let k=0;k<5;k++){
-   const cur=await read(path),data=fn(cur?cur.data:null);
-   try{await write(path,data,msg,cur?cur.sha:undefined);return data}
-   catch(e){if(!e.conflict)throw e;await wait(250+Math.random()*600)}}
-  throw new Error('Nhiều người đang thao tác cùng lúc, hãy thử lại sau ít giây.')}
- return{
-  async index(){if(can()){const c=await read('data/index.json');return norm(c&&c.data)}
-   const r=await fetch('data/index.json?t='+Date.now());return norm(r.ok?await r.json():null)},
-  async update(fn,msg){const d=await mutate('data/index.json',x=>{x=norm(x);fn(x);return x},msg);db=norm(d);return db},
-  async putFile(path,data,msg){const w=await api('contents/files/'+encodeURIComponent(path),{method:'PUT',body:JSON.stringify({message:msg,content:data,branch:C.branch})});if(!w.ok)throw new Error((await w.json()).message)},
-  async deleteFile(path,msg){const u='contents/files/'+encodeURIComponent(path);
-   const r=await api(`${u}?ref=${C.branch}`);if(r.status==404)return;if(!r.ok)throw new Error('Không đọc được tệp ('+r.status+')');
-   const d=await api(u,{method:'DELETE',body:JSON.stringify({message:msg,sha:(await r.json()).sha,branch:C.branch})});if(!d.ok&&d.status!=404)throw new Error((await d.json()).message)},
-  async removeItems(items,msg){const done=[];let err=null;
-   for(const x of items){try{await Store.deleteFile(x.path,'Xóa '+x.name);done.push(x.id)}catch(e){err=e;break}}
-   if(done.length){const ids=new Set(done);await Store.update(d=>{d.items=d.items.filter(x=>!ids.has(x.id))},msg)}
-   if(err)throw err},
-  fileUrl(i){return new URL('files/'+encodeURIComponent(i.path),location.href.split('#')[0]).href},
-  async users(){
-   try{const r=await fetch(`https://api.github.com/repos/${C.owner}/${C.repo}/contents/data/users.json?ref=${C.branch}&t=${Date.now()}`,{headers:{Accept:'application/vnd.github.raw+json',...(S?{Authorization:'Bearer '+S.token}:{})}});if(r.ok)return await r.json();if(r.status==404)return null}catch(e){}
-   try{const r=await fetch('data/users.json?t='+Date.now());if(r.ok)return await r.json()}catch(e){}
-   throw new Error('Không đọc được danh sách tài khoản')},
-  async notes(){const c=await read('data/notes.json');return c&&c.data},
-  updateNotes(fn,msg){return mutate('data/notes.json',x=>{x=x||{};x.notes=x.notes||[];fn(x);return x},msg)},
-  updateUsers(fn,msg){return mutate('data/users.json',x=>{x=x||{};x.users=x.users||[];fn(x);return x},msg)},
-  async checkToken(tok){const r=await fetch(`https://api.github.com/repos/${C.owner}/${C.repo}`,{headers:{Authorization:'Bearer '+tok}});
-   if(!r.ok)throw new Error('Token không truy cập được repo '+C.owner+'/'+C.repo);
-   if(!(await r.json()).permissions?.push)throw new Error('Token chưa có quyền ghi (Contents: Read and write)')}
- }})();
-const getUsers=()=>Store.users();
-const signIn=u=>{S=u;defF={...DEF0};F={...defF};showF=true;sessionStorage.setItem('khs',JSON.stringify(u));close();toast('Xin chào '+u.name);return load()};
+const te=new TextEncoder(),bin=b=>btoa(String.fromCharCode(...new Uint8Array(b))),b2u=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+// Mật khẩu được băm ngay trên máy (PBKDF2) trước khi gửi đi. Máy chủ chỉ nhận và lưu bản băm, không bao giờ thấy mật khẩu gốc.
+async function kd(user,pw){const k=await crypto.subtle.importKey('raw',te.encode(pw),'PBKDF2',false,['deriveBits']);return bin(await crypto.subtle.deriveBits({name:'PBKDF2',salt:te.encode('filecloud|'+String(user).toLowerCase()),iterations:100000,hash:'SHA-256'},k,256))}
+// Mật khẩu ban đầu (trùng tên đăng nhập) không phân biệt hoa thường
+const npw=(n,p)=>p.toLowerCase()===String(n).toLowerCase()?p.toLowerCase():p;
+function expire(msg){S=null;try{sessionStorage.removeItem('khs')}catch(e){}BCclear();db=normDb({});UD={};RT={};NT={notes:[]};F={};showF=false;lockModal=false;render();modal('login');toast(msg||'Phiên đăng nhập đã hết hạn. Hãy đăng nhập lại.')}
+// Gọi máy chủ. Mọi quyền hạn đều được kiểm tra ở máy chủ, giao diện chỉ để ẩn hiện nút.
+let BZ=0;const busy=d=>{BZ+=d;const e=$('#busy');if(e)e.style.display=BZ>0?'block':'none'};
+const rpc=async(a,x)=>{busy(1);try{return await rpc0(a,x)}finally{busy(-1)}};
+async function rpc0(a,x){
+ if(!API){modal('set');throw new Error('Chưa cài địa chỉ máy chủ.')}
+ let r,j;
+ try{r=await fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({a,t:S&&S.token,...x})})}
+ catch(e){APIBAD=true;throw new Error('Không kết nối được máy chủ. Hãy kiểm tra mạng rồi thử lại.')}
+ try{j=await r.json()}catch(e){APIBAD=true;throw new Error('Máy chủ không trả lời đúng. Admin hãy kiểm tra địa chỉ máy chủ và cách triển khai (Ai có quyền truy cập: Bất kỳ ai).')}
+ APIBAD=false;
+ if(!j||!j.ok){const er=new Error((j&&j.e)||'Lỗi máy chủ');er.code=j&&j.c;if(er.code=='auth'&&S)expire(er.message);throw er}
+ return j.d}
+const retry=async(fn,n=3)=>{for(let k=1;;k++){try{return await fn()}catch(e){if(k>=n||e.code)throw e;await new Promise(r=>setTimeout(r,800*k))}}};
+const getUsers=async()=>{const d=await rpc('users.list');applyUsers(d);return d};
+// ===== Tệp: tải về từng phần từ máy chủ, ghép thành Blob trong trình duyệt =====
+const BC=new Map();let BCB=0;
+const MIME={pdf:'application/pdf',png:'image/png',jpg:'image/jpeg',jpeg:'image/jpeg',gif:'image/gif',webp:'image/webp'};
+function BCclear(){BC.forEach(v=>URL.revokeObjectURL(v.url));BC.clear();BCB=0}
+function BCput(k,blob){const o=BC.get(k);if(o){URL.revokeObjectURL(o.url);BCB-=o.blob.size;BC.delete(k)}
+ const v={blob,url:URL.createObjectURL(blob)};BC.set(k,v);BCB+=blob.size;
+ for(const [kk,vv] of BC){if(BCB<=60*1048576||kk===k)break;URL.revokeObjectURL(vv.url);BCB-=vv.blob.size;BC.delete(kk)}return v}
+async function fileBlob(i,prog){const c=BC.get(i.id);if(c)return c;
+ const parts=[];let np=1;
+ for(let k=0;k<np;k++){const d=await retry(()=>rpc('file.get',{id:i.id,part:k}));np=d.np;parts.push(b2u(d.data));if(prog)prog(k+1,np)}
+ return BCput(i.id,new Blob(parts,{type:MIME[ext(i.name)]||'application/octet-stream'}))}
+async function officePdf(i){const k=i.id+'#pdf',c=BC.get(k);if(c)return c;const d=await rpc('file.preview',{id:i.id});return BCput(k,new Blob([b2u(d.data)],{type:'application/pdf'}))}
+async function dlFile(i){toast('Đang tải '+i.name+'…');
+ try{const b=await fileBlob(i,(k,n)=>{if(n>1)toast('Đang tải '+i.name+' (phần '+k+'/'+n+')')});impDownload(b.blob,i.name);toast('Đã tải xuống '+i.name)}catch(e){toast(e.message)}}
+const PREV=['pdf','png','jpg','jpeg','docx','pptx','xlsx','doc','ppt','xls'];
+function openItem(x){if(PREV.includes(ext(x.name)))modal('pv',x);else dlFile(x)}
+let PVID='';
+async function pvLoad(x){const id=PVID=x.id,e=ext(x.name),box=()=>PVID===id&&$('#pvb'),img=['png','jpg','jpeg'].includes(e);
+ try{const u=(img||e=='pdf'?await fileBlob(x):await officePdf(x)).url,b=box();if(!b)return;b.outerHTML=img?`<img src="${u}">`:`<iframe src="${u}"></iframe>`}
+ catch(er){const b=box();if(b){b.textContent=er.message;b.style.color='#ff8b8b'}}}
+let THQ=Promise.resolve();
+function loadThumbs(){document.querySelectorAll('img[data-th]').forEach(im=>{const id=im.dataset.th,c=BC.get(id);if(c){im.src=c.url;return}
+ if(im.dataset.q)return;im.dataset.q=1;const it=itemOf(id);if(!it)return;
+ THQ=THQ.then(async()=>{try{if(!document.body.contains(im))return;im.src=(await fileBlob(it)).url}catch(e){}})})}
+const signIn=u=>{S=u;defF={...DEF0};F={...defF};showF=true;saveS();close();toast('Xin chào '+u.name);return load()};
 async function doLogin(n,p){
  if(!n||!p)throw new Error('Nhập tên đăng nhập và mật khẩu');
- const L=await getUsers();
- if(!L){if(n.toLowerCase()==='admin'&&p===DEF)return modal('setup');throw new Error('Chưa có tài khoản. Lần đầu hãy đăng nhập admin với mật khẩu mặc định.')}
- const u=L.users.find(x=>x.name.toLowerCase()===n.toLowerCase());let t=u&&await unwrap(p,u.w);
- if(!t&&u&&u.mc&&p.toLowerCase()===u.name.toLowerCase())t=await unwrap(u.name,u.w);
- if(!t)throw new Error('Sai tên đăng nhập hoặc mật khẩu');
- if(u.lock)throw new Error('Tài khoản đã bị khóa. Vui lòng liên hệ Admin.');
- await signIn({name:u.name,role:u.role,team:u.team||'',leader:!!u.leader,mc:!!u.mc,token:t});
- if(u.mc){lockModal=true;modal('pwforce')}}
-async function doSetup(tok,p1,p2){
- if(!tok)throw new Error('Hãy nhập GitHub token');chkPw(p1);if(p1!==p2)throw new Error('Hai mật khẩu không khớp');
- await Store.checkToken(tok);
- S={name:'admin',role:'admin',token:tok};
- try{const wr=await wrap(p1,tok);await Store.updateUsers(L=>{L.users=[{name:'admin',role:'admin',w:wr}]},'Tạo tài khoản admin')}catch(e){S=null;throw e}
- await signIn(S)}
-async function doPw(o,n,n2){chkPw(n);if(n!==n2)throw new Error('Hai mật khẩu không khớp');
- const L=await getUsers(),u=L&&L.users.find(x=>x.name===S.name);if(!u||!(await unwrap(o,u.w)))throw new Error('Mật khẩu hiện tại không đúng');
- const nw=await wrap(n,S.token);await Store.updateUsers(L2=>{const v=L2.users.find(x=>x.name===S.name);if(!v)throw new Error('Tài khoản không còn tồn tại');v.w=nw;delete v.mc},'Đổi mật khẩu');close();toast('Đã đổi mật khẩu')}
+ let d;try{d=await rpc('login',{user:n,pw:await kd(n,npw(n,p))})}catch(e){if(e.code=='setup'){modal('setup');return}throw e}
+ await signIn({...d.me,token:d.token});
+ if(S&&S.mc){lockModal=true;modal('pwforce')}}
+async function doSetup(code,p1,p2){
+ if(!code)throw new Error('Hãy nhập mã thiết lập');chkPw(p1);if(p1!==p2)throw new Error('Hai mật khẩu không khớp');
+ const d=await rpc('setup',{code,pw:await kd('admin',p1)});await signIn({...d.me,token:d.token})}
+async function doPw(o,n,n2){chkPw(n);if(n!==n2)throw new Error('Hai mật khẩu không khớp');if(n.toLowerCase()===S.name.toLowerCase())throw new Error('Mật khẩu mới không được trùng tên đăng nhập.');
+ const d=await rpc('pw.change',{old:await kd(S.name,npw(S.name,o)),pw:await kd(S.name,n)});S={...S,token:d.token,mc:false};saveS();close();toast('Đã đổi mật khẩu')}
 const dataNames=()=>{const t=new Set();Object.values(db.fowner||{}).forEach(n=>t.add(String(n).toLowerCase()));(db.items||[]).forEach(i=>{if(i.by)t.add(String(i.by).toLowerCase())});return t};
 async function askDelete(id){
  const own=Object.keys(db.fowner||{}).filter(p=>db.fowner[p]===id),sub=p=>own.some(o=>p===o||p.startsWith(o+'/')),
@@ -306,16 +297,7 @@ async function askDelete(id){
  if(r.mode=='purge'&&!await dlg({title:'Xóa vĩnh viễn dữ liệu',msg:'Xóa tài khoản <b>'+esc(id)+'</b> cùng <b>'+own.length+' thư mục</b> và <b>'+its.length+' tệp</b>? Không thể hoàn tác.',ok:'Xóa vĩnh viễn',danger:1}))return;
  return finishDelete(id,r.mode,r.to)}
 async function finishDelete(id,mode,to){
- const own=Object.keys(db.fowner||{}).filter(p=>db.fowner[p]===id),sub=p=>own.some(o=>p===o||p.startsWith(o+'/'));
- if(mode=='purge'){
-  const its=db.items.filter(x=>x.by===id||sub(x.folder));
-  await Store.removeItems(its,'Xóa dữ liệu của '+id);
-  await Store.update(d=>{d.folders=d.folders.filter(f=>!sub(f));d.items=d.items.filter(x=>x.by!==id&&!sub(x.folder));['fowner','share','track'].forEach(m=>{Object.keys(d[m]||{}).forEach(p=>{if(sub(p))delete d[m][p]})})},'Xóa dữ liệu của '+id)
- }else if(mode=='move'){
-  await Store.update(d=>{Object.keys(d.fowner).forEach(p=>{if(d.fowner[p]===id)d.fowner[p]=to});d.items.forEach(x=>{if(x.by===id)x.by=to})},'Chuyển dữ liệu của '+id+' cho '+to)}
- await Store.updateUsers(L=>{const u=L.users.find(x=>x.name==id);if(u&&u.role=='admin'&&!L.users.some(x=>x.role=='admin'&&x!==u))throw new Error('Không thể xóa Admin cuối cùng');
-  L.users=L.users.filter(x=>x.name!=id);L.retired=L.retired||{};if(mode=='keep'&&u)L.retired[id]={team:u.team||'',fn:u.fn||''};else delete L.retired[id]},'Xóa tài khoản '+id);
- await syncUsers();modal('users',(await getUsers())||{users:[]});await load();
+ const d=await rpc('user.delete',{name:id,mode,to});applyUsers(d);applyBundle(d.bundle);modal('users',d);render();
  toast(mode=='move'?'Đã xóa tài khoản và chuyển dữ liệu cho '+to:mode=='purge'?'Đã xóa tài khoản và toàn bộ dữ liệu':'Đã xóa tài khoản')}
 // ===== Thông báo / ghi chú (Admin, BGH, Tổ trưởng gửi; người nhận thấy khi đăng nhập và xem lại trong mục Thông báo) =====
 let NT={notes:[]},NC={sel:new Set(),flt:'',q:''},NP=[],NPOP=new Set(),NTAB='in',NT_T=0;
@@ -324,11 +306,10 @@ const rcpPool=()=>Object.values(UD).filter(u=>S&&u.name!==S.name&&!u.lock&&(S.ro
 const unreadN=()=>S?NT.notes.filter(n=>(n.to||[]).includes(S.name)&&!(n.seen&&n.seen[S.name])):[];
 const kindInfo={info:['r-gv','Thông báo'],fix:['r-admin','Cần điều chỉnh'],ok:['r-leader','Đã duyệt']};
 function updBadge(){const b=$('#nBadge');if(!b)return;const n=unreadN().length;b.style.display=S&&n?'':'none';b.textContent=n?(n>99?'99+':n):''}
-async function loadNotes(){if(!S||!can())return;try{const c=await Store.notes();NT={notes:(c&&c.notes)||[]}}catch(e){}NT_T=Date.now()}
 const dayLbl=d=>{const t=new Date(d),n=new Date(),k=x=>x.toDateString();if(k(t)==k(n))return 'Hôm nay';const y=new Date(n);y.setDate(n.getDate()-1);if(k(t)==k(y))return 'Hôm qua';return t.toLocaleDateString('vi-VN',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric'})};
 function noteCard(n,mode,isNew){
- const ki=kindInfo[n.kind]||kindInfo.info,ref=n.ref?db.items.find(i=>i.id===n.ref.id):null;
- const fl=n.ref?(ref?'<div class="nact"><a class="btn" style="text-decoration:none" href="'+url(ref)+'" target="_blank" rel="noopener">'+ic('eye')+'Mở tệp: '+esc(n.ref.name)+'</a></div>':'<div class="nm2">Tệp liên quan: '+esc(n.ref.name)+' (đã bị xóa)</div>'):'';
+ const ki=kindInfo[n.kind]||kindInfo.info,ref=n.ref&&n.ref.ok!==false?n.ref:null;
+ const fl=n.ref?(ref?'<div class="nact"><button class="btn" data-open="'+esc(n.ref.id)+'" data-nm="'+esc(n.ref.name)+'">'+ic('eye')+'Mở tệp: '+esc(n.ref.name)+'</button></div>':'<div class="nm2">Tệp liên quan: '+esc(n.ref.name)+' (đã bị xóa)</div>'):'';
  let ex='';
  if(mode=='out'){const seen=n.seen||{},c=(n.to||[]).filter(u=>seen[u]).length;
   ex='<details><summary>Gửi tới '+(n.to||[]).length+' người · '+c+' đã xem</summary>'+(n.to||[]).map(u=>'<div>'+(seen[u]?'✓':'○')+' '+esc(u)+((UD[u]||{}).fn?' – '+esc(UD[u].fn):'')+(seen[u]?' <small>('+fdate(seen[u])+')</small>':'')+'</div>').join('')+'</details><div class="nact"><button class="btn d" data-a="noteDel" data-id="'+esc(n.id)+'">Xóa</button></div>'}
@@ -363,42 +344,41 @@ function checkNotes(){
 async function markSeen(ids){
  if(!S||!ids.length)return;const me=S.name,now=new Date().toISOString();
  NT.notes.forEach(n=>{if(ids.includes(n.id)){n.seen=n.seen||{};n.seen[me]=now}});updBadge();
- try{await Store.updateNotes(L=>{ids.forEach(id=>{const n=L.notes.find(x=>x.id==id);if(n&&(n.to||[]).includes(me)){n.seen=n.seen||{};if(!n.seen[me])n.seen[me]=now}})},'Đã xem thông báo')}catch(e){toast('Chưa lưu được trạng thái đã đọc: '+e.message)}}
+ try{const d=await rpc('notes.seen',{ids});NT={notes:d.notes};updBadge()}catch(e){toast('Chưa lưu được trạng thái đã đọc: '+e.message)}}
 async function sendNote(){
  if(!canNote())throw new Error('Bạn không có quyền gửi thông báo.');
  const title=$('#nt1').value.trim(),body=$('#nb1').value.trim(),kind=$('#nk').value,rid=$('#nf').value,ok=new Set(rcpPool().map(u=>u.name)),to=[...NC.sel].filter(u=>ok.has(u));
  if(!to.length)throw new Error('Hãy chọn ít nhất một người nhận.');if(!title)throw new Error('Hãy nhập tiêu đề.');
- const it=rid&&db.items.find(i=>i.id===rid),n={id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),by:S.name,byRole:info(S),kind,title,body,to,date:new Date().toISOString(),seen:{}};if(it)n.ref={id:it.id,name:it.name};
  const bt=document.querySelector('[data-a=noteSend]');bt.disabled=true;
- try{await Store.updateNotes(L=>{L.notes.push(n)},'Gửi thông báo')}catch(e){bt.disabled=false;throw e}
- await loadNotes();NTAB='out';modal('notes');toast('Đã gửi thông báo cho '+to.length+' người')}
+ try{const d=await rpc('notes.send',{title,body,kind,to,ref:rid||undefined});NT={notes:d.notes}}catch(e){bt.disabled=false;throw e}
+ NTAB='out';modal('notes');toast('Đã gửi thông báo cho '+to.length+' người')}
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&S&&Date.now()-NT_T>120000)load()});
-async function mutU(fn){if(!S||S.role!='admin')throw new Error('Chỉ Admin được quản lý tài khoản');
- const L=await Store.updateUsers(fn,'Cập nhật tài khoản');modal('users',L)}
+
 const fdeny=f=>{if(!S){modal('login');return true}if(S.role!='admin'&&(db.fowner||{})[f]!==S.name){toast('Bạn chỉ được sửa/xóa thư mục do mình tạo.');return true}return false};
 const deny=i=>{if(!S){modal('login');return true}if(S.role!='admin'&&i.by!==S.name){toast('Bạn chỉ được sửa/xóa tệp do mình tải lên.');return true}return false};
 const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),3000)};
 const fsize=n=>n>=1048576?(n/1048576).toFixed(1)+' MB':Math.max(1,Math.round(n/1024))+' KB';
 const fdate=d=>new Date(d).toLocaleString('vi-VN',{dateStyle:'medium',timeStyle:'short'});
 const par=f=>f.includes('/')?f.slice(0,f.lastIndexOf('/')):'';
-const url=i=>Store.fileUrl(i);
 const ext=n=>(n.split('.').pop()||'').toLowerCase();
 const COL={pdf:['#ff5a6a','#3a1f2d'],doc:['#5aa0ff','#1b2f57'],docx:['#5aa0ff','#1b2f57'],ppt:['#ff9a4d','#3d2a1c'],pptx:['#ff9a4d','#3d2a1c'],xls:['#3ecf8e','#16382f'],xlsx:['#3ecf8e','#16382f'],zip:['#ffc233','#3a3119'],rar:['#ffc233','#3a3119']};
 const badge=n=>{const e=ext(n),c=COL[e]||['#9aa8c7','#26314d'];return `<div class="fi" style="color:${c[0]};background:${c[1]}">${ic('file')}</div>`};
 
 async function load(){
- try{db=await Store.index()}catch(e){toast(e.message||'Không tải được dữ liệu')}
- db.folders=db.folders||[];db.items=db.items||[];if(S){await syncUsers();await loadNotes()}render();checkNotes()
+ if(S){try{applyBundle((await rpc('sync')).bundle)}catch(e){if(e.code!='auth')toast(e.message||'Không tải được dữ liệu')}}
+ if(!S){db=normDb({});UD={};RT={};NT={notes:[]}}
+ render();checkNotes()
 }
 
 async function act(fn,ok){
  if(!can()){toast('Hãy đăng nhập để chỉnh sửa.');return modal('login')}
- try{await fn();if(ok)toast(ok)}catch(e){toast('Lỗi: '+e.message)}
- sel.clear();await load()
+ let full=true;
+ try{const d=await fn();if(d&&d.bundle){applyBundle(d.bundle);full=false}if(ok)toast(ok)}catch(e){toast('Lỗi: '+e.message)}
+ sel.clear();if(full)await load();else{render();checkNotes()}
 }
 
 
-const thumb=i=>['png','jpg','jpeg','gif','webp'].includes(ext(i.name))&&D.th?`<div class="fi" style="width:${D.sz}px;height:${D.sz}px;padding:0;overflow:hidden;background:#101b33"><img src="${url(i)}" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover"></div>`:badge(i.name);
+const thumb=i=>['png','jpg','jpeg','gif','webp'].includes(ext(i.name))&&D.th&&i.size<=800*1024?`<div class="fi" style="width:${D.sz}px;height:${D.sz}px;padding:0;overflow:hidden;background:#101b33"><img data-th="${esc(i.id)}" alt="" style="width:100%;height:100%;object-fit:cover"></div>`:badge(i.name);
 // Đặt menu thả xuống luôn nằm trọn trong màn hình: tự lật lên trên khi sát đáy, thu nhỏ và cuộn nếu thiếu chỗ
 function placeMenu(r){const box=$('#menuBox');box.style.maxHeight='';box.style.display='block';
  const vw=innerWidth,vh=innerHeight,w=box.offsetWidth,h=box.offsetHeight,below=vh-r.bottom-12,above=r.top-12;let top;
@@ -409,7 +389,7 @@ function placeMenu(r){const box=$('#menuBox');box.style.maxHeight='';box.style.d
  box.style.top=top+'px';box.style.left=Math.min(Math.max(8,r.right-w),Math.max(8,vw-w-8))+'px'}
 ['scroll','resize'].forEach(ev=>addEventListener(ev,e=>{const b=$('#menuBox');if(e.target!==b)b.style.display='none'},true));
 // Hướng dẫn theo vai trò
-const HC=[["Tải tệp lên","Mở thư mục cần lưu, bấm <b>Tải lên</b> (hoặc kéo thả tệp vào trang), chọn tệp, chọn môn và lớp nếu muốn rồi bấm Tải lên. Mỗi tệp tối đa 50 MB. Tệp mới cần khoảng 1 phút mới xem hoặc tải về được."],["Tạo thư mục","Bấm <b>Thư mục mới</b> và đặt tên. Tạo được ở ngoài cùng hoặc bên trong thư mục của chính bạn."],["Xem và tải về","Bấm tên tệp hoặc <b>Xem trước</b> để xem, bấm <b>Tải xuống</b> để lưu về máy."],["Đổi tên, xóa","Bấm <b>⋮</b> cạnh tệp hoặc thư mục, chọn Đổi tên hoặc Xóa. Chỉ làm được với mục do bạn tạo."],["Bộ lọc mặc định","Khi đăng nhập, trang mặc định chỉ hiện thư mục và tệp do bạn tạo (Nguồn: Của tôi). Muốn xem thư mục được chia sẻ hoặc toàn bộ nội dung bạn có quyền xem, bấm icon phễu rồi chọn <b>Nguồn: Tất cả</b>."],["Tìm nhanh","Thanh công cụ có kính lúp (tìm trong cả kho), phễu (lọc theo nguồn: của tôi hoặc từng khối, loại tệp và môn học. Lọc theo tên thì chỉ áp dụng trong thư mục đang mở, lọc theo ba tiêu chí còn lại thì tìm trong cả kho), hai mũi tên (sắp xếp) và thanh trượt (hình thu nhỏ)."],["Đổi mật khẩu","Chọn <b>Đổi mật khẩu</b> ở cột bên trái. Quên mật khẩu thì liên hệ Admin để được đặt lại."]];
+const HC=[["Tải tệp lên","Mở thư mục cần lưu, bấm <b>Tải lên</b> (hoặc kéo thả tệp vào trang), chọn tệp, chọn môn và lớp nếu muốn rồi bấm Tải lên. Mỗi tệp tối đa 50 MB. Tệp lớn được tải lên từng phần nên cần chờ thêm vài giây."],["Tạo thư mục","Bấm <b>Thư mục mới</b> và đặt tên. Tạo được ở ngoài cùng hoặc bên trong thư mục của chính bạn."],["Xem và tải về","Bấm tên tệp hoặc <b>Xem trước</b> để xem, bấm <b>Tải xuống</b> để lưu về máy."],["Đổi tên, xóa","Bấm <b>⋮</b> cạnh tệp hoặc thư mục, chọn Đổi tên hoặc Xóa. Chỉ làm được với mục do bạn tạo."],["Bộ lọc mặc định","Khi đăng nhập, trang mặc định chỉ hiện thư mục và tệp do bạn tạo (Nguồn: Của tôi). Muốn xem thư mục được chia sẻ hoặc toàn bộ nội dung bạn có quyền xem, bấm icon phễu rồi chọn <b>Nguồn: Tất cả</b>."],["Tìm nhanh","Thanh công cụ có kính lúp (tìm trong cả kho), phễu (lọc theo nguồn: của tôi hoặc từng khối, loại tệp và môn học. Lọc theo tên thì chỉ áp dụng trong thư mục đang mở, lọc theo ba tiêu chí còn lại thì tìm trong cả kho), hai mũi tên (sắp xếp) và thanh trượt (hình thu nhỏ)."],["Đổi mật khẩu","Chọn <b>Đổi mật khẩu</b> ở cột bên trái. Quên mật khẩu thì liên hệ Admin để được đặt lại."]];
 const HELP={
 guest:{intro:"Bạn chưa đăng nhập nên chưa xem được tệp nào.",steps:[["Đăng nhập","Bấm <b>Đăng nhập</b> ở cột bên trái, nhập tên đăng nhập và mật khẩu do Admin cấp."],["Chưa có tài khoản?","Liên hệ Admin để được tạo tài khoản. Trang không có chức năng tự đăng ký."],["Sau khi đăng nhập","Mở lại mục Hướng dẫn để xem hướng dẫn riêng cho vai trò của bạn."]]},
 gv:{intro:"Bạn thấy và quản lý được tệp, thư mục do chính mình tạo, cùng các thư mục mà BGH hoặc tổ trưởng chia sẻ cho khối của bạn.",
@@ -427,7 +407,7 @@ bgh:{intro:"Bạn xem được toàn bộ tệp và thư mục của mọi giáo
 admin:{intro:"Bạn có toàn quyền: xem, sửa, xóa mọi tệp và thư mục, chia sẻ mọi thư mục và quản lý tài khoản.",
  can:["Xem, sửa, xóa mọi tệp và thư mục","Chia sẻ bất kỳ thư mục nào, kể cả thư mục cũ chưa có chủ","Thêm tài khoản, phân quyền, đặt lại mật khẩu, xóa tài khoản"],
  steps:[["Thêm tài khoản","Bấm nút <b>Thêm tài khoản</b> dưới thẻ tài khoản, nhập tên đăng nhập, mật khẩu (từ 8 ký tự), vai trò và tổ chuyên môn. Tích “Phân công làm tổ trưởng” nếu cần. Báo mật khẩu cho người dùng, họ tự đổi ở mục Đổi mật khẩu. Muốn tạo nhiều tài khoản cùng lúc, chọn thẻ <b>Từ file Excel</b>: bấm Tải file mẫu, điền Họ và Tên, Chức vụ, Tổ trưởng và Tổ chuyên môn của từng người (một file có thể gồm nhiều tổ; giáo viên bắt buộc có tổ, Ban giám hiệu thì để trống), rồi chọn file. Tên đăng nhập tự tạo (Đoàn Thanh Cang thành Cangdt), mật khẩu ban đầu giống tên đăng nhập và người dùng phải đổi ở lần đăng nhập đầu tiên."],["Quản lý tài khoản","Mở <b>Quản lý tài khoản</b> để xem danh sách, lọc theo tổ, bấm <b>Phân quyền</b> (đổi vai trò, tổ, tổ trưởng), <b>Đặt lại MK</b> hoặc <b>Xóa</b>. Màu nhãn: Admin đỏ, Ban giám hiệu tím, Tổ trưởng xanh ngọc, Giáo viên xanh dương."],["Khóa hoặc xóa tài khoản","<b>Khóa</b> dùng khi người dùng nghỉ tạm thời: họ không đăng nhập được nhưng dữ liệu giữ nguyên, bấm <b>Mở khóa</b> khi họ quay lại. Khi <b>Xóa</b> tài khoản đang có dữ liệu, bạn chọn: giữ lại dữ liệu, chuyển cho người khác (ví dụ tổ trưởng hoặc giáo viên thay thế) hoặc xóa toàn bộ dữ liệu. Tên đăng nhập còn dữ liệu sẽ không được tạo lại cho người khác."],["Chia sẻ thư mục","Bấm <b>⋮</b> rồi <b>Chia sẻ cho khối</b>. Thư mục cũ chưa có chủ chỉ Admin và BGH thấy cho tới khi bạn chia sẻ. Muốn theo dõi ai đã nộp, tích thêm ô <b>Yêu cầu nộp bài</b> khi chia sẻ rồi dùng <b>Trạng thái nộp bài</b> trong cùng menu."],["Gửi thông báo, ghi chú duyệt bài","Bấm <b>Thông báo</b> ở menu trái rồi <b>Tạo thông báo</b>. Chọn loại (Thông báo, Cần điều chỉnh, Đã duyệt), nhập tiêu đề, ghi chú, chọn người nhận (có thể chọn cả tổ hoặc tất cả), đính kèm tệp nếu cần rồi bấm <b>Gửi</b>. Người nhận thấy ngay khi đăng nhập và xem lại trong mục Thông báo. Thẻ <b>Đã gửi</b> cho biết ai đã xem."]],
- notes:["Màu thư mục: vàng là thư mục do bạn tạo, xanh là thư mục của người khác (được chia sẻ cho bạn), đỏ là thư mục yêu cầu nộp bài.","Bảo quản kỹ GitHub token và mật khẩu Admin. Mất cả hai phải thiết lập lại từ đầu. Token hết hạn thì tạo token mới và thiết lập lại.","Kho đang công khai nên việc ẩn tệp chỉ có tác dụng trên giao diện.","GitHub Pages giới hạn khoảng 1 GB. Nên tải theo đợt nhỏ, mỗi đợt 5 đến 10 tệp. Xóa tệp không giảm dung lượng kho vì GitHub giữ lịch sử.","Dữ liệu nằm ở <code>files/</code> (tệp), <code>data/index.json</code> (danh mục) và <code>data/users.json</code> (tài khoản)."]}};
+ notes:["Màu thư mục: vàng là thư mục do bạn tạo, xanh là thư mục của người khác (được chia sẻ cho bạn), đỏ là thư mục yêu cầu nộp bài.","Mọi quyền hạn được máy chủ Google kiểm tra, giáo viên không vượt quyền được dù có xem mã nguồn trang web.","Tệp được lưu riêng tư trong Google Drive của tài khoản Google đã cài máy chủ, thư mục “FileCloud - Du lieu (khong xoa)”. Không xóa, đổi tên hay chia sẻ thư mục này.","Quên mật khẩu Admin: mở dự án Apps Script, chạy hàm resetAdmin, lấy mã mới trong Nhật ký rồi đăng nhập tên admin để đặt mật khẩu mới.","Hãy chạy hàm installBackup một lần để bật sao lưu tự động mỗi đêm (giữ 14 ngày, trong thư mục backup).","Sai mật khẩu 5 lần sẽ bị tạm khóa 15 phút. Mở tệp cần vài giây vì được tải từ Google Drive."]}};
 function helpHtml(){const k=S?rk(S):['guest','Khách'],g=HELP[k[0]],li=a=>a.map(x=>'<li>'+x+'</li>').join(''),st=a=>'<ol>'+a.map(x=>'<li><b>'+x[0]+".</b> "+x[1]+'</li>').join('')+'</ol>';
  return '<h3>Hướng dẫn dành cho '+(S?k[1]:'khách')+'</h3>'+(S?'<div>'+uBadges(S)+'</div>':'')+'<p>'+g.intro+'</p><div class="hg">'+(g.can?'<h4>Bạn có thể</h4><ul>'+li(g.can)+'</ul>':'')+(S?'<h4>Thao tác cơ bản</h4>'+st(HC):'')+'<h4>'+(S?'Dành riêng cho vai trò '+k[1]:'Các bước')+'</h4>'+st(g.steps)+(g.notes?'<h4>Lưu ý</h4><ul>'+li(g.notes)+'</ul>':'')+'</div><div class="fl"><button class="btn p" data-a="x">Đã hiểu</button></div>'}
 // ===== Nhập tài khoản từ file Excel (đọc .xlsx ngay trong trình duyệt, không cần thư viện ngoài) =====
@@ -477,7 +457,7 @@ async function impLoad(file){
   if(col.role===undefined)throw new Error('Thiếu cột “Chức vụ”. Hãy dùng đúng tệp mẫu.');
   const data=[];rows.slice(hi+1).forEach(r=>{const n=cleanName(r[col.name]);if(!n)return;data.push({name:n,role:cleanName(r[col.role]),leader:col.leader===undefined?'':cleanName(r[col.leader]),team:col.team===undefined?'':cleanName(r[col.team])})});
   if(!data.length)throw new Error('Tệp chưa có dòng nào được nhập Họ và Tên.');
-  IMP.rows=data;IMP.users=((await Store.users())||{users:[]}).users;impRender()
+  IMP.rows=data;IMP.users=(await getUsers()).users;impRender()
  }catch(e){IMP.rows=[];box.innerHTML='<div class="empty" style="padding:16px;color:#ff8b8b">'+esc(e.message)+'</div>';$('#impGo').disabled=true;$('#impHint').textContent=''}
 }
 function impPlan(){
@@ -503,29 +483,29 @@ function impRender(){
  const ok=n('new');
  $('#impGo').disabled=!ok;$('#impGo').textContent='Tạo '+ok+' tài khoản';
  $('#impHint').textContent=ok?(n('err')?'Dòng báo lỗi sẽ được bỏ qua. Hãy sửa trong file rồi chọn lại để tạo thêm.':''):'Không có tài khoản hợp lệ để tạo.'}
+const randPw=()=>{const A='abcdefghjkmnpqrstuvwxyz23456789',v=crypto.getRandomValues(new Uint8Array(8));return [...v].map(x=>A[x%A.length]).join('')};
 async function impCreate(){
  if(!S||S.role!='admin')throw new Error('Chỉ Admin được tạo tài khoản.');
  const plan=impPlan().filter(p=>p.status=='new'),bt=$('#impGo'),hint=$('#impHint');if(!plan.length)throw new Error('Không có tài khoản hợp lệ để tạo.');
- bt.disabled=true;let done=0;
+ const rnd=!!($('#impRand')||{}).checked;bt.disabled=true;let done=0;
  try{
-  const wraps=await Promise.all(plan.map(async p=>{const w=await wrap(p.user,S.token);hint.textContent='Đang mã hóa mật khẩu '+(++done)+'/'+plan.length+'…';return w}));
-  hint.textContent='Đang lưu lên GitHub…';
-  let made=[],skipped=[];
-  await Store.updateUsers(L=>{L.users=L.users||[];const have=new Set(L.users.map(u=>u.name.toLowerCase()));made=[];skipped=[];
-   plan.forEach((p,k)=>{if(have.has(p.user.toLowerCase())){skipped.push(p);return}have.add(p.user.toLowerCase());L.users.push({name:p.user,role:p.role,team:p.team,leader:p.leader,fn:p.name,mc:true,w:wraps[k]});made.push(p)})},'Nhập tài khoản từ Excel');
-  IMP.result=made;await syncUsers();render();
-  $('#nuXl').innerHTML=impResultHtml(made,skipped)
+  plan.forEach(p=>{p.pwd=rnd?randPw():p.user.toLowerCase()});
+  const rows=await Promise.all(plan.map(async p=>{const pw=await kd(p.user,p.pwd);hint.textContent='Đang mã hóa mật khẩu '+(++done)+'/'+plan.length+'…';return{user:p.user,name:p.name,role:p.role,team:p.team,leader:p.leader,pw}}));
+  hint.textContent='Đang lưu lên máy chủ…';
+  const mk=new Set();let d;
+  for(let k=0;k<rows.length;k+=150){d=await rpc('user.import',{rows:rows.slice(k,k+150)});(d.made||[]).forEach(n=>mk.add(n))}
+  applyUsers(d);const made=plan.filter(p=>mk.has(p.user)),skipped=plan.filter(p=>!mk.has(p.user));
+  IMP.result=made;render();$('#nuXl').innerHTML=impResultHtml(made,skipped,rnd)
  }catch(e){bt.disabled=false;hint.textContent='';throw e}
 }
 const roleLbl=p=>p.role=='bgh'?'Ban giám hiệu':'Giáo viên'+(p.leader?' (Tổ trưởng)':'');
-function impResultHtml(made,skipped){return '<div><b style="color:var(--tx)">Đã tạo '+made.length+' tài khoản</b>'+(skipped.length?' · bỏ qua '+skipped.length+' (tên đăng nhập đã tồn tại)':'')+'</div><p>Mật khẩu ban đầu giống tên đăng nhập. Mỗi người sẽ phải đổi mật khẩu ở lần đăng nhập đầu tiên. Hãy gửi danh sách này cho giáo viên.</p><div id="impList">'+
-  made.map((p,i)=>'<div class="irow"><span class="ino">'+(i+1)+'</span><div class="nm"><b>'+esc(p.name)+'</b><small>'+esc(roleLbl(p))+(p.team?' · '+esc(p.team):'')+'</small></div><div class="iu" style="grid-column:span 2"><code>'+esc(p.user)+'</code></div></div>').join('')+
+function impResultHtml(made,skipped,rnd){return '<div><b style="color:var(--tx)">Đã tạo '+made.length+' tài khoản</b>'+(skipped.length?' · bỏ qua '+skipped.length+' (tên đăng nhập đã tồn tại)':'')+'</div><p>'+(rnd?'Mỗi người có một mật khẩu ngẫu nhiên riêng (bảng dưới). ':'Mật khẩu ban đầu giống tên đăng nhập. ')+'Mỗi người sẽ phải đổi mật khẩu ở lần đăng nhập đầu tiên. <b>Hãy lưu hoặc sao chép danh sách này ngay</b>: mật khẩu ban đầu không xem lại được sau khi đóng.</p><div id="impList">'+
+  made.map((p,i)=>'<div class="irow"><span class="ino">'+(i+1)+'</span><div class="nm"><b>'+esc(p.name)+'</b><small>'+esc(roleLbl(p))+(p.team?' · '+esc(p.team):'')+'</small></div><div class="iu" style="grid-column:span 2"><code>'+esc(p.user)+'</code> <span style="color:var(--mu)">/</span> <code>'+esc(p.pwd)+'</code></div></div>').join('')+
   '</div><div class="fl"><button class="btn" data-a="impCopy">'+ic('copy')+'Sao chép</button><button class="btn" data-a="impCsv">'+ic('download')+'Tải .csv</button><button class="btn p" data-a="x">Đóng</button></div>'}
 function impDownload(blob,name){const u=URL.createObjectURL(blob),el=document.createElement('a');el.href=u;el.download=name;document.body.appendChild(el);el.click();el.remove();setTimeout(()=>URL.revokeObjectURL(u),2000)}
 function impTemplate(){const b=atob(TPL_B64),u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);impDownload(new Blob([u],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}),'Mau_Danh_sach_Can_bo_Giao_vien.xlsx')}
 async function doPwForce(n,n2){chkPw(n);if(n!==n2)throw new Error('Hai mật khẩu không khớp');if(n.toLowerCase()===S.name.toLowerCase())throw new Error('Mật khẩu mới không được trùng tên đăng nhập.');
- const nw=await wrap(n,S.token);await Store.updateUsers(L=>{const v=L.users.find(x=>x.name===S.name);if(!v)throw new Error('Tài khoản không còn tồn tại');v.w=nw;delete v.mc},'Đổi mật khẩu lần đầu');
- S={...S,mc:false};sessionStorage.setItem('khs',JSON.stringify(S));close();toast('Đã đổi mật khẩu');checkNotes()}
+ const d=await rpc('pw.change',{pw:await kd(S.name,n)});S={...S,token:d.token,mc:false};saveS();close();toast('Đã đổi mật khẩu');await load();checkNotes()}
 // Hộp thoại nhập liệu / xác nhận giữa màn hình (thay cho prompt và confirm của trình duyệt)
 function dlg(o){return new Promise(res=>{
  const ov=$('#ov2'),md=$('#md2');
@@ -605,26 +585,25 @@ function render(){
  $('#all').checked=vis.length>0&&vis.every(id=>sel.has(id));
  let h=subs.slice(0,lim).map(f=>{const n=db.items.filter(i=>(i.folder===f||i.folder.startsWith(f+'/'))&&canView(i)).length;
   return `<div class="row"><span style="width:18px"></span><div class="fi" style="${fcol(f)}">${ic('folder')}</div><div class="nm"><b data-p="${esc(f)}">${esc(dn(f))}</b><small>${n} tệp${pchip(par(f))}${fchips(f)}</small></div><div class="acts"><button class="btn i" data-m="f" data-id="${esc(f)}">${ic('more')}</button></div></div>`}).join('');
- h+=its.slice(0,Math.max(0,lim-subs.length)).map(i=>{const pv=['pdf','png','jpg','jpeg','docx','pptx','xlsx'].includes(ext(i.name));
+ h+=its.slice(0,Math.max(0,lim-subs.length)).map(i=>{const pv=PREV.includes(ext(i.name));
   return `<div class="row"><input type="checkbox" data-s="${esc(i.id)}" ${sel.has(i.id)?'checked':''}>${thumb(i)}<div class="nm"><b data-pv="${esc(i.id)}">${esc(i.name)}</b><small>${fdate(i.date)} · ${fsize(i.size)}${S&&i.by!==S.name?' · '+esc(i.by||'không rõ')+(ud(i.by)&&ud(i.by).team?' ('+esc(ud(i.by).team)+')':''):''}${pchip(i.folder)}${i.subject?'<span class="chip">'+esc(i.subject)+'</span>':''}${i.grade?'<span class="chip">Lớp '+esc(i.grade)+'</span>':''}</small></div>
-  <div class="acts">${pv?`<button class="btn hide" data-pv="${esc(i.id)}">${ic('eye')}Xem trước</button>`:''}<a class="btn" style="text-decoration:none" href="${url(i)}" download="${esc(i.name)}">${ic('download')}Tải xuống</a><button class="btn i" data-m="i" data-id="${esc(i.id)}">${ic('more')}</button></div></div>`}).join('');
+  <div class="acts">${pv?`<button class="btn hide" data-pv="${esc(i.id)}">${ic('eye')}Xem trước</button>`:''}<button class="btn" data-dl="${esc(i.id)}">${ic('download')}Tải xuống</button><button class="btn i" data-m="i" data-id="${esc(i.id)}">${ic('more')}</button></div></div>`}).join('');
  if(subs.length+its.length>lim)h+='<div class="row more"><span>Đang hiển thị '+Math.min(lim,subs.length+its.length)+' / '+(subs.length+its.length)+' mục</span><button class="btn" data-a="more">Hiển thị thêm</button></div>';
- $('#list').innerHTML=h||`<div class="empty">${(q||fq||structOn())?(F.src=='mine'&&!q&&!fq&&Object.keys(F).filter(k=>F[k]&&k!='src'&&k!='type').length==0?'Bạn chưa tạo thư mục nào. Bấm <b>Thư mục mới</b> để tạo. Muốn xem thư mục được chia sẻ hoặc tệp, đổi <b>Nguồn</b> hoặc <b>Loại</b> sang <b>Tất cả</b> trong bộ lọc.':'Không có mục nào khớp bộ lọc.'):(S?'Chưa có tệp nào bạn được phép xem ở đây. Bấm “Tải lên” để thêm tệp.':'<p style="margin-bottom:14px">Vui lòng đăng nhập để xem tệp.</p><button class="btn p" data-a="login">'+ic('key')+' Đăng nhập</button>')}</div>`
+ $('#list').innerHTML=h||`<div class="empty">${(q||fq||structOn())?(F.src=='mine'&&!q&&!fq&&Object.keys(F).filter(k=>F[k]&&k!='src'&&k!='type').length==0?'Bạn chưa tạo thư mục nào. Bấm <b>Thư mục mới</b> để tạo. Muốn xem thư mục được chia sẻ hoặc tệp, đổi <b>Nguồn</b> hoặc <b>Loại</b> sang <b>Tất cả</b> trong bộ lọc.':'Không có mục nào khớp bộ lọc.'):(S?'Chưa có tệp nào bạn được phép xem ở đây. Bấm “Tải lên” để thêm tệp.':'<p style="margin-bottom:14px">Vui lòng đăng nhập để xem tệp.</p><button class="btn p" data-a="login">'+ic('key')+' Đăng nhập</button>')}</div>`;loadThumbs()
 }
 function nav(p){cur=p;q='';fq='';F=(p===''&&Object.keys(defF).length)?{...defF}:{};if(p===''&&Object.keys(defF).length)showF=true;$('#q').value='';$('#fq').value='';sel.clear();location.hash=encodeURIComponent(p);render()}
 addEventListener('hashchange',()=>{cur=decodeURIComponent(location.hash.slice(1));render()});
 
 function modal(k,x){
  const md=$('#md');md.className='md';let h='';
- if(k=='set')h=`<h3>Cài đặt repo</h3><p>Thường tự nhận khi chạy trên GitHub Pages. Chỉ chỉnh khi mở tệp trên máy hoặc dùng tên miền riêng.</p>
- <label>Tài khoản / tổ chức<input type="text" id="c1" value="${esc(C.owner)}"></label><label>Tên repo<input type="text" id="c2" value="${esc(C.repo)}"></label>
- <label>Nhánh<input type="text" id="c3" value="${esc(C.branch)}"></label>
- <div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" data-a="setOk">Lưu</button></div>`;
+ if(k=='set')h=`<h3>Cài đặt máy chủ</h3><p>Địa chỉ máy chủ Google Apps Script mà trang web này kết nối tới. Thường được đọc tự động từ tệp <code>config.json</code>. Chỉ sửa khi địa chỉ triển khai thay đổi. Để trống rồi lưu nếu muốn dùng lại địa chỉ trong <code>config.json</code>.</p>
+ <label>Địa chỉ máy chủ (Web app URL)<input type="text" id="c1" value="${esc(API)}" placeholder="https://script.google.com/macros/s/…/exec"></label>
+ <div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" data-a="setOk">Kiểm tra và lưu</button></div>`;
  if(k=='login')h=`<h3>Đăng nhập</h3><label>Tên đăng nhập<input type="text" id="ln" autocomplete="username"></label><label>Mật khẩu<input type="password" id="lp" autocomplete="current-password"></label><p>Quên mật khẩu hoặc gặp khó khăn khi đăng nhập? Vui lòng liên hệ <b>Admin</b> để được hỗ trợ.</p><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" data-a="loginOk">Đăng nhập</button></div>`;
- if(k=='setup')h=`<h3>Thiết lập lần đầu</h3><p>Nhập GitHub token (fine-grained, quyền Contents: Read and write cho repo này) và đặt mật khẩu Admin mới. Token được mã hóa bằng mật khẩu này trước khi lưu lên repo; mật khẩu mặc định không được dùng để bảo vệ dữ liệu.</p><label>GitHub token<input type="password" id="st" placeholder="github_pat_…"></label><label>Mật khẩu mới (≥ 8 ký tự, khác mật khẩu mặc định)<input type="password" id="s1"></label><label>Nhập lại mật khẩu<input type="password" id="s2"></label><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" data-a="setupOk">Hoàn tất</button></div>`;
+ if(k=='setup')h=`<h3>Thiết lập lần đầu</h3><p>Máy chủ vừa được cài và chưa có mật khẩu Admin. Nhập <b>mã thiết lập</b> (xem trong Nhật ký thực thi của hàm <code>setup</code> trên trang Apps Script) và đặt mật khẩu Admin mới.</p><label>Mã thiết lập<input type="text" id="st" placeholder="XXXX-XXXX-XXXX-XXXX" autocomplete="off"></label><label>Mật khẩu Admin mới (≥ 8 ký tự)<input type="password" id="s1" autocomplete="new-password"></label><label>Nhập lại mật khẩu<input type="password" id="s2" autocomplete="new-password"></label><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" data-a="setupOk">Hoàn tất</button></div>`;
  if(k=='users'){UL=x;md.className='md wide';
   h=`<h3>Quản lý tài khoản</h3><label>Lọc theo tổ chuyên môn<select id="uf"><option value="">Tất cả tổ chuyên môn</option>${TEAMS.map(t=>`<option${UF===t?' selected':''}>${t}</option>`).join('')}<option value="__none"${UF=='__none'?' selected':''}>Chưa phân tổ</option></select></label><div id="ulist">${usersHtml()}</div><div class="fl"><button class="btn p" data-a="x">Đóng</button></div>`}
- if(k=='newu'){md.className='md wide';h=`<h3>Thêm tài khoản</h3><div class="tabs"><button class="tab on" data-a="nuTab" data-id="one">Từng tài khoản</button><button class="tab" data-a="nuTab" data-id="xl">Từ file Excel</button></div><div id="nuOne" class="nup"><label>Tên đăng nhập mới<input type="text" id="nn"></label><label>Mật khẩu (≥ 8 ký tự)<input type="password" id="np"></label><label>Vai trò<select id="nr"><option value="user">Giáo viên: chỉ xem, sửa, xóa tệp của mình</option><option value="bgh">Ban giám hiệu: xem tất cả tệp</option><option value="admin">Admin: toàn quyền</option></select></label><label>Tổ chuyên môn<select id="nt">${teamOpts('')}</select></label><label style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" id="nl" style="width:18px"> Phân công làm tổ trưởng của tổ này</label><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" data-a="uAdd">Tạo tài khoản</button></div></div><div id="nuXl" class="nup" style="display:none"><p>Tạo nhiều tài khoản cùng lúc từ danh sách cán bộ, giáo viên. Mỗi dòng ghi Họ và Tên, Chức vụ, Tổ trưởng và <b>Tổ chuyên môn</b>, nên một file có thể gồm giáo viên của nhiều tổ. Tên đăng nhập tự tạo từ họ tên (ví dụ Đoàn Thanh Cang → <b>Cangdt</b>), mật khẩu ban đầu giống tên đăng nhập.</p><div class="frow"><button class="btn" data-a="impTpl">${ic('download')}Tải file mẫu</button></div><label>Chọn file Excel (.xlsx)<input type="file" id="impFile" accept=".xlsx"></label><div id="impPrev"></div><p id="impHint"></p><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" id="impGo" data-a="impGo" disabled>Tạo tài khoản</button></div></div>`}
+ if(k=='newu'){md.className='md wide';h=`<h3>Thêm tài khoản</h3><div class="tabs"><button class="tab on" data-a="nuTab" data-id="one">Từng tài khoản</button><button class="tab" data-a="nuTab" data-id="xl">Từ file Excel</button></div><div id="nuOne" class="nup"><label>Tên đăng nhập mới<input type="text" id="nn"></label><label>Mật khẩu (≥ 8 ký tự)<input type="password" id="np"></label><label>Vai trò<select id="nr"><option value="user">Giáo viên: chỉ xem, sửa, xóa tệp của mình</option><option value="bgh">Ban giám hiệu: xem tất cả tệp</option><option value="admin">Admin: toàn quyền</option></select></label><label>Tổ chuyên môn<select id="nt">${teamOpts('')}</select></label><label style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" id="nl" style="width:18px"> Phân công làm tổ trưởng của tổ này</label><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" data-a="uAdd">Tạo tài khoản</button></div></div><div id="nuXl" class="nup" style="display:none"><p>Tạo nhiều tài khoản cùng lúc từ danh sách cán bộ, giáo viên. Mỗi dòng ghi Họ và Tên, Chức vụ, Tổ trưởng và <b>Tổ chuyên môn</b>, nên một file có thể gồm giáo viên của nhiều tổ. Tên đăng nhập tự tạo từ họ tên (ví dụ Đoàn Thanh Cang → <b>Cangdt</b>), mật khẩu ban đầu giống tên đăng nhập.</p><div class="frow"><button class="btn" data-a="impTpl">${ic('download')}Tải file mẫu</button></div><label>Chọn file Excel (.xlsx)<input type="file" id="impFile" accept=".xlsx"></label><label style="flex-direction:row;align-items:flex-start;gap:8px"><input type="checkbox" id="impRand" style="width:18px;margin-top:2px"><span>Tạo mật khẩu ngẫu nhiên cho từng người (an toàn hơn). Nếu không tích, mật khẩu ban đầu giống tên đăng nhập.</span></label><div id="impPrev"></div><p id="impHint"></p><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" id="impGo" data-a="impGo" disabled>Tạo tài khoản</button></div></div>`}
  if(k=='status'){SX={f:x,flt:'all'};md.className='md wide';
   h=`<h3>Trạng thái nộp bài</h3><p>Thư mục <b style="color:var(--tx)">${esc(dn(x))}</b> · chia sẻ cho ${esc((db.share[x]||[]).join(', '))}</p><p style="font-size:13px">Thư mục này được bật <b style="color:var(--tx)">Yêu cầu nộp bài</b>. Danh sách gồm các giáo viên thuộc tổ được chia sẻ. Giáo viên được tính là <b style="color:var(--tx)">Đã nộp</b> khi có ít nhất 1 tệp do chính họ tải vào thư mục này (hoặc thư mục con). Chủ thư mục và tài khoản bị khóa không được tính.</p><div class="frow"><label class="fsel" style="flex:1">Hiển thị<select id="sfl" style="width:100%"><option value="all">Tất cả</option><option value="pending">Chưa nộp</option><option value="done">Đã nộp</option></select></label><button class="btn" data-a="stCopy">${ic('copy')}Sao chép danh sách chưa nộp</button><button class="btn" data-a="stRefresh">${ic('refresh')}Làm mới</button></div><div id="stwrap">${statusHtml()}</div><div class="fl"><button class="btn p" data-a="x">Đóng</button></div>`}
  if(k=='shr'){const c2=(db.share||{})[x]||[],ops=S.role=='admin'||S.role=='bgh'?TEAMS:[S.team];
@@ -633,43 +612,46 @@ function modal(k,x){
  if(k=='pwforce')h=`<h3>Đổi mật khẩu lần đầu</h3><p>Tài khoản của bạn đang dùng mật khẩu ban đầu. Hãy đặt mật khẩu mới để tiếp tục sử dụng.</p><label>Mật khẩu mới (≥ 8 ký tự, khác tên đăng nhập)<input type="password" id="f1" autocomplete="new-password"></label><label>Nhập lại mật khẩu<input type="password" id="f2" autocomplete="new-password"></label><div class="fl"><button class="btn p" data-a="pwfOk">Đổi mật khẩu</button></div>`;
  if(k=='pw')h=`<h3>Đổi mật khẩu</h3><label>Mật khẩu hiện tại<input type="password" id="p0"></label><label>Mật khẩu mới (≥ 8 ký tự)<input type="password" id="p1"></label><label>Nhập lại<input type="password" id="p2"></label><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" data-a="pwOk">Đổi mật khẩu</button></div>`;
  if(k=='help'){md.className='md wide';h=helpHtml()}
- if(k=='up')h=`<h3>Tải lên tệp</h3><label>Tệp (Word, PDF, PowerPoint… tối đa 50 MB/tệp)<input type="file" id="uf" multiple></label>
+ if(k=='up')h=`<h3>Tải lên tệp</h3><label>Tệp (Word, PDF, PowerPoint… tối đa 50 MB/tệp)<input type="file" id="upf" multiple></label>
  <label>Môn (tùy chọn)<select id="us"><option value="">Không chọn</option>${SUBJ.map(t=>`<option>${t}</option>`).join('')}</select></label>
  <label>Lớp (tùy chọn)<select id="ug"><option value="">Không chọn</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
  <p id="ust"></p><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" id="ub" data-a="upOk">Tải lên</button></div>`;
- if(k=='pv'){md.className='md big';const u=url(x),e=ext(x.name);
-  h=`<div class="fl" style="justify-content:space-between;align-items:center"><b>${esc(x.name)}</b><button class="btn" data-a="x">Đóng</button></div>`+
-  (['png','jpg','jpeg'].includes(e)?`<img src="${u}">`:e=='pdf'?`<iframe src="${u}"></iframe>`:`<iframe src="https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(u)}"></iframe>`)}
+ if(k=='pv'){md.className='md big';PVID=x.id;
+  h=`<div class="fl" style="justify-content:space-between;align-items:center"><b>${esc(x.name)}</b><span style="display:flex;gap:8px"><button class="btn" data-dl="${esc(x.id)}" data-nm="${esc(x.name)}">${ic('download')}Tải xuống</button><button class="btn" data-a="x">Đóng</button></span></div><div id="pvb" class="empty" style="padding:40px">Đang tải bản xem trước… (tệp Word, Excel, PowerPoint có thể mất vài giây)</div>`}
  if(k=='notes'||k=='notePop'||k=='noteNew')h=noteModal(k,md);
  if(NAVK[k])setNav(NAVK[k]);else if(k=='noteNew')setNav('nNote');
- md.innerHTML=h;$('#ov').classList.add('on')
+ md.innerHTML=h;$('#ov').classList.add('on');if(k=='pv')pvLoad(x)
 }
 // Tô sáng mục menu trái theo cửa sổ đang mở; đóng cửa sổ thì quay về File Manager
 const NAVK={notes:'nNote',users:'nUsers',newu:'nUsers',uedit:'nUsers',pw:'nPw',pwforce:'nPw',set:'nSet',help:'nHelp',login:'nLog'};
 const setNav=id=>document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.id===id));
 const close=()=>{setNav('nHome');lockModal=false;$('#ov').classList.remove('on');$('#md').innerHTML=''};
 
+const PART=3000000;
 async function doUpload(files,subject,grade){
- const st=$('#ust'),bt=$('#ub'),dir=cur,added=[];bt.disabled=true;let err=null;
- try{
-  for(const [n,f] of [...files].entries()){
+ const st=$('#ust'),bt=$('#ub'),dir=cur;bt.disabled=true;let err=null,okc=0;
+ const b64f=blob=>new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result.split(',')[1]);fr.readAsDataURL(blob)});
+ for(const [n,f] of [...files].entries()){
+  try{
    if(f.size>50*1048576)throw new Error(f.name+' vượt quá 50 MB');
-   st.textContent=`Đang tải ${n+1}/${files.length}: ${f.name}`;
-   const data=await new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result.split(',')[1]);fr.readAsDataURL(f)});
-   const path=Date.now()+'_'+f.name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/gi,'d').replace(/[^\w.-]+/g,'_');
-   await Store.putFile(path,data,'Tải lên '+f.name);
-   added.push({id:path,name:f.name,path,size:f.size,date:new Date().toISOString(),folder:dir,subject,grade,by:S.name})
-  }
- }catch(e){err=e}
- try{if(added.length){st.textContent='Đang lưu danh mục…';await Store.update(d=>{d.items.push(...added)},'Cập nhật danh mục')}}catch(e){err=err||e}
- if(err){bt.disabled=false;st.textContent='';toast('Lỗi: '+err.message+(added.length?' (đã tải được '+added.length+' tệp)':''))}else{close();toast('Đã tải lên '+files.length+' tệp')}
+   if(!f.size)throw new Error(f.name+' là tệp rỗng');
+   const lbl=`Đang tải ${n+1}/${files.length}: ${f.name}`;st.textContent=lbl;
+   if(f.size<=PART){const data=await b64f(f);await retry(()=>rpc('file.add',{folder:dir,name:f.name,subject,grade,data}),2)}
+   else{const parts=[],np=Math.ceil(f.size/PART);
+    for(let k=0;k<np;k++){st.textContent=lbl+` (phần ${k+1}/${np})`;const data=await b64f(f.slice(k*PART,(k+1)*PART));parts.push((await retry(()=>rpc('file.put',{data}))).h)}
+    st.textContent=lbl+' (đang ghép tệp…)';await rpc('file.add',{folder:dir,name:f.name,subject,grade,parts})}
+   okc++
+  }catch(e){err=e;break}}
+ if(err){bt.disabled=false;st.textContent='';toast('Lỗi: '+err.message+(okc?' (đã tải được '+okc+' tệp)':''))}else{close();toast('Đã tải lên '+files.length+' tệp')}
  await load()
 }
 const itemOf=id=>db.items.find(i=>i.id===id);
 document.addEventListener('click',async e=>{
  const box=$('#menuBox');if(!e.target.closest('[data-m]'))box.style.display='none';
  if(e.target===$('#ov')){if(!lockModal)close();return}
- const t=e.target.closest('[data-a],[data-p],[data-pv],[data-m]');if(!t)return;
+ const t=e.target.closest('[data-a],[data-p],[data-pv],[data-m],[data-dl],[data-open]');if(!t)return;
+ if(t.dataset.dl){const x=itemOf(t.dataset.dl)||{id:t.dataset.dl,name:t.dataset.nm||'tep'};return dlFile(x)}
+ if(t.dataset.open)return openItem({id:t.dataset.open,name:t.dataset.nm||'tep'});
  if(t.dataset.p!==undefined)return nav(t.dataset.p);
  if(t.dataset.pv)return modal('pv',itemOf(t.dataset.pv));
  if(['sort','disp','hd'].includes(t.dataset.m)){const r=t.getBoundingClientRect(),m=t.dataset.m,ck=v=>'<span class="ck">'+(v?ic('check'):'')+'</span>';let h='';
@@ -678,7 +660,7 @@ document.addEventListener('click',async e=>{
   if(m=='hd')h='<button data-a="selAll">'+ic('check')+' Chọn tất cả</button><button data-a="share">'+ic('link')+' Sao chép liên kết thư mục</button>'+(cur&&canStatus(cur)?'<button data-a="stOpen" data-id="'+esc(cur)+'">'+ic('check')+' Trạng thái nộp bài</button>':'');
   box.innerHTML=h;box.style.minWidth='220px';placeMenu(r);return}
  if(t.dataset.m){const r=t.getBoundingClientRect(),id=t.dataset.id,f=t.dataset.m=='f';
-  box.innerHTML=(f?'<button data-a="rnF" data-id="'+esc(id)+'">'+ic('pencil')+' Đổi tên</button>'+(canShare(id)?'<button data-a="shr" data-id="'+esc(id)+'">'+ic('users')+' Chia sẻ cho khối</button>':'')+(canStatus(id)?'<button data-a="stOpen" data-id="'+esc(id)+'">'+ic('check')+' Trạng thái nộp bài</button>':''):'<button data-a="cp" data-id="'+esc(id)+'">'+ic('link')+' Sao chép liên kết</button><button data-a="rn" data-id="'+esc(id)+'">'+ic('pencil')+' Đổi tên</button>')+'<button data-a="'+(f?'delF':'delI')+'" data-id="'+esc(id)+'" style="color:#ff8b96">'+ic('trash')+' Xóa</button>';
+  box.innerHTML=(f?'<button data-a="rnF" data-id="'+esc(id)+'">'+ic('pencil')+' Đổi tên</button>'+(canShare(id)?'<button data-a="shr" data-id="'+esc(id)+'">'+ic('users')+' Chia sẻ cho khối</button>':'')+(canStatus(id)?'<button data-a="stOpen" data-id="'+esc(id)+'">'+ic('check')+' Trạng thái nộp bài</button>':''):'<button data-a="rn" data-id="'+esc(id)+'">'+ic('pencil')+' Đổi tên</button>')+'<button data-a="'+(f?'delF':'delI')+'" data-id="'+esc(id)+'" style="color:#ff8b96">'+ic('trash')+' Xóa</button>';
   box.style.minWidth='';placeMenu(r);return}
  const a=t.dataset.a,id=t.dataset.id,i=id&&itemOf(id);
  if(a=='x')close();
@@ -699,23 +681,27 @@ document.addEventListener('click',async e=>{
  if(a=='selAll'){vis.forEach(x=>sel.add(x));render()}
  if(a=='re')load();
  if(a=='share'){navigator.clipboard.writeText(location.href);toast('Đã sao chép liên kết thư mục')}
- if(a=='cp'){navigator.clipboard.writeText(url(i));toast('Đã sao chép liên kết tệp')}
- if(a=='setOk'){C={owner:$('#c1').value.trim(),repo:$('#c2').value.trim(),branch:$('#c3').value.trim()||'main'};localStorage.setItem('khbd',JSON.stringify(C));close();toast('Đã lưu kết nối');load()}
+ if(a=='setOk')try{const u=$('#c1').value.trim();
+  if(!u){try{localStorage.removeItem('fcapi')}catch(e){}API='';await loadApi();close();toast(API?'Đã dùng lại địa chỉ trong config.json':'Chưa có địa chỉ máy chủ');return load()}
+  if(!/^https:\/\/script\.google\.com\/(?:macros\/s|a\/macros\/[\w.-]+\/s)\/[\w-]+\/exec$/.test(u)&&!/^http:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?(?:\/|$)/.test(u))throw new Error('Địa chỉ phải có dạng https://script.google.com/macros/s/…/exec');
+  let ok=false;try{const j=await (await fetch(u)).json();ok=j&&j.app=='filecloud'}catch(e){}
+  if(!ok)throw new Error('Không kết nối được hoặc đây không phải máy chủ File Cloud. Hãy kiểm tra địa chỉ và cách triển khai.');
+  API=u;APIBAD=false;try{localStorage.setItem('fcapi',u)}catch(e){}close();toast('Đã lưu địa chỉ máy chủ');load()}catch(er){toast(er.message)}
  if(a=='login')modal('login');
- if(a=='logout'){S=null;F={};defF={...DEF0};showF=false;sessionStorage.removeItem('khs');toast('Đã đăng xuất');load()}
+ if(a=='logout'){S=null;F={};defF={...DEF0};showF=false;try{sessionStorage.removeItem('khs')}catch(e){}BCclear();toast('Đã đăng xuất');load()}
  if(a=='loginOk')try{await doLogin($('#ln').value.trim(),$('#lp').value)}catch(er){toast(er.message)}
  if(a=='setupOk')try{await doSetup($('#st').value.trim(),$('#s1').value,$('#s2').value)}catch(er){toast(er.message)}
  if(a=='users')try{modal('users',(await getUsers())||{users:[]})}catch(er){toast(er.message)}
  if(a=='pw')modal('pw');
  if(a=='pwOk')try{await doPw($('#p0').value,$('#p1').value,$('#p2').value)}catch(er){toast(er.message)}
  if(a=='uAdd')try{const n=$('#nn').value.trim(),p=$('#np').value,r=$('#nr').value,tm=$('#nt').value.trim(),ld=$('#nl').checked;chkPw(p);if(ld&&!tm)throw new Error('Hãy chọn tổ cho tổ trưởng');if(!/^[\w.-]{3,30}$/.test(n))throw new Error('Tên đăng nhập 3–30 ký tự: chữ không dấu, số, . _ -');
-  const w=await wrap(p,S.token);await mutU(L=>{if(L.users.some(u=>u.name.toLowerCase()==n.toLowerCase()))throw new Error('Tên đăng nhập đã tồn tại');if(dataNames().has(n.toLowerCase()))throw new Error('Tên này còn dữ liệu của người đã nghỉ. Hãy chọn tên khác, hoặc chuyển/xóa dữ liệu cũ trước.');L.users.push({name:n,role:r,team:tm,leader:ld,w})});close();toast('Đã tạo tài khoản '+n)}catch(er){toast(er.message)}
+  const d=await rpc('user.add',{name:n,role:r,team:tm,leader:ld,pw:await kd(n,npw(n,p))});applyUsers(d);close();render();toast('Đã tạo tài khoản '+n)}catch(er){toast(er.message)}
  if(a=='addU'&&S&&S.role=='admin'){IMP={rows:[],users:[]};modal('newu')}
  if(a=='nuTab'){const xl=id=='xl';$('#nuOne').style.display=xl?'none':'';$('#nuXl').style.display=xl?'':'none';document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.id==id))}
  if(a=='impTpl')impTemplate();
  if(a=='impGo')try{await impCreate()}catch(er){toast(er.message)}
- if(a=='impCopy'){navigator.clipboard.writeText(['Họ và tên\tTài khoản\tMật khẩu ban đầu'].concat((IMP.result||[]).map(p=>p.name+'\t'+p.user+'\t'+p.user)).join('\n'));toast('Đã sao chép danh sách tài khoản')}
- if(a=='impCsv'){const q=v=>'"'+String(v).replace(/"/g,'""')+'"';impDownload(new Blob(['﻿'+[['STT','Họ và tên','Tài khoản','Mật khẩu ban đầu','Chức vụ','Tổ chuyên môn']].concat((IMP.result||[]).map((p,i)=>[i+1,p.name,p.user,p.user,roleLbl(p),p.team||''])).map(r=>r.map(q).join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'}),'Danh_sach_tai_khoan.csv')}
+ if(a=='impCopy'){navigator.clipboard.writeText(['Họ và tên\tTài khoản\tMật khẩu ban đầu'].concat((IMP.result||[]).map(p=>p.name+'\t'+p.user+'\t'+p.pwd)).join('\n'));toast('Đã sao chép danh sách tài khoản')}
+ if(a=='impCsv'){const q=v=>'"'+String(v).replace(/"/g,'""')+'"';impDownload(new Blob(['﻿'+[['STT','Họ và tên','Tài khoản','Mật khẩu ban đầu','Chức vụ','Tổ chuyên môn']].concat((IMP.result||[]).map((p,i)=>[i+1,p.name,p.user,p.pwd,roleLbl(p),p.team||''])).map(r=>r.map(q).join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'}),'Danh_sach_tai_khoan.csv')}
  if(a=='pwfOk')try{await doPwForce($('#f1').value,$('#f2').value)}catch(er){toast(er.message)}
  if(a=='notes'&&S){NTAB=NTAB||'in';modal('notes');const u=unreadN();if((!canNote()||NTAB=='in')&&u.length)markSeen(u.map(n=>n.id))}
  if(a=='noteTab'){NTAB=id;modal('notes')}
@@ -725,40 +711,40 @@ document.addEventListener('click',async e=>{
  if(a=='noteSend')try{await sendNote()}catch(er){toast(er.message)}
  if(a=='notePopOk'){const ids=NP.map(n=>n.id);close();markSeen(ids)}
  if(a=='noteDel'){if(!await dlg({title:'Xóa thông báo',msg:'Xóa thông báo này? Người nhận cũng không còn thấy nó nữa.',ok:'Xóa',danger:1}))return;
-  try{await Store.updateNotes(L=>{L.notes=L.notes.filter(n=>!(n.id==id&&(n.by===S.name||S.role=='admin')))},'Xóa thông báo');await loadNotes();NTAB='out';modal('notes');toast('Đã xóa thông báo')}catch(er){toast(er.message)}}
+  try{const d=await rpc('notes.delete',{id});NT={notes:d.notes};NTAB='out';modal('notes');toast('Đã xóa thông báo')}catch(er){toast(er.message)}}
  if(a=='uEdit')try{const L=await getUsers();modal('uedit',L.users.find(u=>u.name==id))}catch(er){toast(er.message)}
  if(a=='uback')try{modal('users',(await getUsers())||{users:[]})}catch(er){toast(er.message)}
  if(a=='uEditOk')try{const tm=$('#et').value.trim(),ld=$('#el').checked,r=$('#er').value;if(ld&&!tm)throw new Error('Hãy chọn tổ cho tổ trưởng');if(id==S.name&&r!='admin')throw new Error('Không thể tự hạ quyền Admin của chính mình');
-  await mutU(L=>{const u=L.users.find(x=>x.name==id);u.role=r;u.team=tm;u.leader=ld});toast('Đã cập nhật phân quyền')}catch(er){toast(er.message)}
- if(a=='uReset')try{const p=await dlg({title:'Đặt lại mật khẩu',label:'Mật khẩu mới cho '+id+' (tối thiểu 8 ký tự)',type:'password',ok:'Đặt lại',input:1});if(!p)return;chkPw(p);const w=await wrap(p,S.token);await mutU(L=>{const v=L.users.find(u=>u.name==id);v.w=w;v.mc=id!=S.name});toast('Đã đặt lại mật khẩu')}catch(er){toast(er.message)}
- if(a=='uDel')try{await syncUsers();await askDelete(id)}catch(er){toast(er.message)}
+  const d=await rpc('user.edit',{name:id,role:r,team:tm,leader:ld});applyUsers(d);modal('users',d);render();toast('Đã cập nhật phân quyền')}catch(er){toast(er.message)}
+ if(a=='uReset')try{const p=await dlg({title:'Đặt lại mật khẩu',label:'Mật khẩu mới cho '+id+' (tối thiểu 8 ký tự)',type:'password',ok:'Đặt lại',input:1});if(!p)return;chkPw(p);const d=await rpc('user.reset',{name:id,pw:await kd(id,npw(id,p))});if(d.token){S={...S,token:d.token};saveS()}applyUsers(d);modal('users',d);toast('Đã đặt lại mật khẩu')}catch(er){toast(er.message)}
+ if(a=='uDel')try{await load();await askDelete(id)}catch(er){toast(er.message)}
  if(a=='uLock')try{const cu=(UL.users||[]).find(u=>u.name==id);if(!cu)return;
   if(!cu.lock&&!await dlg({title:'Khóa tài khoản',msg:'Khóa tài khoản <b>'+esc(id)+'</b>? Người này sẽ không đăng nhập được nữa nhưng thư mục và tệp vẫn được giữ nguyên. Bạn có thể mở khóa bất cứ lúc nào.',ok:'Khóa'}))return;
-  const on=!cu.lock;await mutU(L=>{const u=L.users.find(x=>x.name==id);if(!u)throw new Error('Tài khoản không còn tồn tại');if(on){if(u.role=='admin'&&!L.users.some(x=>x.role=='admin'&&!x.lock&&x!==u))throw new Error('Không thể khóa Admin cuối cùng');u.lock=true}else delete u.lock});await syncUsers();toast(on?'Đã khóa tài khoản':'Đã mở khóa tài khoản')}catch(er){toast(er.message)}
+  const on=!cu.lock;{const d=await rpc('user.lock',{name:id,on});applyUsers(d);modal('users',d)}toast(on?'Đã khóa tài khoản':'Đã mở khóa tài khoản')}catch(er){toast(er.message)}
  if(a=='up'){if(!can()){toast('Hãy đăng nhập để tải lên.');return modal('login')}if(cur&&!canPut(cur))return toast('Bạn không có quyền tải lên thư mục này.');modal('up')}
- if(a=='upOk'){const f=$('#uf').files;if(!f.length)return toast('Hãy chọn ít nhất một tệp');doUpload(f,$('#us').value,$('#ug').value)}
+ if(a=='upOk'){const f=$('#upf').files;if(!f.length)return toast('Hãy chọn ít nhất một tệp');doUpload(f,$('#us').value,$('#ug').value)}
  if(a=='nf'){const n=await dlg({title:'Thư mục mới',label:'Tên thư mục (ví dụ: Lớp 3)',ok:'Tạo',input:1});if(!n||!n.trim())return;
   let p=(cur?cur+'/':'')+n.trim().replace(/[\/~]/g,'-');
   if(cur&&S&&S.role!='admin'&&S.role!='bgh'&&(db.fowner||{})[cur]!==S.name)return toast('Bạn chỉ tạo được thư mục con trong thư mục của mình.');
   if(db.folders.includes(p)){if((db.fowner||{})[p]===S.name)return toast('Bạn đã có thư mục này');p+='~'+S.name;if(db.folders.includes(p))return toast('Bạn đã có thư mục này')}
-  act(()=>Store.update(d=>{if(d.folders.includes(p))throw new Error('Thư mục đã tồn tại');d.folders.push(p);d.fowner[p]=S.name},'Tạo thư mục '+p),'Đã tạo thư mục')}
+  act(()=>rpc('folder.create',{parent:cur,name:n.trim()}),'Đã tạo thư mục')}
  if(a=='rn'&&i&&deny(i))return;
- if(a=='rn'){const n=await dlg({title:'Đổi tên tệp',label:'Tên mới',value:i.name,ok:'Lưu',input:1,base:1});if(n&&n.trim())act(()=>Store.update(d=>{const x=d.items.find(y=>y.id===i.id);if(!x)throw new Error('Tệp không còn tồn tại');x.name=n.trim()},'Đổi tên tệp'),'Đã đổi tên')}
+ if(a=='rn'){const n=await dlg({title:'Đổi tên tệp',label:'Tên mới',value:i.name,ok:'Lưu',input:1,base:1});if(n&&n.trim())act(()=>rpc('file.rename',{id:i.id,name:n.trim()}),'Đã đổi tên')}
  if(a=='delI'&&deny(i))return;
- if(a=='delI'&&await dlg({title:'Xóa tệp',msg:'Bạn có chắc muốn xóa <b>'+esc(i.name)+'</b>? Không thể hoàn tác.',ok:'Xóa',danger:1}))act(()=>Store.removeItems([i],'Xóa '+i.name),'Đã xóa');
+ if(a=='delI'&&await dlg({title:'Xóa tệp',msg:'Bạn có chắc muốn xóa <b>'+esc(i.name)+'</b>? Không thể hoàn tác.',ok:'Xóa',danger:1}))act(()=>rpc('file.delete',{ids:[i.id]}),'Đã xóa');
  if((a=='delF'||a=='rnF')&&fdeny(id))return;
  if(a=='rnF'){const old=dn(id),n=((await dlg({title:'Đổi tên thư mục',label:'Tên mới',value:old,ok:'Lưu',input:1}))||'').trim().replace(/[\/~]/g,'-');if(!n||n===old)return;
   const np=(par(id)?par(id)+'/':'')+n;if(db.folders.includes(np))return toast('Đã có thư mục trùng tên');
   const mv=p=>p===id?np:p.startsWith(id+'/')?np+p.slice(id.length):p;
-  act(()=>Store.update(d=>{if(d.folders.includes(np))throw new Error('Đã có thư mục trùng tên');d.folders=d.folders.map(mv);d.items.forEach(x=>{x.folder=mv(x.folder)});['fowner','share','track'].forEach(m=>{const o={};Object.keys(d[m]||{}).forEach(k=>{o[mv(k)]=d[m][k]});d[m]=o})},'Đổi tên thư mục'),'Đã đổi tên thư mục')}
+  act(()=>rpc('folder.rename',{id,name:n}),'Đã đổi tên thư mục')}
  if(a=='delF'){const sub=p=>p===id||p.startsWith(id+'/'),its=db.items.filter(x=>sub(x.folder));
   if(!await dlg({title:'Xóa thư mục',msg:'Xóa thư mục <b>'+esc(dn(id))+'</b>'+(its.length?' cùng <b>'+its.length+' tệp</b> bên trong (kể cả tệp của người khác nộp vào)':'')+'? Không thể hoàn tác.',ok:'Xóa',danger:1}))return;
-  act(async()=>{await Store.removeItems(its,'Xóa thư mục');await Store.update(d=>{d.folders=d.folders.filter(f=>!sub(f));d.items=d.items.filter(x=>!sub(x.folder));['fowner','share','track'].forEach(m=>{Object.keys(d[m]||{}).forEach(p=>{if(sub(p))delete d[m][p]})})},'Xóa thư mục')},'Đã xóa thư mục')}
+  act(()=>rpc('folder.delete',{id}),'Đã xóa thư mục')}
  if(a=='shr'&&canShare(id))modal('shr',id);
  if(a=='shrOk'&&canShare(id)){const v=[...document.querySelectorAll('.st:checked')].map(c=>c.value),tk=!!($('#trk')||{}).checked&&v.length>0;close();
-  act(()=>Store.update(d=>{if(v.length)d.share[id]=v;else delete d.share[id];if(tk)d.track[id]=true;else delete d.track[id]},'Chia sẻ thư mục'),v.length?(tk?'Đã chia sẻ và bật theo dõi nộp bài':'Đã chia sẻ thư mục'):'Đã ngừng chia sẻ')}
+  act(()=>rpc('folder.share',{id,teams:v,track:tk}),v.length?(tk?'Đã chia sẻ và bật theo dõi nộp bài':'Đã chia sẻ thư mục'):'Đã ngừng chia sẻ')}
  if(a=='delSel'&&S&&S.role!='admin'&&[...sel].some(id=>itemOf(id).by!==S.name))return toast('Bạn chỉ được xóa tệp do mình tải lên.');
- if(a=='delSel'&&await dlg({title:'Xóa tệp đã chọn',msg:'Xóa <b>'+sel.size+' tệp</b> đã chọn? Không thể hoàn tác.',ok:'Xóa',danger:1}))act(()=>Store.removeItems([...sel].map(itemOf).filter(Boolean),'Xóa nhiều tệp'),'Đã xóa')
+ if(a=='delSel'&&await dlg({title:'Xóa tệp đã chọn',msg:'Xóa <b>'+sel.size+' tệp</b> đã chọn? Không thể hoàn tác.',ok:'Xóa',danger:1}))act(()=>rpc('file.delete',{ids:[...sel]}),'Đã xóa')
 });
 document.addEventListener('change',e=>{
  if(e.target.dataset.s){e.target.checked?sel.add(e.target.dataset.s):sel.delete(e.target.dataset.s);render()}
@@ -773,14 +759,15 @@ document.addEventListener('change',e=>{
  if(e.target.name=='dm'){const t=$('#dmT');if(t)t.disabled=e.target.value!='move'}
  if(e.target.id=='nrf'){NC.flt=e.target.value;rcRefresh()}
  if(e.target.classList.contains('rc')){if(e.target.checked)NC.sel.add(e.target.value);else NC.sel.delete(e.target.value);rcRefresh()}
- if(e.target.id=='uf'){UF=e.target.value;$('#ulist').innerHTML=usersHtml()}
+ if(e.target.id=='uf'&&$('#ulist')){UF=e.target.value;$('#ulist').innerHTML=usersHtml()}
 });
 $('#fq').addEventListener('keydown',e=>{if(e.key=='Enter'){fq=e.target.value.trim().toLowerCase();render()}});
 document.addEventListener('input',e=>{if(e.target.id=='rcq'){NC.q=e.target.value.trim().toLowerCase();const l=$('#rcl');if(l)l.innerHTML=rcListHtml()}});
 $('#q').addEventListener('input',e=>{q=e.target.value.trim().toLowerCase();render()});
 addEventListener('dragover',e=>e.preventDefault());
-addEventListener('drop',e=>{e.preventDefault();if(!e.dataTransfer.files.length)return;if(!can()){toast('Hãy đăng nhập để tải lên.');return modal('login')}if(cur&&!canPut(cur))return toast('Bạn không có quyền tải lên thư mục này.');modal('up');$('#uf').files=e.dataTransfer.files});
+addEventListener('drop',e=>{e.preventDefault();if(!e.dataTransfer.files.length)return;if(!can()){toast('Hãy đăng nhập để tải lên.');return modal('login')}if(cur&&!canPut(cur))return toast('Bạn không có quyền tải lên thư mục này.');modal('up');$('#upf').files=e.dataTransfer.files});
 $('#ov').addEventListener('keydown',e=>{if(e.key=='Enter'&&e.target.tagName=='INPUT'&&e.target.type!='file'){const b=$('#md .btn.p');b&&b.click()}});
 if(S&&!location.hash.slice(1)){F={...defF};showF=true}
-cur=decodeURIComponent(location.hash.slice(1));load().then(()=>{if(S&&S.mc){lockModal=true;modal('pwforce')}});
+cur=decodeURIComponent(location.hash.slice(1));
+loadApi().then(()=>load()).then(()=>{if(S&&S.mc){lockModal=true;modal('pwforce')}else if(!API)modal('set')});
 </script></body></html>
