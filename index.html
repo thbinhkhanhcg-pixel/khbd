@@ -102,6 +102,7 @@ input[type=checkbox]:checked{border-color:var(--ac);background:var(--ac) url("da
 main{display:flex;flex-direction:column}
 .wrap{width:100%;padding-bottom:32px}
 footer{margin-top:auto;padding:20px 16px 24px;text-align:center;color:var(--mu);font-size:13.5px}
+.mk{margin-top:auto;padding:6px 12px 2px;color:var(--mu);font-size:12.5px;text-align:left;opacity:.85}.mk svg{width:14px;height:14px;fill:#ff3b4e;stroke:none;vertical-align:-2px;margin:0 2px}
 footer .sep{margin:0 10px;opacity:.5}footer svg{width:16px;height:16px;fill:#ff3b4e;stroke:none;vertical-align:-3px;margin:0 3px}
 .md.dlg{padding:0;gap:0;width:min(440px,100%)}
 #ov2{z-index:15}
@@ -154,6 +155,7 @@ footer .sep{margin:0 10px;opacity:.5}footer svg{width:16px;height:16px;fill:#ff3
   <a data-a="login" id="nLog"><svg class="ic"><use href="#i-key"/></svg>Đăng nhập</a>
   <a data-a="logout" id="nOut" style="display:none"><svg class="ic"><use href="#i-logout"/></svg>Đăng xuất</a>
  </nav>
+ <div class="mk">Made with <svg viewBox="0 0 24 24" aria-label="love"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> by Doan Kan</div>
 </aside>
 <main>
  <header><button id="menu" data-a="menu"><svg class="ic"><use href="#i-menu"/></svg></button>File Manager</header>
@@ -179,7 +181,7 @@ footer .sep{margin:0 10px;opacity:.5}footer svg{width:16px;height:16px;fill:#ff3
   <section class="card fpanel" id="fbar" style="display:none"><div class="frow" style="align-items:center"><span class="fic"><svg class="ic"><use href="#i-filter"/></svg></span><input type="text" id="fq" placeholder="Lọc theo tên tệp hoặc thư mục…"><button class="btn p" data-a="fApply">Áp dụng</button><button class="btn" data-a="fClear">Xóa bộ lọc</button></div><div class="frow" id="fsel"></div></section>
   <section class="card" id="list"></section>
  </div>
-<footer>Tiểu học Bình Phước © 2026<span class="sep">·</span>Digitalizing Education with <svg viewBox="0 0 24 24" aria-label="love"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> by Doan Kan</footer>
+<footer>Tiểu học Bình Phước © 2026<span class="sep">·</span>Digitalizing Education with <svg viewBox="0 0 24 24" aria-label="love"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></footer>
 </main>
 <div class="ov" id="ov"><div class="md" id="md"></div></div>
 <div class="ov" id="ov2"><div class="md dlg" id="md2"></div></div>
