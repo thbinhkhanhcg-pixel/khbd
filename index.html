@@ -89,6 +89,7 @@ input[type=checkbox]:checked{border-color:var(--ac);background:var(--ac) url("da
 .ucnt{color:var(--mu);font-size:12.5px;padding:2px 0 8px}
 #ulist{max-height:50vh;overflow:auto}
 .upbar{position:relative;height:22px;border-radius:11px;background:var(--line);overflow:hidden}.upbar i{display:block;height:100%;width:0;border-radius:11px;background:linear-gradient(90deg,#2f6bff,#4f8bff);transition:width .25s ease}.upbar span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.5)}
+.upbar.wait i{background:linear-gradient(90deg,#2f6bff,#7aa8ff,#2f6bff);background-size:200% 100%;animation:upwait 1.2s linear infinite}@keyframes upwait{0%{background-position:200% 0}100%{background-position:-200% 0}}
 .upbar.ind i{width:35%!important;background:repeating-linear-gradient(45deg,#2f6bff 0 10px,#4f8bff 10px 20px);animation:upind 1.1s linear infinite}@keyframes upind{0%{margin-left:-35%}100%{margin-left:100%}}
 .qsum{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.qsum>div{border:1px solid var(--line);border-radius:12px;padding:10px 12px}.qsum small{display:block;color:var(--mu);font-size:11.5px}.qsum b{font-size:18px}
 .qbar{height:8px;border-radius:5px;background:var(--line);overflow:hidden}.qbar i{display:block;height:100%;background:#3b82f6;border-radius:5px}.qbar.w i{background:#f59e0b}.qbar.r i{background:#ef4444}
@@ -292,11 +293,11 @@ function loadThumbs(){document.querySelectorAll('img[data-th]').forEach(im=>{con
  if(im.dataset.q)return;im.dataset.q=1;const it=itemOf(id);if(!it)return;
  if(it.fid){im.src='https://drive.google.com/thumbnail?id='+encodeURIComponent(it.fid)+'&sz=w'+Math.min(800,Math.max(100,(D.sz||100)*2));return}
  THQ=THQ.then(async()=>{try{if(!document.body.contains(im))return;im.src=(await fileBlob(it)).url}catch(e){}})})}
-const signIn=u=>{S=u;defF={...DEF0};F={...defF};showF=true;saveS();close();toast('Xin chào '+u.name);return load()};
+const signIn=(u,b)=>{S=u;defF={...DEF0};F={...defF};showF=true;saveS();close();toast('Xin chào '+u.name);if(b){applyBundle(b);render();checkNotes();return Promise.resolve()}return load()};
 async function doLogin(n,p){
  if(!n||!p)throw new Error('Nhập tên đăng nhập và mật khẩu');
  let d;try{d=await rpc('login',{user:n,pw:await kd(n,npw(n,p))})}catch(e){if(e.code=='setup'){modal('setup');return}throw e}
- await signIn({...d.me,token:d.token});
+ await signIn({...d.me,token:d.token},d.bundle);
  if(S&&S.mc){lockModal=true;modal('pwforce')}}
 async function doSetup(code,p1,p2){
  if(!code)throw new Error('Hãy nhập mã thiết lập');chkPw(p1);if(p1!==p2)throw new Error('Hai mật khẩu không khớp');
@@ -673,9 +674,9 @@ async function upSlow(f,dir,subject,grade,onp){
 async function doUpload(files,subject,grade){
  const st=$('#ust'),bt=$('#ub'),dir=cur;bt.disabled=true;let err=null,okc=0,last=null;
  const list=[...files],pr=list.map(()=>0),show=()=>{const tot=list.reduce((a,f)=>a+f.size,0)||1,dn=list.reduce((a,f,i)=>a+f.size*pr[i],0);
-  const pc=Math.min(100,Math.round(dn*100/tot)),ub=$('#upbar');
-  st.textContent=`Đang tải ${okc}/${list.length} tệp – ${fsize(dn)} / ${fsize(tot)}`+(list.length==1?': '+list[0].name:'');
-  if(ub){ub.style.display='';ub.classList.toggle('ind',pc==0&&okc==0);ub.setAttribute('aria-valuenow',pc);ub.firstChild.style.width=pc+'%';ub.lastChild.textContent=pc+'%'}};
+  const sent=dn>=tot-1&&okc<list.length,pc=Math.min(sent?99:100,Math.round(dn*100/tot)),ub=$('#upbar');
+  st.textContent=sent?`Đã gửi xong ${fsize(tot)}, đang lưu vào Google Drive… (có thể mất vài giây, xin đừng đóng cửa sổ)`:`Đang tải ${okc}/${list.length} tệp – ${fsize(dn)} / ${fsize(tot)}`+(list.length==1?': '+list[0].name:'');
+  if(ub){ub.style.display='';ub.classList.toggle('wait',sent);ub.classList.toggle('ind',pc==0&&okc==0);ub.setAttribute('aria-valuenow',pc);ub.firstChild.style.width=pc+'%';ub.lastChild.textContent=pc+'%'}};
  for(const f of list){if(f.size>50*1048576){err=new Error(f.name+' vượt quá 50 MB');break}if(!f.size){err=new Error(f.name+' là tệp rỗng');break}}
  let next=0;show();
  const worker=async()=>{while(!err){const n=next++;if(n>=list.length)return;const f=list[n],onp=p=>{pr[n]=p;show()};
@@ -733,7 +734,7 @@ document.addEventListener('click',async e=>{
   API=u;APIBAD=false;try{localStorage.setItem('fcapi',u)}catch(e){}close();toast('Đã lưu địa chỉ máy chủ');load()}catch(er){toast(er.message)}
  if(a=='login')modal('login');
  if(a=='logout'){S=null;F={};defF={...DEF0};showF=false;try{sessionStorage.removeItem('khs')}catch(e){}BCclear();toast('Đã đăng xuất');load()}
- if(a=='loginOk')try{await doLogin($('#ln').value.trim(),$('#lp').value)}catch(er){toast(er.message)}
+ if(a=='loginOk'){const b0=t.textContent;t.disabled=true;t.textContent='Đang đăng nhập…';try{await doLogin($('#ln').value.trim(),$('#lp').value)}catch(er){toast(er.message)}finally{t.disabled=false;t.textContent=b0}}
  if(a=='setupOk')try{await doSetup($('#st').value.trim(),$('#s1').value,$('#s2').value)}catch(er){toast(er.message)}
  if(a=='usage'||a=='usageRe')try{modal('usage',await rpc('usage.stats'))}catch(er){toast(er.message)}
  if(a=='users')try{modal('users',(await getUsers())||{users:[]})}catch(er){toast(er.message)}
