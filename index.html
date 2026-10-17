@@ -88,6 +88,8 @@ input[type=checkbox]:checked{border-color:var(--ac);background:var(--ac) url("da
 .urow .btn{width:100%;padding:8px 6px}.urow .nm b{cursor:default}
 .ucnt{color:var(--mu);font-size:12.5px;padding:2px 0 8px}
 #ulist{max-height:50vh;overflow:auto}
+.upbar{position:relative;height:22px;border-radius:11px;background:var(--line);overflow:hidden}.upbar i{display:block;height:100%;width:0;border-radius:11px;background:linear-gradient(90deg,#2f6bff,#4f8bff);transition:width .25s ease}.upbar span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.5)}
+.upbar.ind i{width:35%!important;background:repeating-linear-gradient(45deg,#2f6bff 0 10px,#4f8bff 10px 20px);animation:upind 1.1s linear infinite}@keyframes upind{0%{margin-left:-35%}100%{margin-left:100%}}
 .qsum{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.qsum>div{border:1px solid var(--line);border-radius:12px;padding:10px 12px}.qsum small{display:block;color:var(--mu);font-size:11.5px}.qsum b{font-size:18px}
 .qbar{height:8px;border-radius:5px;background:var(--line);overflow:hidden}.qbar i{display:block;height:100%;background:#3b82f6;border-radius:5px}.qbar.w i{background:#f59e0b}.qbar.r i{background:#ef4444}
 .qrow{display:grid;grid-template-columns:28px 1fr 70px 90px 56px;gap:10px;align-items:center;padding:9px 0;border-top:1px solid var(--line)}.qrow .qb{grid-column:2/-1}.qrow .nm b{cursor:default}.qrow .num{text-align:right;font-variant-numeric:tabular-nums}.qrow .rk{color:var(--mu);font-size:12.5px;text-align:center}
@@ -637,7 +639,7 @@ function modal(k,x){
  if(k=='up')h=`<h3>Tải lên tệp</h3><label>Tệp (Word, PDF, PowerPoint… tối đa 50 MB/tệp)<input type="file" id="upf" multiple></label>
  <label>Môn (tùy chọn)<select id="us"><option value="">Không chọn</option>${SUBJ.map(t=>`<option>${t}</option>`).join('')}</select></label>
  <label>Lớp (tùy chọn)<select id="ug"><option value="">Không chọn</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
- <p id="ust"></p><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" id="ub" data-a="upOk">Tải lên</button></div>`;
+ <p id="ust"></p><div class="upbar" id="upbar" style="display:none" role="progressbar" aria-valuemin="0" aria-valuemax="100"><i></i><span></span></div><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" id="ub" data-a="upOk">Tải lên</button></div>`;
  if(k=='pv'){md.className='md big';PVID=x.id;
   h=`<div class="fl" style="justify-content:space-between;align-items:center"><b>${esc(x.name)}</b><span style="display:flex;gap:8px"><button class="btn" data-dl="${esc(x.id)}" data-nm="${esc(x.name)}" data-fid="${esc(x.fid||'')}">${ic('download')}Tải xuống</button>${x.fid?`<a class="btn" target="_blank" rel="noopener" href="https://drive.google.com/file/d/${encodeURIComponent(x.fid)}/view">Mở trong Google Drive</a>`:''}<button class="btn" data-a="x">Đóng</button></span></div><div id="pvb" class="empty" style="padding:40px">Đang tải bản xem trước…${x.fid?'':' (tệp Word, Excel, PowerPoint có thể mất vài giây)'}</div>`}
  if(k=='notes'||k=='notePop'||k=='noteNew')h=noteModal(k,md);
@@ -671,7 +673,9 @@ async function upSlow(f,dir,subject,grade,onp){
 async function doUpload(files,subject,grade){
  const st=$('#ust'),bt=$('#ub'),dir=cur;bt.disabled=true;let err=null,okc=0,last=null;
  const list=[...files],pr=list.map(()=>0),show=()=>{const tot=list.reduce((a,f)=>a+f.size,0)||1,dn=list.reduce((a,f,i)=>a+f.size*pr[i],0);
-  st.textContent=`Đang tải ${okc}/${list.length} tệp – ${Math.round(dn*100/tot)}%`+(list.length==1?': '+list[0].name:'')};
+  const pc=Math.min(100,Math.round(dn*100/tot)),ub=$('#upbar');
+  st.textContent=`Đang tải ${okc}/${list.length} tệp – ${fsize(dn)} / ${fsize(tot)}`+(list.length==1?': '+list[0].name:'');
+  if(ub){ub.style.display='';ub.classList.toggle('ind',pc==0&&okc==0);ub.setAttribute('aria-valuenow',pc);ub.firstChild.style.width=pc+'%';ub.lastChild.textContent=pc+'%'}};
  for(const f of list){if(f.size>50*1048576){err=new Error(f.name+' vượt quá 50 MB');break}if(!f.size){err=new Error(f.name+' là tệp rỗng');break}}
  let next=0;show();
  const worker=async()=>{while(!err){const n=next++;if(n>=list.length)return;const f=list[n],onp=p=>{pr[n]=p;show()};
@@ -682,7 +686,7 @@ async function doUpload(files,subject,grade){
    pr[n]=1;okc++;last=r;show()
   }catch(e){err=e}}};
  await Promise.all(Array.from({length:Math.min(FILE_PAR,list.length)},worker));
- if(err){bt.disabled=false;st.textContent='';toast('Lỗi: '+err.message+(okc?' (đã tải được '+okc+' tệp)':''))}else{close();toast('Đã tải lên '+list.length+' tệp')}
+ if(err){bt.disabled=false;st.textContent='';const ub=$('#upbar');if(ub)ub.style.display='none';toast('Lỗi: '+err.message+(okc?' (đã tải được '+okc+' tệp)':''))}else{close();toast('Đã tải lên '+list.length+' tệp')}
  if(!err&&list.length==1&&last&&last.bundle){applyBundle(last.bundle);render();checkNotes()}else await load()
 }
 const itemOf=id=>db.items.find(i=>i.id===id);
