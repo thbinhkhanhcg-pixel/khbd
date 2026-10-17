@@ -88,6 +88,11 @@ input[type=checkbox]:checked{border-color:var(--ac);background:var(--ac) url("da
 .urow .btn{width:100%;padding:8px 6px}.urow .nm b{cursor:default}
 .ucnt{color:var(--mu);font-size:12.5px;padding:2px 0 8px}
 #ulist{max-height:50vh;overflow:auto}
+.qsum{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.qsum>div{border:1px solid var(--line);border-radius:12px;padding:10px 12px}.qsum small{display:block;color:var(--mu);font-size:11.5px}.qsum b{font-size:18px}
+.qbar{height:8px;border-radius:5px;background:var(--line);overflow:hidden}.qbar i{display:block;height:100%;background:#3b82f6;border-radius:5px}.qbar.w i{background:#f59e0b}.qbar.r i{background:#ef4444}
+.qrow{display:grid;grid-template-columns:28px 1fr 70px 90px 56px;gap:10px;align-items:center;padding:9px 0;border-top:1px solid var(--line)}.qrow .qb{grid-column:2/-1}.qrow .nm b{cursor:default}.qrow .num{text-align:right;font-variant-numeric:tabular-nums}.qrow .rk{color:var(--mu);font-size:12.5px;text-align:center}
+#qlist{max-height:46vh;overflow:auto}.qtop{display:flex;gap:10px;flex-wrap:wrap}.qtop label{flex:1;min-width:150px}
+@media(max-width:560px){.qsum{grid-template-columns:1fr}.qrow{grid-template-columns:24px 1fr 80px}.qrow .cnt,.qrow .pc{display:none}.qrow .qb{grid-column:2/-1}}
 @media(max-width:560px){.urow{grid-template-columns:1fr 1fr}.urow .nm{grid-column:1/-1}}
 #menuBox{max-width:calc(100vw - 16px);overflow:auto;overscroll-behavior:contain}
 .wrap{padding-bottom:72px}
@@ -139,6 +144,7 @@ footer .sep{margin:0 10px;opacity:.5}footer svg{width:16px;height:16px;fill:#ff3
   <a class="on" data-a="home" id="nHome"><svg class="ic"><use href="#i-folderopen"/></svg>File Manager</a>
   <a data-a="notes" id="nNote" style="display:none"><svg class="ic"><use href="#i-bell"/></svg>Thông báo<b id="nBadge" style="display:none"></b></a>
   <a data-a="users" id="nUsers" style="display:none"><svg class="ic"><use href="#i-users"/></svg>Quản lý tài khoản</a>
+  <a data-a="usage" id="nUsage" style="display:none"><svg class="ic"><use href="#i-drive"/></svg>Theo dõi dung lượng</a>
   <a data-a="pw" id="nPw" style="display:none"><svg class="ic"><use href="#i-lock"/></svg>Đổi mật khẩu</a>
   <a data-a="set" id="nSet" style="display:none"><svg class="ic"><use href="#i-sliders"/></svg>Cài đặt máy chủ</a>
   <a data-a="help" id="nHelp"><svg class="ic"><use href="#i-help"/></svg>Hướng dẫn</a>
@@ -204,6 +210,14 @@ const rk=u=>u.role=='admin'?['admin','Admin']:u.role=='bgh'?['bgh','Ban giám hi
 const uBadges=u=>{const k=rk(u);return '<span class="rb r-'+k[0]+'">'+k[1]+'</span>'+(u.team?'<span class="rt">'+esc(u.team)+'</span>':'')};
 const usersHtml=()=>{const L=UL.users.filter(u=>!UF||(UF=='__none'?!u.team:u.team===UF));
  return '<div class="ucnt">'+L.length+' tài khoản</div>'+(L.map(u=>'<div class="urow"><div class="nm"><b>'+esc(u.name)+'</b>'+(u.fn?'<span class="fnm">'+esc(u.fn)+'</span>':'')+'<small>'+uBadges(u)+(u.lock?'<span class="rb r-lock">Đã khóa</span>':'')+(u.mc?'<span class="rb r-warn" title="Vẫn đang dùng mật khẩu ban đầu (trùng tên đăng nhập)">Chưa đổi mật khẩu</span>':'')+'</small></div><button class="btn" data-a="uEdit" data-id="'+esc(u.name)+'">Phân quyền</button><button class="btn" data-a="uReset" data-id="'+esc(u.name)+'">Đặt lại MK</button>'+(u.name==S.name?'<span></span><span></span>':'<button class="btn" data-a="uLock" data-id="'+esc(u.name)+'">'+(u.lock?'Mở khóa':'Khóa')+'</button><button class="btn d" data-a="uDel" data-id="'+esc(u.name)+'">Xóa</button>')+'</div>').join('')||'<div class="empty" style="padding:24px">Không có tài khoản nào trong tổ này.</div>')};
+let QD=null,QF='',QS='b';
+const qHtml=()=>{if(!QD)return '';const T=QD.bytes||0;let L=QD.rows.filter(r=>!QF||(QF=='__none'?!r.team&&!r.gone:QF=='__gone'?r.gone:r.team===QF));
+ L=[...L].sort((a,b)=>QS=='n'?b.n-a.n||b.b-a.b:QS=='a'?a.name.localeCompare(b.name,'vi'):b.b-a.b||b.n-a.n);const mx=Math.max(1,...L.map(r=>r.b));
+ const sb=L.reduce((a,r)=>a+r.b,0),sn=L.reduce((a,r)=>a+r.n,0);
+ return '<div class="ucnt">'+L.length+' tài khoản · '+sn+' tệp · '+fsize(sb)+'</div>'+(L.map((r,k)=>'<div class="qrow"><span class="rk">'+(k+1)+'</span><div class="nm"><b>'+esc(r.name)+'</b>'+(r.fn?'<span class="fnm">'+esc(r.fn)+'</span>':'')+'<small>'+(r.gone?'<span class="rb r-lock">Tài khoản đã xóa, dữ liệu còn giữ</span>':uBadges(r))+'</small></div><span class="num cnt">'+r.n+' tệp</span><b class="num">'+(r.b?fsize(r.b):'0')+'</b><span class="num pc" style="color:var(--mu)">'+(T?(r.b*100/T).toFixed(1):'0')+'%</span><div class="qb"><div class="qbar"><i style="width:'+(r.b*100/mx)+'%"></i></div></div></div>').join('')||'<div class="empty" style="padding:24px">Không có dữ liệu.</div>')};
+const qBody=()=>{const q=QD.quota,pc=q&&q.limit?q.used*100/q.limit:0;
+ return '<div class="qsum"><div><small>Tổng số tệp</small><b>'+QD.files+'</b></div><div><small>Dung lượng đã tải lên</small><b>'+fsize(QD.bytes)+'</b></div><div><small>Google Drive đã dùng</small><b>'+(q?fsize(q.used)+(q.limit?' / '+fsize(q.limit):''):'Không đọc được')+'</b>'+(q&&q.limit?'<div class="qbar'+(pc>=90?' r':pc>=70?' w':'')+'" style="margin-top:6px"><i style="width:'+Math.min(100,pc)+'%"></i></div>':'')+'</div></div>'
+ +'<div class="qtop"><label>Lọc theo tổ chuyên môn<select id="qf"><option value="">Tất cả</option>'+TEAMS.map(t=>'<option'+(QF===t?' selected':'')+'>'+t+'</option>').join('')+'<option value="__none"'+(QF=='__none'?' selected':'')+'>Chưa phân tổ</option><option value="__gone"'+(QF=='__gone'?' selected':'')+'>Tài khoản đã xóa</option></select></label><label>Sắp xếp<select id="qs"><option value="b"'+(QS=='b'?' selected':'')+'>Dung lượng nhiều nhất</option><option value="n"'+(QS=='n'?' selected':'')+'>Số tệp nhiều nhất</option><option value="a"'+(QS=='a'?' selected':'')+'>Tên A–Z</option></select></label></div><div id="qlist">'+qHtml()+'</div><p style="font-size:12px">Dung lượng Google Drive đã dùng gồm cả thùng rác, dữ liệu hệ thống và mọi thứ khác trong tài khoản Google của trường, nên có thể lớn hơn tổng các tệp ở đây. Số liệu cập nhật lúc '+new Date(QD.at).toLocaleString('vi-VN')+'.</p>'};
 const info=u=>(u.role=='admin'?'Admin':u.role=='bgh'?'Ban giám hiệu':'Giáo viên')+(u.team?' · '+u.team:'')+(u.leader?' · Tổ trưởng':'');
 // Quyền xem: Admin và BGH xem tất cả; Tổ trưởng xem tệp của cả tổ; Giáo viên chỉ xem tệp của mình
 const dn=f=>f.split('/').pop().split('~')[0];
@@ -364,7 +378,7 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden&&S&&Date.n
 const fdeny=f=>{if(!S){modal('login');return true}if(S.role!='admin'&&(db.fowner||{})[f]!==S.name){toast('Bạn chỉ được sửa/xóa thư mục do mình tạo.');return true}return false};
 const deny=i=>{if(!S){modal('login');return true}if(S.role!='admin'&&i.by!==S.name){toast('Bạn chỉ được sửa/xóa tệp do mình tải lên.');return true}return false};
 const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),3000)};
-const fsize=n=>n>=1048576?(n/1048576).toFixed(1)+' MB':Math.max(1,Math.round(n/1024))+' KB';
+const fsize=n=>n>=1073741824?(n/1073741824).toFixed(2)+' GB':n>=1048576?(n/1048576).toFixed(1)+' MB':Math.max(1,Math.round(n/1024))+' KB';
 const fdate=d=>new Date(d).toLocaleString('vi-VN',{dateStyle:'medium',timeStyle:'short'});
 const par=f=>f.includes('/')?f.slice(0,f.lastIndexOf('/')):'';
 const ext=n=>(n.split('.').pop()||'').toLowerCase();
@@ -587,7 +601,7 @@ function render(){
  const ad=S&&S.role=='admin';
  $('#accN').textContent=S?S.name:'Khách';$('#accS').innerHTML=S?uBadges(S):'Chế độ chỉ xem';
  $('.av').textContent=S?S.name.slice(0,2).toUpperCase():'GV';
- $('#nUsers').style.display=ad?'':'none';$('#nNote').style.display=S?'':'none';updBadge();$('#nSet').style.display=canCfg()?'':'none';$('#addAcc').style.display=ad?'':'none';$('#nPw').style.display=S?'':'none';$('#nOut').style.display=S?'':'none';$('#nLog').style.display=S?'none':'';
+ $('#nUsers').style.display=ad?'':'none';$('#nUsage').style.display=ad?'':'none';$('#nNote').style.display=S?'':'none';updBadge();$('#nSet').style.display=canCfg()?'':'none';$('#addAcc').style.display=ad?'':'none';$('#nPw').style.display=S?'':'none';$('#nOut').style.display=S?'':'none';$('#nLog').style.display=S?'none':'';
  $('#delSel').style.display=sel.size?'':'none';$('#delSel').innerHTML=ic('trash')+'Xóa ('+sel.size+')';
  $('#all').checked=vis.length>0&&vis.every(id=>sel.has(id));
  let h=subs.slice(0,lim).map(f=>{const n=db.items.filter(i=>(i.folder===f||i.folder.startsWith(f+'/'))&&canView(i)).length;
@@ -608,6 +622,7 @@ function modal(k,x){
  <div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" data-a="setOk">Kiểm tra và lưu</button></div>`;
  if(k=='login')h=`<h3>Đăng nhập</h3><label>Tên đăng nhập<input type="text" id="ln" autocomplete="username"></label><label>Mật khẩu<input type="password" id="lp" autocomplete="current-password"></label><p>Quên mật khẩu hoặc gặp khó khăn khi đăng nhập? Vui lòng liên hệ <b>Admin</b> để được hỗ trợ.</p><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" data-a="loginOk">Đăng nhập</button></div>`;
  if(k=='setup')h=`<h3>Thiết lập lần đầu</h3><p>Máy chủ vừa được cài và chưa có mật khẩu Admin. Nhập <b>mã thiết lập</b> (xem trong Nhật ký thực thi của hàm <code>setup</code> trên trang Apps Script) và đặt mật khẩu Admin mới.</p><label>Mã thiết lập<input type="text" id="st" placeholder="XXXX-XXXX-XXXX-XXXX" autocomplete="off"></label><label>Mật khẩu Admin mới (≥ 8 ký tự)<input type="password" id="s1" autocomplete="new-password"></label><label>Nhập lại mật khẩu<input type="password" id="s2" autocomplete="new-password"></label><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" data-a="setupOk">Hoàn tất</button></div>`;
+ if(k=='usage'){QD=x;md.className='md wide';h='<h3>Theo dõi dung lượng người dùng</h3>'+qBody()+'<div class="fl"><button class="btn" data-a="usageRe">'+ic('refresh')+'Làm mới</button><button class="btn p" data-a="x">Đóng</button></div>'}
  if(k=='users'){UL=x;md.className='md wide';
   h=`<h3>Quản lý tài khoản</h3><label>Lọc theo tổ chuyên môn<select id="uf"><option value="">Tất cả tổ chuyên môn</option>${TEAMS.map(t=>`<option${UF===t?' selected':''}>${t}</option>`).join('')}<option value="__none"${UF=='__none'?' selected':''}>Chưa phân tổ</option></select></label><div id="ulist">${usersHtml()}</div><div class="fl"><button class="btn p" data-a="x">Đóng</button></div>`}
  if(k=='newu'){md.className='md wide';h=`<h3>Thêm tài khoản</h3><div class="tabs"><button class="tab on" data-a="nuTab" data-id="one">Từng tài khoản</button><button class="tab" data-a="nuTab" data-id="xl">Từ file Excel</button></div><div id="nuOne" class="nup"><label>Tên đăng nhập mới<input type="text" id="nn"></label><label>Mật khẩu (≥ 8 ký tự)<input type="password" id="np"></label><label>Vai trò<select id="nr"><option value="user">Giáo viên: chỉ xem, sửa, xóa tệp của mình</option><option value="bgh">Ban giám hiệu: xem tất cả tệp</option><option value="admin">Admin: toàn quyền</option></select></label><label>Tổ chuyên môn<select id="nt">${teamOpts('')}</select></label><label style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" id="nl" style="width:18px"> Phân công làm tổ trưởng của tổ này</label><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" data-a="uAdd">Tạo tài khoản</button></div></div><div id="nuXl" class="nup" style="display:none"><p>Tạo nhiều tài khoản cùng lúc từ danh sách cán bộ, giáo viên. Mỗi dòng ghi Họ và Tên, Chức vụ, Tổ trưởng và <b>Tổ chuyên môn</b>, nên một file có thể gồm giáo viên của nhiều tổ. Tên đăng nhập tự tạo từ họ tên (ví dụ Đoàn Thanh Cang → <b>Cangdt</b>), mật khẩu ban đầu giống tên đăng nhập.</p><div class="frow"><button class="btn" data-a="impTpl">${ic('download')}Tải file mẫu</button></div><label>Chọn file Excel (.xlsx)<input type="file" id="impFile" accept=".xlsx"></label><label style="flex-direction:row;align-items:flex-start;gap:8px"><input type="checkbox" id="impRand" style="width:18px;margin-top:2px"><span>Tạo mật khẩu ngẫu nhiên cho từng người (an toàn hơn). Nếu không tích, mật khẩu ban đầu giống tên đăng nhập.</span></label><div id="impPrev"></div><p id="impHint"></p><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" id="impGo" data-a="impGo" disabled>Tạo tài khoản</button></div></div>`}
@@ -630,7 +645,7 @@ function modal(k,x){
  md.innerHTML=h;$('#ov').classList.add('on');if(k=='pv')pvLoad(x)
 }
 // Tô sáng mục menu trái theo cửa sổ đang mở; đóng cửa sổ thì quay về File Manager
-const NAVK={notes:'nNote',users:'nUsers',newu:'nUsers',uedit:'nUsers',pw:'nPw',pwforce:'nPw',set:'nSet',help:'nHelp',login:'nLog'};
+const NAVK={usage:'nUsage',notes:'nNote',users:'nUsers',newu:'nUsers',uedit:'nUsers',pw:'nPw',pwforce:'nPw',set:'nSet',help:'nHelp',login:'nLog'};
 const setNav=id=>document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.id===id));
 const close=()=>{setNav('nHome');lockModal=false;$('#ov').classList.remove('on');$('#md').innerHTML=''};
 
@@ -716,6 +731,7 @@ document.addEventListener('click',async e=>{
  if(a=='logout'){S=null;F={};defF={...DEF0};showF=false;try{sessionStorage.removeItem('khs')}catch(e){}BCclear();toast('Đã đăng xuất');load()}
  if(a=='loginOk')try{await doLogin($('#ln').value.trim(),$('#lp').value)}catch(er){toast(er.message)}
  if(a=='setupOk')try{await doSetup($('#st').value.trim(),$('#s1').value,$('#s2').value)}catch(er){toast(er.message)}
+ if(a=='usage'||a=='usageRe')try{modal('usage',await rpc('usage.stats'))}catch(er){toast(er.message)}
  if(a=='users')try{modal('users',(await getUsers())||{users:[]})}catch(er){toast(er.message)}
  if(a=='pw')modal('pw');
  if(a=='pwOk')try{await doPw($('#p0').value,$('#p1').value,$('#p2').value)}catch(er){toast(er.message)}
@@ -784,6 +800,8 @@ document.addEventListener('change',e=>{
  if(e.target.name=='dm'){const t=$('#dmT');if(t)t.disabled=e.target.value!='move'}
  if(e.target.id=='nrf'){NC.flt=e.target.value;rcRefresh()}
  if(e.target.classList.contains('rc')){if(e.target.checked)NC.sel.add(e.target.value);else NC.sel.delete(e.target.value);rcRefresh()}
+ if(e.target.id=='qf'&&$('#qlist')){QF=e.target.value;$('#qlist').innerHTML=qHtml()}
+ if(e.target.id=='qs'&&$('#qlist')){QS=e.target.value;$('#qlist').innerHTML=qHtml()}
  if(e.target.id=='uf'&&$('#ulist')){UF=e.target.value;$('#ulist').innerHTML=usersHtml()}
 });
 $('#fq').addEventListener('keydown',e=>{if(e.key=='Enter'){fq=e.target.value.trim().toLowerCase();render()}});
