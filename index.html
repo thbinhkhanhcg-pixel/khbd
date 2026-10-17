@@ -396,12 +396,24 @@ async function load(){
  render();checkNotes()
 }
 
-async function act(fn,ok){
+// Thao tác ghi (đổi tên, xóa, tạo thư mục, chia sẻ): màn hình cập nhật NGAY, yêu cầu gửi lên máy chủ chạy nền; lỗi thì tự hoàn lại.
+let PEND=0,OPQ=Promise.resolve(),LASTB=null;
+async function act(fn,ok,opt,gc){
  if(!can()){toast('Hãy đăng nhập để chỉnh sửa.');return modal('login')}
- let full=true;
- try{const d=await fn();if(d&&d.bundle){applyBundle(d.bundle);full=false}if(ok)toast(ok)}catch(e){toast('Lỗi: '+e.message)}
- sel.clear();if(full)await load();else{render();checkNotes()}
-}
+ if(!opt){
+  let full=true;
+  try{const d=await fn();if(d&&d.bundle){applyBundle(d.bundle);full=false}if(ok)toast(ok)}catch(e){toast('Lỗi: '+e.message)}
+  sel.clear();if(full)await load();else{render();checkNotes()}
+  return}
+ try{opt()}catch(e){}
+ sel.clear();render();if(ok)toast(ok);
+ PEND++;
+ OPQ=OPQ.then(async()=>{let err=null;
+  try{const d=await fn();if(d&&d.bundle)LASTB=d.bundle}catch(e){err=e}
+  PEND--;
+  if(err){toast('Lỗi: '+err.message);LASTB=null;if(!PEND)await load();return}
+  if(!PEND&&LASTB){const b=LASTB;LASTB=null;applyBundle(b);render();checkNotes()}
+  if(gc)rpc0('gc',{}).catch(()=>{})})}
 
 
 const thumb=i=>['png','jpg','jpeg','gif','webp'].includes(ext(i.name))&&D.th&&(i.fid||i.size<=800*1024)?`<div class="fi" style="width:${D.sz}px;height:${D.sz}px;padding:0;overflow:hidden;background:#101b33"><img data-th="${esc(i.id)}" alt="" style="width:100%;height:100%;object-fit:cover"></div>`:badge(i.name);
@@ -775,24 +787,24 @@ document.addEventListener('click',async e=>{
   let p=(cur?cur+'/':'')+n.trim().replace(/[\/~]/g,'-');
   if(cur&&S&&S.role!='admin'&&S.role!='bgh'&&(db.fowner||{})[cur]!==S.name)return toast('Bạn chỉ tạo được thư mục con trong thư mục của mình.');
   if(db.folders.includes(p)){if((db.fowner||{})[p]===S.name)return toast('Bạn đã có thư mục này');p+='~'+S.name;if(db.folders.includes(p))return toast('Bạn đã có thư mục này')}
-  act(()=>rpc('folder.create',{parent:cur,name:n.trim()}),'Đã tạo thư mục')}
+  act(()=>rpc('folder.create',{parent:cur,name:n.trim()}),'Đã tạo thư mục',()=>{db.folders.push(p);db.fowner[p]=S.name})}
  if(a=='rn'&&i&&deny(i))return;
- if(a=='rn'){const n=await dlg({title:'Đổi tên tệp',label:'Tên mới',value:i.name,ok:'Lưu',input:1,base:1});if(n&&n.trim())act(()=>rpc('file.rename',{id:i.id,name:n.trim()}),'Đã đổi tên')}
+ if(a=='rn'){const n=await dlg({title:'Đổi tên tệp',label:'Tên mới',value:i.name,ok:'Lưu',input:1,base:1});if(n&&n.trim())act(()=>rpc('file.rename',{id:i.id,name:n.trim()}),'Đã đổi tên',()=>{const x=itemOf(i.id);if(x)x.name=n.trim()},1)}
  if(a=='delI'&&deny(i))return;
- if(a=='delI'&&await dlg({title:'Xóa tệp',msg:'Bạn có chắc muốn xóa <b>'+esc(i.name)+'</b>? Không thể hoàn tác.',ok:'Xóa',danger:1}))act(()=>rpc('file.delete',{ids:[i.id]}),'Đã xóa');
+ if(a=='delI'&&await dlg({title:'Xóa tệp',msg:'Bạn có chắc muốn xóa <b>'+esc(i.name)+'</b>? Không thể hoàn tác.',ok:'Xóa',danger:1}))act(()=>rpc('file.delete',{ids:[i.id]}),'Đã xóa',()=>{db.items=db.items.filter(x=>x.id!==i.id)},1);
  if((a=='delF'||a=='rnF')&&fdeny(id))return;
  if(a=='rnF'){const old=dn(id),n=((await dlg({title:'Đổi tên thư mục',label:'Tên mới',value:old,ok:'Lưu',input:1}))||'').trim().replace(/[\/~]/g,'-');if(!n||n===old)return;
   const np=(par(id)?par(id)+'/':'')+n;if(db.folders.includes(np))return toast('Đã có thư mục trùng tên');
   const mv=p=>p===id?np:p.startsWith(id+'/')?np+p.slice(id.length):p;
-  act(()=>rpc('folder.rename',{id,name:n}),'Đã đổi tên thư mục')}
+  act(()=>rpc('folder.rename',{id,name:n}),'Đã đổi tên thư mục',()=>{db.folders=db.folders.map(mv);db.items.forEach(x=>{x.folder=mv(x.folder)});['fowner','share','track'].forEach(m=>{const o={};Object.keys(db[m]||{}).forEach(k=>{o[mv(k)]=db[m][k]});db[m]=o});if(cur&&mv(cur)!==cur)cur=mv(cur)})}
  if(a=='delF'){const sub=p=>p===id||p.startsWith(id+'/'),its=db.items.filter(x=>sub(x.folder));
   if(!await dlg({title:'Xóa thư mục',msg:'Xóa thư mục <b>'+esc(dn(id))+'</b>'+(its.length?' cùng <b>'+its.length+' tệp</b> bên trong (kể cả tệp của người khác nộp vào)':'')+'? Không thể hoàn tác.',ok:'Xóa',danger:1}))return;
-  act(()=>rpc('folder.delete',{id}),'Đã xóa thư mục')}
+  act(()=>rpc('folder.delete',{id}),'Đã xóa thư mục',()=>{db.folders=db.folders.filter(p=>!sub(p));db.items=db.items.filter(x=>!sub(x.folder));['fowner','share','track'].forEach(m=>{Object.keys(db[m]||{}).forEach(k=>{if(sub(k))delete db[m][k]})});if(cur&&sub(cur))cur=par(id)},1)}
  if(a=='shr'&&canShare(id))modal('shr',id);
  if(a=='shrOk'&&canShare(id)){const v=[...document.querySelectorAll('.st:checked')].map(c=>c.value),tk=!!($('#trk')||{}).checked&&v.length>0;close();
-  act(()=>rpc('folder.share',{id,teams:v,track:tk}),v.length?(tk?'Đã chia sẻ và bật theo dõi nộp bài':'Đã chia sẻ thư mục'):'Đã ngừng chia sẻ')}
+  act(()=>rpc('folder.share',{id,teams:v,track:tk}),v.length?(tk?'Đã chia sẻ và bật theo dõi nộp bài':'Đã chia sẻ thư mục'):'Đã ngừng chia sẻ',()=>{if(v.length)db.share[id]=v;else delete db.share[id];if(tk)db.track[id]=true;else delete db.track[id]})}
  if(a=='delSel'&&S&&S.role!='admin'&&[...sel].some(id=>itemOf(id).by!==S.name))return toast('Bạn chỉ được xóa tệp do mình tải lên.');
- if(a=='delSel'&&await dlg({title:'Xóa tệp đã chọn',msg:'Xóa <b>'+sel.size+' tệp</b> đã chọn? Không thể hoàn tác.',ok:'Xóa',danger:1}))act(()=>rpc('file.delete',{ids:[...sel]}),'Đã xóa')
+ if(a=='delSel'&&await dlg({title:'Xóa tệp đã chọn',msg:'Xóa <b>'+sel.size+' tệp</b> đã chọn? Không thể hoàn tác.',ok:'Xóa',danger:1})){const ids=[...sel];act(()=>rpc('file.delete',{ids}),'Đã xóa',()=>{const s=new Set(ids);db.items=db.items.filter(x=>!s.has(x.id))},1)}
 });
 document.addEventListener('change',e=>{
  if(e.target.dataset.s){e.target.checked?sel.add(e.target.dataset.s):sel.delete(e.target.dataset.s);render()}
@@ -819,5 +831,6 @@ addEventListener('drop',e=>{e.preventDefault();if(!e.dataTransfer.files.length)r
 $('#ov').addEventListener('keydown',e=>{if(e.key=='Enter'&&e.target.tagName=='INPUT'&&e.target.type!='file'){const b=$('#md .btn.p');b&&b.click()}});
 if(S&&!location.hash.slice(1)){F={...defF};showF=true}
 cur=decodeURIComponent(location.hash.slice(1));
-loadApi().then(()=>load()).then(()=>{if(S&&S.mc){lockModal=true;modal('pwforce')}else if(!API)modal('set')});
+const warm=()=>{if(API&&!document.hidden)fetch(API,{cache:'no-store',mode:'no-cors'}).catch(()=>{})};
+loadApi().then(()=>{warm();setInterval(warm,240000);document.addEventListener('visibilitychange',warm)}).then(()=>load()).then(()=>{if(S&&S.mc){lockModal=true;modal('pwforce')}else if(!API)modal('set')});
 </script></body></html>
