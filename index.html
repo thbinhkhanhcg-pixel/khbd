@@ -253,21 +253,28 @@ function BCput(k,blob){const o=BC.get(k);if(o){URL.revokeObjectURL(o.url);BCB-=o
  const v={blob,url:URL.createObjectURL(blob)};BC.set(k,v);BCB+=blob.size;
  for(const [kk,vv] of BC){if(BCB<=60*1048576||kk===k)break;URL.revokeObjectURL(vv.url);BCB-=vv.blob.size;BC.delete(kk)}return v}
 async function fileBlob(i,prog){const c=BC.get(i.id);if(c)return c;
- const parts=[];let np=1;
- for(let k=0;k<np;k++){const d=await retry(()=>rpc('file.get',{id:i.id,part:k}));np=d.np;parts.push(b2u(d.data));if(prog)prog(k+1,np)}
+ const d0=await retry(()=>rpc('file.get',{id:i.id,part:0})),np=d0.np,parts=new Array(np);parts[0]=b2u(d0.data);let nx=1,dn=1,fail=null;if(prog)prog(1,np);
+ const wk=async()=>{while(!fail){const k=nx++;if(k>=np)return;try{const d=await retry(()=>rpc('file.get',{id:i.id,part:k}));parts[k]=b2u(d.data);dn++;if(prog)prog(dn,np)}catch(e){fail=e}}};
+ await Promise.all(Array.from({length:Math.min(3,Math.max(0,np-1))},wk));if(fail)throw fail;
  return BCput(i.id,new Blob(parts,{type:MIME[ext(i.name)]||'application/octet-stream'}))}
 async function officePdf(i){const k=i.id+'#pdf',c=BC.get(k);if(c)return c;const d=await rpc('file.preview',{id:i.id});return BCput(k,new Blob([b2u(d.data)],{type:'application/pdf'}))}
-async function dlFile(i){toast('Đang tải '+i.name+'…');
+const fidOf=i=>i.fid||((itemOf(i.id)||{}).fid)||'';
+const gdl=f=>'https://drive.usercontent.google.com/download?id='+encodeURIComponent(f)+'&export=download&confirm=t';
+function frameDl(u){const f=document.createElement('iframe');f.style.display='none';f.src=u;document.body.appendChild(f);setTimeout(()=>f.remove(),60000)}
+async function dlFile(i){const fid=fidOf(i);if(fid){frameDl(gdl(fid));toast('Đang tải '+i.name+'… (xem thanh tải xuống của trình duyệt)');return}
+ toast('Đang tải '+i.name+'…');
  try{const b=await fileBlob(i,(k,n)=>{if(n>1)toast('Đang tải '+i.name+' (phần '+k+'/'+n+')')});impDownload(b.blob,i.name);toast('Đã tải xuống '+i.name)}catch(e){toast(e.message)}}
 const PREV=['pdf','png','jpg','jpeg','docx','pptx','xlsx','doc','ppt','xls'];
-function openItem(x){if(PREV.includes(ext(x.name)))modal('pv',x);else dlFile(x)}
+function openItem(x){if(!x.fid)x={...x,fid:fidOf(x)};if(PREV.includes(ext(x.name)))modal('pv',x);else dlFile(x)}
 let PVID='';
-async function pvLoad(x){const id=PVID=x.id,e=ext(x.name),box=()=>PVID===id&&$('#pvb'),img=['png','jpg','jpeg'].includes(e);
+async function pvLoad(x){const id=PVID=x.id,e=ext(x.name),box=()=>PVID===id&&$('#pvb'),img=['png','jpg','jpeg'].includes(e),fid=fidOf(x);
+ if(fid){const b=box();if(b)b.outerHTML=`<iframe src="https://drive.google.com/file/d/${encodeURIComponent(fid)}/preview" allow="autoplay"></iframe>`;return}
  try{const u=(img||e=='pdf'?await fileBlob(x):await officePdf(x)).url,b=box();if(!b)return;b.outerHTML=img?`<img src="${u}">`:`<iframe src="${u}"></iframe>`}
  catch(er){const b=box();if(b){b.textContent=er.message;b.style.color='#ff8b8b'}}}
 let THQ=Promise.resolve();
 function loadThumbs(){document.querySelectorAll('img[data-th]').forEach(im=>{const id=im.dataset.th,c=BC.get(id);if(c){im.src=c.url;return}
  if(im.dataset.q)return;im.dataset.q=1;const it=itemOf(id);if(!it)return;
+ if(it.fid){im.src='https://drive.google.com/thumbnail?id='+encodeURIComponent(it.fid)+'&sz=w'+Math.min(800,Math.max(100,(D.sz||100)*2));return}
  THQ=THQ.then(async()=>{try{if(!document.body.contains(im))return;im.src=(await fileBlob(it)).url}catch(e){}})})}
 const signIn=u=>{S=u;defF={...DEF0};F={...defF};showF=true;saveS();close();toast('Xin chào '+u.name);return load()};
 async function doLogin(n,p){
@@ -309,7 +316,7 @@ function updBadge(){const b=$('#nBadge');if(!b)return;const n=unreadN().length;b
 const dayLbl=d=>{const t=new Date(d),n=new Date(),k=x=>x.toDateString();if(k(t)==k(n))return 'Hôm nay';const y=new Date(n);y.setDate(n.getDate()-1);if(k(t)==k(y))return 'Hôm qua';return t.toLocaleDateString('vi-VN',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric'})};
 function noteCard(n,mode,isNew){
  const ki=kindInfo[n.kind]||kindInfo.info,ref=n.ref&&n.ref.ok!==false?n.ref:null;
- const fl=n.ref?(ref?'<div class="nact"><button class="btn" data-open="'+esc(n.ref.id)+'" data-nm="'+esc(n.ref.name)+'">'+ic('eye')+'Mở tệp: '+esc(n.ref.name)+'</button></div>':'<div class="nm2">Tệp liên quan: '+esc(n.ref.name)+' (đã bị xóa)</div>'):'';
+ const fl=n.ref?(ref?'<div class="nact"><button class="btn" data-open="'+esc(n.ref.id)+'" data-nm="'+esc(n.ref.name)+'" data-fid="'+esc(n.ref.fid||'')+'">'+ic('eye')+'Mở tệp: '+esc(n.ref.name)+'</button></div>':'<div class="nm2">Tệp liên quan: '+esc(n.ref.name)+' (đã bị xóa)</div>'):'';
  let ex='';
  if(mode=='out'){const seen=n.seen||{},c=(n.to||[]).filter(u=>seen[u]).length;
   ex='<details><summary>Gửi tới '+(n.to||[]).length+' người · '+c+' đã xem</summary>'+(n.to||[]).map(u=>'<div>'+(seen[u]?'✓':'○')+' '+esc(u)+((UD[u]||{}).fn?' – '+esc(UD[u].fn):'')+(seen[u]?' <small>('+fdate(seen[u])+')</small>':'')+'</div>').join('')+'</details><div class="nact"><button class="btn d" data-a="noteDel" data-id="'+esc(n.id)+'">Xóa</button></div>'}
@@ -378,7 +385,7 @@ async function act(fn,ok){
 }
 
 
-const thumb=i=>['png','jpg','jpeg','gif','webp'].includes(ext(i.name))&&D.th&&i.size<=800*1024?`<div class="fi" style="width:${D.sz}px;height:${D.sz}px;padding:0;overflow:hidden;background:#101b33"><img data-th="${esc(i.id)}" alt="" style="width:100%;height:100%;object-fit:cover"></div>`:badge(i.name);
+const thumb=i=>['png','jpg','jpeg','gif','webp'].includes(ext(i.name))&&D.th&&(i.fid||i.size<=800*1024)?`<div class="fi" style="width:${D.sz}px;height:${D.sz}px;padding:0;overflow:hidden;background:#101b33"><img data-th="${esc(i.id)}" alt="" style="width:100%;height:100%;object-fit:cover"></div>`:badge(i.name);
 // Đặt menu thả xuống luôn nằm trọn trong màn hình: tự lật lên trên khi sát đáy, thu nhỏ và cuộn nếu thiếu chỗ
 function placeMenu(r){const box=$('#menuBox');box.style.maxHeight='';box.style.display='block';
  const vw=innerWidth,vh=innerHeight,w=box.offsetWidth,h=box.offsetHeight,below=vh-r.bottom-12,above=r.top-12;let top;
@@ -617,7 +624,7 @@ function modal(k,x){
  <label>Lớp (tùy chọn)<select id="ug"><option value="">Không chọn</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
  <p id="ust"></p><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" id="ub" data-a="upOk">Tải lên</button></div>`;
  if(k=='pv'){md.className='md big';PVID=x.id;
-  h=`<div class="fl" style="justify-content:space-between;align-items:center"><b>${esc(x.name)}</b><span style="display:flex;gap:8px"><button class="btn" data-dl="${esc(x.id)}" data-nm="${esc(x.name)}">${ic('download')}Tải xuống</button><button class="btn" data-a="x">Đóng</button></span></div><div id="pvb" class="empty" style="padding:40px">Đang tải bản xem trước… (tệp Word, Excel, PowerPoint có thể mất vài giây)</div>`}
+  h=`<div class="fl" style="justify-content:space-between;align-items:center"><b>${esc(x.name)}</b><span style="display:flex;gap:8px"><button class="btn" data-dl="${esc(x.id)}" data-nm="${esc(x.name)}" data-fid="${esc(x.fid||'')}">${ic('download')}Tải xuống</button>${x.fid?`<a class="btn" target="_blank" rel="noopener" href="https://drive.google.com/file/d/${encodeURIComponent(x.fid)}/view">Mở trong Google Drive</a>`:''}<button class="btn" data-a="x">Đóng</button></span></div><div id="pvb" class="empty" style="padding:40px">Đang tải bản xem trước…${x.fid?'':' (tệp Word, Excel, PowerPoint có thể mất vài giây)'}</div>`}
  if(k=='notes'||k=='notePop'||k=='noteNew')h=noteModal(k,md);
  if(NAVK[k])setNav(NAVK[k]);else if(k=='noteNew')setNav('nNote');
  md.innerHTML=h;$('#ov').classList.add('on');if(k=='pv')pvLoad(x)
@@ -627,35 +634,49 @@ const NAVK={notes:'nNote',users:'nUsers',newu:'nUsers',uedit:'nUsers',pw:'nPw',p
 const setNav=id=>document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.id===id));
 const close=()=>{setNav('nHome');lockModal=false;$('#ov').classList.remove('on');$('#md').innerHTML=''};
 
-const PART=3000000,UP_PAR=3;
+const PART=3000000,UP_PAR=3,FILE_PAR=3;let NOFAST=false;
+const b64f=blob=>new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result.split(',')[1]);fr.readAsDataURL(blob)});
+// Gửi thẳng tệp lên Google Drive (nhanh nhất): máy chủ chỉ kiểm tra quyền, trình duyệt gửi tệp cho Drive
+function putDrive(url,f,onp){return new Promise((res,rej)=>{const x=new XMLHttpRequest(),bad=m=>Object.assign(new Error(m),{code:'nofast'});
+ x.open('PUT',url);x.upload.onprogress=e=>{if(e.lengthComputable)onp(e.loaded/e.total)};
+ x.onload=()=>{if(x.status>=200&&x.status<300){try{const id=JSON.parse(x.responseText).id;id?res(id):rej(bad('no id'))}catch(e){rej(bad('bad json'))}}else rej(bad('Drive '+x.status))};
+ x.onerror=()=>rej(bad('network'));x.ontimeout=()=>rej(bad('timeout'));x.send(f)})}
+async function upFast(f,dir,subject,grade,onp){
+ const base={folder:dir,name:f.name,subject,grade};
+ const bg=await rpc('upload.begin',{...base,size:f.size,origin:location.origin});
+ const id=await putDrive(bg.url,f,onp);
+ return await rpc('upload.commit',{...base,ticket:bg.ticket,id})}
+async function upSlow(f,dir,subject,grade,onp){
+ if(f.size<=PART){const data=await b64f(f);return await retry(()=>rpc('file.add',{folder:dir,name:f.name,subject,grade,data}),2)}
+ const np=Math.ceil(f.size/PART),parts=new Array(np);let next=0,done=0,fail=null;
+ const worker=async()=>{while(!fail){const k=next++;if(k>=np)return;
+  try{const data=await b64f(f.slice(k*PART,(k+1)*PART));parts[k]=(await retry(()=>rpc('file.put',{data}),4)).h;done++;onp(done/np)}catch(e){fail=e}}};
+ await Promise.all(Array.from({length:Math.min(UP_PAR,np)},worker));if(fail)throw fail;
+ return await rpc('file.add',{folder:dir,name:f.name,subject,grade,parts})}
 async function doUpload(files,subject,grade){
- const st=$('#ust'),bt=$('#ub'),dir=cur;bt.disabled=true;let err=null,okc=0;
- const b64f=blob=>new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result.split(',')[1]);fr.readAsDataURL(blob)});
- for(const [n,f] of [...files].entries()){
+ const st=$('#ust'),bt=$('#ub'),dir=cur;bt.disabled=true;let err=null,okc=0,last=null;
+ const list=[...files],pr=list.map(()=>0),show=()=>{const tot=list.reduce((a,f)=>a+f.size,0)||1,dn=list.reduce((a,f,i)=>a+f.size*pr[i],0);
+  st.textContent=`Đang tải ${okc}/${list.length} tệp – ${Math.round(dn*100/tot)}%`+(list.length==1?': '+list[0].name:'')};
+ for(const f of list){if(f.size>50*1048576){err=new Error(f.name+' vượt quá 50 MB');break}if(!f.size){err=new Error(f.name+' là tệp rỗng');break}}
+ let next=0;show();
+ const worker=async()=>{while(!err){const n=next++;if(n>=list.length)return;const f=list[n],onp=p=>{pr[n]=p;show()};
   try{
-   if(f.size>50*1048576)throw new Error(f.name+' vượt quá 50 MB');
-   if(!f.size)throw new Error(f.name+' là tệp rỗng');
-   const lbl=`Đang tải ${n+1}/${files.length}: ${f.name}`;st.textContent=lbl;
-   if(f.size<=PART){const data=await b64f(f);await retry(()=>rpc('file.add',{folder:dir,name:f.name,subject,grade,data}),2)}
-   else{const np=Math.ceil(f.size/PART),parts=new Array(np);let next=0,done=0,fail=null;
-    const show=()=>{st.textContent=lbl+` – ${Math.round(done*100/np)}% (${done}/${np} phần)`};show();
-    // Gửi nhiều phần cùng lúc (UP_PAR phần) để nhanh hơn nhiều so với gửi lần lượt
-    const worker=async()=>{while(!fail){const k=next++;if(k>=np)return;
-     try{const data=await b64f(f.slice(k*PART,(k+1)*PART));parts[k]=(await retry(()=>rpc('file.put',{data}),4)).h;done++;show()}catch(e){fail=e}}};
-    await Promise.all(Array.from({length:Math.min(UP_PAR,np)},worker));if(fail)throw fail;
-    st.textContent=lbl+' – đang ghép tệp…';await rpc('file.add',{folder:dir,name:f.name,subject,grade,parts})}
-   okc++
-  }catch(e){err=e;break}}
- if(err){bt.disabled=false;st.textContent='';toast('Lỗi: '+err.message+(okc?' (đã tải được '+okc+' tệp)':''))}else{close();toast('Đã tải lên '+files.length+' tệp')}
- await load()
+   let r;
+   if(!NOFAST){try{r=await upFast(f,dir,subject,grade,onp)}catch(e){if(e.code=='nofast'){NOFAST=true;pr[n]=0}else if(!e.code||e.code=='server'||e.code=='busy'){pr[n]=0;try{r=await upFast(f,dir,subject,grade,onp)}catch(e2){if(e2.code&&e2.code!='nofast'&&e2.code!='server'&&e2.code!='busy')throw e2;NOFAST=true;pr[n]=0}}else throw e}}
+   if(!r)r=await upSlow(f,dir,subject,grade,onp);
+   pr[n]=1;okc++;last=r;show()
+  }catch(e){err=e}}};
+ await Promise.all(Array.from({length:Math.min(FILE_PAR,list.length)},worker));
+ if(err){bt.disabled=false;st.textContent='';toast('Lỗi: '+err.message+(okc?' (đã tải được '+okc+' tệp)':''))}else{close();toast('Đã tải lên '+list.length+' tệp')}
+ if(!err&&list.length==1&&last&&last.bundle){applyBundle(last.bundle);render();checkNotes()}else await load()
 }
 const itemOf=id=>db.items.find(i=>i.id===id);
 document.addEventListener('click',async e=>{
  const box=$('#menuBox');if(!e.target.closest('[data-m]'))box.style.display='none';
  if(e.target===$('#ov')){if(!lockModal)close();return}
  const t=e.target.closest('[data-a],[data-p],[data-pv],[data-m],[data-dl],[data-open]');if(!t)return;
- if(t.dataset.dl){const x=itemOf(t.dataset.dl)||{id:t.dataset.dl,name:t.dataset.nm||'tep'};return dlFile(x)}
- if(t.dataset.open)return openItem({id:t.dataset.open,name:t.dataset.nm||'tep'});
+ if(t.dataset.dl){const x=itemOf(t.dataset.dl)||{id:t.dataset.dl,name:t.dataset.nm||'tep',fid:t.dataset.fid||''};return dlFile(x)}
+ if(t.dataset.open)return openItem({id:t.dataset.open,name:t.dataset.nm||'tep',fid:t.dataset.fid||''});
  if(t.dataset.p!==undefined)return nav(t.dataset.p);
  if(t.dataset.pv)return modal('pv',itemOf(t.dataset.pv));
  if(['sort','disp','hd'].includes(t.dataset.m)){const r=t.getBoundingClientRect(),m=t.dataset.m,ck=v=>'<span class="ck">'+(v?ic('check'):'')+'</span>';let h='';
