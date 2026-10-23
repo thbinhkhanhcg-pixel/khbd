@@ -11,7 +11,16 @@ aside{width:282px;background:var(--side);border-right:1px solid var(--line);padd
 .logo{font-size:20px;font-weight:700;padding:4px 8px;display:flex;gap:10px;align-items:center}
 .logo i{font-style:normal;background:linear-gradient(135deg,#ffb830,#ff7a18);border-radius:8px;width:34px;height:34px;display:grid;place-items:center}
 .acc{display:flex;gap:10px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:12px;background:#182646}
-.av{width:36px;height:36px;border-radius:50%;background:var(--ac);display:grid;place-items:center;font-weight:700;flex:none}
+.av{position:relative;overflow:hidden;width:40px;height:40px;border-radius:50%;background:var(--ac);display:grid;place-items:center;font-weight:700;flex:none;color:#fff}
+.av img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:var(--ac)}
+.av.sm{width:32px;height:32px;font-size:12px}
+#avS{cursor:pointer;transition:box-shadow .15s}#avS:hover{box-shadow:0 0 0 2px #5b8cff}
+.ucell{display:flex;gap:10px;align-items:center;min-width:0}.ucell .nm{min-width:0}
+.avx{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+.avp{position:relative;width:min(240px,70vw);height:min(240px,70vw);border-radius:50%;overflow:hidden;border:2px solid var(--line);background:#101b33}
+.avp .av{width:100%;height:100%;border-radius:0;font-size:64px}
+.avp canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab;display:none;background:#fff}.avp canvas:active{cursor:grabbing}
+.avx input[type=range]{width:min(240px,70vw);accent-color:var(--ac);padding:0;border:0;background:none}
 .addacc{display:flex;align-items:center;gap:12px;padding:10px;border:1px dashed #33466f;border-radius:12px;color:var(--mu);cursor:pointer}.addacc:hover{color:var(--tx);border-color:var(--ac)}.addacc i{font-style:normal;width:36px;height:36px;border-radius:50%;background:#1d2c4f;display:grid;place-items:center;font-size:20px}
 .acc small{display:block;color:var(--mu);font-size:12px}
 nav a{display:flex;gap:10px;padding:10px 12px;border-radius:10px;color:var(--mu);cursor:pointer;text-decoration:none;margin-bottom:2px}
@@ -96,7 +105,7 @@ input[type=checkbox]:checked{border-color:var(--ac);background:var(--ac) url("da
 .qrow{display:grid;grid-template-columns:28px 1fr 70px 90px 56px;gap:10px;align-items:center;padding:9px 0;border-top:1px solid var(--line)}.qrow .qb{grid-column:2/-1}.qrow .nm b{cursor:default}.qrow .num{text-align:right;font-variant-numeric:tabular-nums}.qrow .rk{color:var(--mu);font-size:12.5px;text-align:center}
 #qlist{max-height:46vh;overflow:auto}.qtop{display:flex;gap:10px;flex-wrap:wrap}.qtop label{flex:1;min-width:150px}
 @media(max-width:560px){.qsum{grid-template-columns:1fr}.qrow{grid-template-columns:24px 1fr 80px}.qrow .cnt,.qrow .pc{display:none}.qrow .qb{grid-column:2/-1}}
-@media(max-width:560px){.urow{grid-template-columns:1fr 1fr}.urow .nm{grid-column:1/-1}}
+@media(max-width:560px){.urow{grid-template-columns:1fr 1fr}.urow .ucell{grid-column:1/-1}}
 #menuBox{max-width:calc(100vw - 16px);overflow:auto;overscroll-behavior:contain}
 .wrap{padding-bottom:72px}
 main{display:flex;flex-direction:column}
@@ -139,16 +148,17 @@ footer .sep{margin:0 10px;opacity:.5}footer svg{width:16px;height:16px;fill:#ff3
 #busy{position:fixed;top:0;left:0;right:0;height:3px;z-index:999;display:none;background:linear-gradient(90deg,transparent,var(--ac),transparent) no-repeat;background-size:40% 100%;animation:bz 1s linear infinite;pointer-events:none}@keyframes bz{from{background-position:-40% 0}to{background-position:140% 0}}
 </style></head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></symbol><symbol id="i-folder" viewBox="0 0 24 24"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9L9.6 3.9A2 2 0 0 0 7.9 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol><symbol id="i-folderplus" viewBox="0 0 24 24"><path d="M12 10v6"/><path d="M9 13h6"/><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9L9.6 3.9A2 2 0 0 0 7.9 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol><symbol id="i-folderopen" viewBox="0 0 24 24"><path d="m6 14 1.5-2.9A2 2 0 0 1 9.2 10H20a2 2 0 0 1 1.9 2.5l-1.5 6a2 2 0 0 1-1.9 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.7.9l.8 1.2a2 2 0 0 0 1.7.9H18a2 2 0 0 1 2 2v2"/></symbol><symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></symbol><symbol id="i-more" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></symbol><symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4"/><path d="m15.4 6.5-6.8 4"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol><symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></symbol><symbol id="i-sort" viewBox="0 0 24 24"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></symbol><symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol><symbol id="i-drive" viewBox="0 0 24 24"><path d="M22 12H2"/><path d="M5.5 5.1 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.5-6.9A2 2 0 0 0 16.8 4H7.2a2 2 0 0 0-1.7 1.1Z"/><path d="M6 16h.01"/><path d="M10 16h.01"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol><symbol id="i-sliders" viewBox="0 0 24 24"><path d="M21 4h-7"/><path d="M10 4H3"/><path d="M21 12h-9"/><path d="M8 12H3"/><path d="M21 20h-5"/><path d="M12 20H3"/><path d="M14 2v4"/><path d="M8 10v4"/><path d="M16 18v4"/></symbol><symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol><symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></symbol><symbol id="i-key" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></symbol><symbol id="i-pencil" viewBox="0 0 24 24"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></symbol><symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></symbol><symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><path d="M10 11v6"/><path d="M14 11v6"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></symbol><symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 12h16"/><path d="M4 6h16"/><path d="M4 18h16"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol><symbol id="i-filter" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M7 12h10"/><path d="M10 18h4"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol></defs></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></symbol><symbol id="i-folder" viewBox="0 0 24 24"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9L9.6 3.9A2 2 0 0 0 7.9 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol><symbol id="i-folderplus" viewBox="0 0 24 24"><path d="M12 10v6"/><path d="M9 13h6"/><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9L9.6 3.9A2 2 0 0 0 7.9 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol><symbol id="i-folderopen" viewBox="0 0 24 24"><path d="m6 14 1.5-2.9A2 2 0 0 1 9.2 10H20a2 2 0 0 1 1.9 2.5l-1.5 6a2 2 0 0 1-1.9 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.7.9l.8 1.2a2 2 0 0 0 1.7.9H18a2 2 0 0 1 2 2v2"/></symbol><symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></symbol><symbol id="i-more" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></symbol><symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4"/><path d="m15.4 6.5-6.8 4"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol><symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></symbol><symbol id="i-sort" viewBox="0 0 24 24"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></symbol><symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol><symbol id="i-drive" viewBox="0 0 24 24"><path d="M22 12H2"/><path d="M5.5 5.1 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.5-6.9A2 2 0 0 0 16.8 4H7.2a2 2 0 0 0-1.7 1.1Z"/><path d="M6 16h.01"/><path d="M10 16h.01"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol><symbol id="i-sliders" viewBox="0 0 24 24"><path d="M21 4h-7"/><path d="M10 4H3"/><path d="M21 12h-9"/><path d="M8 12H3"/><path d="M21 20h-5"/><path d="M12 20H3"/><path d="M14 2v4"/><path d="M8 10v4"/><path d="M16 18v4"/></symbol><symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol><symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></symbol><symbol id="i-key" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></symbol><symbol id="i-pencil" viewBox="0 0 24 24"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></symbol><symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></symbol><symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><path d="M10 11v6"/><path d="M14 11v6"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></symbol><symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 12h16"/><path d="M4 6h16"/><path d="M4 18h16"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol><symbol id="i-filter" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M7 12h10"/><path d="M10 18h4"/></symbol><symbol id="i-camera" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol></defs></svg>
 <aside id="sb">
  <div class="logo"><i><svg class="ic"><use href="#i-folderopen"/></svg></i>BP Cloud</div>
- <div class="acc"><div class="av">GV</div><div><b id="accN"></b><small id="accS"></small></div></div>
+ <div class="acc"><div class="av" id="avS" data-a="avatar" title="Đổi ảnh đại diện">GV</div><div><b id="accN"></b><small id="accS"></small></div></div>
  <div class="addacc" id="addAcc" data-a="addU" style="display:none"><i><svg class="ic"><use href="#i-plus"/></svg></i>Thêm tài khoản</div>
  <nav>
   <a class="on" data-a="home" id="nHome"><svg class="ic"><use href="#i-folderopen"/></svg>File Manager</a>
   <a data-a="notes" id="nNote" style="display:none"><svg class="ic"><use href="#i-bell"/></svg>Thông báo<b id="nBadge" style="display:none"></b></a>
   <a data-a="users" id="nUsers" style="display:none"><svg class="ic"><use href="#i-users"/></svg>Quản lý tài khoản</a>
   <a data-a="usage" id="nUsage" style="display:none"><svg class="ic"><use href="#i-drive"/></svg>Theo dõi dung lượng</a>
+  <a data-a="avatar" id="nAv" style="display:none"><svg class="ic"><use href="#i-camera"/></svg>Ảnh đại diện</a>
   <a data-a="pw" id="nPw" style="display:none"><svg class="ic"><use href="#i-lock"/></svg>Đổi mật khẩu</a>
   <a data-a="set" id="nSet" style="display:none"><svg class="ic"><use href="#i-sliders"/></svg>Cài đặt máy chủ</a>
   <a data-a="help" id="nHelp"><svg class="ic"><use href="#i-help"/></svg>Hướng dẫn</a>
@@ -211,10 +221,16 @@ let UD={},RT={};const ud=n=>UD[n]||RT[n];
 const TEAMS=['Khối 1','Khối 2','Khối 3','Khối 4','Khối 5','Anh Văn','Bộ Môn'];
 const teamOpts=v=>'<option value="">— Không chọn —</option>'+(v&&!TEAMS.includes(v)?`<option selected>${esc(v)}</option>`:'')+TEAMS.map(t=>`<option${t===v?' selected':''}>${t}</option>`).join('');
 let UL={users:[]},UF='';
+// Ảnh đại diện: tệp ảnh nhỏ (JPEG vuông) trong Drive, trang chỉ giữ mã tệp. Chưa có ảnh hoặc ảnh lỗi thì hiện 2 chữ cái đầu của tên.
+const AVLOC={};
+const avSrc=id=>AVLOC[id]||'https://drive.google.com/thumbnail?id='+encodeURIComponent(id)+'&sz=w160';
+const avIni=n=>esc(String(n||'?').slice(0,2).toUpperCase());
+const avImg=u=>u&&u.av?'<img src="'+esc(avSrc(u.av))+'" alt="" onerror="this.remove()">':'';
+const avHtml=(u,c)=>'<span class="av'+(c?' '+c:'')+'">'+avIni(u.name)+avImg(u)+'</span>';
 const rk=u=>u.role=='admin'?['admin','Admin']:u.role=='bgh'?['bgh','Ban giám hiệu']:u.leader?['leader','Tổ trưởng']:['gv','Giáo viên'];
 const uBadges=u=>{const k=rk(u);return '<span class="rb r-'+k[0]+'">'+k[1]+'</span>'+(u.team?'<span class="rt">'+esc(u.team)+'</span>':'')};
 const usersHtml=()=>{const L=UL.users.filter(u=>!UF||(UF=='__none'?!u.team:u.team===UF));
- return '<div class="ucnt">'+L.length+' tài khoản</div>'+(L.map(u=>'<div class="urow"><div class="nm"><b>'+esc(u.name)+'</b>'+(u.fn?'<span class="fnm">'+esc(u.fn)+'</span>':'')+'<small>'+uBadges(u)+(u.lock?'<span class="rb r-lock">Đã khóa</span>':'')+(u.mc?'<span class="rb r-warn" title="Vẫn đang dùng mật khẩu ban đầu (trùng tên đăng nhập)">Chưa đổi mật khẩu</span>':'')+'</small></div><button class="btn" data-a="uEdit" data-id="'+esc(u.name)+'">Phân quyền</button><button class="btn" data-a="uReset" data-id="'+esc(u.name)+'">Đặt lại MK</button>'+(u.name==S.name?'<span></span><span></span>':'<button class="btn" data-a="uLock" data-id="'+esc(u.name)+'">'+(u.lock?'Mở khóa':'Khóa')+'</button><button class="btn d" data-a="uDel" data-id="'+esc(u.name)+'">Xóa</button>')+'</div>').join('')||'<div class="empty" style="padding:24px">Không có tài khoản nào trong tổ này.</div>')};
+ return '<div class="ucnt">'+L.length+' tài khoản</div>'+(L.map(u=>'<div class="urow"><div class="ucell">'+avHtml(u,'sm')+'<div class="nm"><b>'+esc(u.name)+'</b>'+(u.fn?'<span class="fnm">'+esc(u.fn)+'</span>':'')+'<small>'+uBadges(u)+(u.lock?'<span class="rb r-lock">Đã khóa</span>':'')+(u.mc?'<span class="rb r-warn" title="Vẫn đang dùng mật khẩu ban đầu (trùng tên đăng nhập)">Chưa đổi mật khẩu</span>':'')+'</small></div></div><button class="btn" data-a="uEdit" data-id="'+esc(u.name)+'">Phân quyền</button><button class="btn" data-a="uReset" data-id="'+esc(u.name)+'">Đặt lại MK</button>'+(u.name==S.name?'<span></span><span></span>':'<button class="btn" data-a="uLock" data-id="'+esc(u.name)+'">'+(u.lock?'Mở khóa':'Khóa')+'</button><button class="btn d" data-a="uDel" data-id="'+esc(u.name)+'">Xóa</button>')+'</div>').join('')||'<div class="empty" style="padding:24px">Không có tài khoản nào trong tổ này.</div>')};
 let QD=null,QF='',QS='b';
 const qHtml=()=>{if(!QD)return '';const T=QD.bytes||0;let L=QD.rows.filter(r=>!QF||(QF=='__none'?!r.team&&!r.gone:QF=='__gone'?r.gone:r.team===QF));
  L=[...L].sort((a,b)=>QS=='n'?b.n-a.n||b.b-a.b:QS=='a'?a.name.localeCompare(b.name,'vi'):b.b-a.b||b.n-a.n);const mx=Math.max(1,...L.map(r=>r.b));
@@ -237,7 +253,7 @@ const canView=i=>{if(!S)return false;if(S.role=='admin'||S.role=='bgh'||i.by===S
 const normDb=d=>{d=d||{};d.folders=d.folders||[];d.items=d.items||[];d.fowner=d.fowner||{};d.share=d.share||{};d.track=d.track||{};return d};
 // Nhận dữ liệu đã được máy chủ lọc theo quyền của người đang đăng nhập
 function applyBundle(b){if(!b)return;
- if(b.me&&S){S={...S,...b.me,mc:!!b.me.mc};saveS()}
+ if(b.me&&S){S={...S,...b.me,av:b.me.av||'',mc:!!b.me.mc};saveS()}
  if(b.mc)return;
  if(b.db)db=normDb(b.db);
  if(b.dir){UD={};b.dir.forEach(u=>UD[u.name]=u);RT=b.retired||{}}
@@ -617,8 +633,8 @@ function render(){
  $('#meta').innerHTML=S?(last?'<span class="mi">'+ic('calendar')+fdate(last)+'</span>':'')+'<span class="mi">'+ic('copy')+(subs.length+its.length)+' mục</span>'+(cur&&trkF(shRoot(cur))?'<span class="mi req">Yêu cầu nộp bài</span>':'')+((structOn()||fq||q)?'<span class="mi" style="color:#ffc233">Đang lọc</span>':''):'Cần đăng nhập để xem nội dung';
  const ad=S&&S.role=='admin';
  $('#accN').textContent=S?S.name:'Khách';$('#accS').innerHTML=S?uBadges(S):'Chế độ chỉ xem';
- $('.av').textContent=S?S.name.slice(0,2).toUpperCase():'GV';
- $('#nUsers').style.display=ad?'':'none';$('#nUsage').style.display=ad?'':'none';$('#nNote').style.display=S?'':'none';updBadge();$('#nSet').style.display=canCfg()?'':'none';$('#addAcc').style.display=ad?'':'none';$('#nPw').style.display=S?'':'none';$('#nOut').style.display=S?'':'none';$('#nLog').style.display=S?'none':'';
+ {const e=$('#avS'),k=S?S.name+'|'+(S.av||''):'';if(e.dataset.k!==k){e.dataset.k=k;e.innerHTML=S?avIni(S.name)+avImg(S):'GV'}}
+ $('#nUsers').style.display=ad?'':'none';$('#nUsage').style.display=ad?'':'none';$('#nNote').style.display=S?'':'none';updBadge();$('#nSet').style.display=canCfg()?'':'none';$('#addAcc').style.display=ad?'':'none';$('#nPw').style.display=S?'':'none';$('#nAv').style.display=S?'':'none';$('#nOut').style.display=S?'':'none';$('#nLog').style.display=S?'none':'';
  $('#delSel').style.display=sel.size?'':'none';$('#delSel').innerHTML=ic('trash')+'Xóa ('+sel.size+')';
  $('#all').checked=vis.length>0&&vis.every(id=>sel.has(id));
  let h=subs.slice(0,lim).map(f=>{const n=db.items.filter(i=>(i.folder===f||i.folder.startsWith(f+'/'))&&canView(i)).length;
@@ -650,6 +666,8 @@ function modal(k,x){
  if(k=='uedit')h=`<h3>Phân quyền: ${esc(x.name)}</h3><label>Vai trò<select id="er"><option value="user"${x.role=='user'?' selected':''}>Giáo viên</option><option value="bgh"${x.role=='bgh'?' selected':''}>Ban giám hiệu</option><option value="admin"${x.role=='admin'?' selected':''}>Admin</option></select></label><label>Tổ chuyên môn<select id="et">${teamOpts(x.team||'')}</select></label><label style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" id="el" style="width:18px" ${x.leader?'checked':''}> Phân công làm tổ trưởng</label><div class="fl"><button class="btn" data-a="uback">Quay lại</button><button class="btn p" data-a="uEditOk" data-id="${esc(x.name)}">Lưu</button></div>`;
  if(k=='pwforce')h=`<h3>Đổi mật khẩu lần đầu</h3><p>Tài khoản của bạn đang dùng mật khẩu ban đầu. Hãy đặt mật khẩu mới để tiếp tục sử dụng.</p><label>Mật khẩu mới (≥ 8 ký tự, khác tên đăng nhập)<input type="password" id="f1" autocomplete="new-password"></label><label>Nhập lại mật khẩu<input type="password" id="f2" autocomplete="new-password"></label><div class="fl"><button class="btn p" data-a="pwfOk">Đổi mật khẩu</button></div>`;
  if(k=='pw')h=`<h3>Đổi mật khẩu</h3><label>Mật khẩu hiện tại<input type="password" id="p0"></label><label>Mật khẩu mới (≥ 8 ký tự)<input type="password" id="p1"></label><label>Nhập lại<input type="password" id="p2"></label><div class="fl"><button class="btn" data-a="x">Hủy</button><button class="btn p" data-a="pwOk">Đổi mật khẩu</button></div>`;
+ if(k=='avatar'){AVX={img:null,z:1,x:0,y:0};
+  h=`<h3>Ảnh đại diện</h3><div class="avx"><div class="avp"><span class="av" id="avCur">${avIni(S.name)}${avImg(S)}</span><canvas id="avc" width="240" height="240"></canvas></div><p id="avh">Bấm <b>Chọn ảnh</b> để chọn ảnh từ máy. Sau đó kéo ảnh để chọn phần hiển thị và dùng thanh bên dưới để phóng to hoặc thu nhỏ.</p><input type="range" id="avz" min="1" max="3" step="0.02" value="1" style="display:none" aria-label="Phóng to"><div class="frow" style="justify-content:center"><button class="btn" data-a="avPick">${ic('upload')}Chọn ảnh</button>${S.av?'<button class="btn d" data-a="avDel">'+ic('trash')+'Xóa ảnh</button>':''}</div></div><input type="file" id="avf" accept="image/*" hidden><div class="fl"><button class="btn" data-a="x">Đóng</button><button class="btn p" id="avOk" data-a="avOk" disabled>Lưu ảnh</button></div>`}
  if(k=='help'){md.className='md wide';h=helpHtml()}
  if(k=='up')h=`<h3>Tải lên tệp</h3><label>Tệp (Word, PDF, PowerPoint… tối đa 50 MB/tệp)<input type="file" id="upf" multiple></label>
  <label>Môn (tùy chọn)<select id="us"><option value="">Không chọn</option>${SUBJ.map(t=>`<option>${t}</option>`).join('')}</select></label>
@@ -662,7 +680,7 @@ function modal(k,x){
  md.innerHTML=h;$('#ov').classList.add('on');if(k=='pv')pvLoad(x)
 }
 // Tô sáng mục menu trái theo cửa sổ đang mở; đóng cửa sổ thì quay về File Manager
-const NAVK={usage:'nUsage',notes:'nNote',users:'nUsers',newu:'nUsers',uedit:'nUsers',pw:'nPw',pwforce:'nPw',set:'nSet',help:'nHelp',login:'nLog'};
+const NAVK={avatar:'nAv',usage:'nUsage',notes:'nNote',users:'nUsers',newu:'nUsers',uedit:'nUsers',pw:'nPw',pwforce:'nPw',set:'nSet',help:'nHelp',login:'nLog'};
 const setNav=id=>document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.id===id));
 const close=()=>{setNav('nHome');lockModal=false;$('#ov').classList.remove('on');$('#md').innerHTML=''};
 
@@ -705,6 +723,24 @@ async function doUpload(files,subject,grade){
  if(!err&&list.length==1&&last&&last.bundle){applyBundle(last.bundle);render();checkNotes()}else await load()
 }
 const itemOf=id=>db.items.find(i=>i.id===id);
+// ===== Ảnh đại diện: chọn ảnh, kéo/phóng để cắt vuông, nén JPEG 192×192 ngay trên máy rồi mới gửi (chỉ vài chục KB) =====
+let AVX={img:null,z:1,x:0,y:0};const AVN=240,AVO=192;
+function avGeo(){const i=AVX.img,b=Math.max(AVN/i.naturalWidth,AVN/i.naturalHeight)*AVX.z,w=i.naturalWidth*b,h=i.naturalHeight*b,mx=(w-AVN)/2,my=(h-AVN)/2;
+ AVX.x=Math.min(Math.max(AVX.x,-mx),mx);AVX.y=Math.min(Math.max(AVX.y,-my),my);return{w,h,dx:AVN/2+AVX.x-w/2,dy:AVN/2+AVX.y-h/2}}
+function avDraw(){const c=$('#avc');if(!c||!AVX.img)return;const g=c.getContext('2d'),o=avGeo();g.fillStyle='#fff';g.fillRect(0,0,AVN,AVN);g.drawImage(AVX.img,o.dx,o.dy,o.w,o.h)}
+function avOut(){const c=document.createElement('canvas');c.width=c.height=AVO;const g=c.getContext('2d'),o=avGeo(),k=AVO/AVN;g.fillStyle='#fff';g.fillRect(0,0,AVO,AVO);g.imageSmoothingQuality='high';g.drawImage(AVX.img,o.dx*k,o.dy*k,o.w*k,o.h*k);
+ let q=.86,u=c.toDataURL('image/jpeg',q);while(u.length>110000&&q>.4){q-=.12;u=c.toDataURL('image/jpeg',q)}return u}
+function avLoad(f){if(!/^image\//.test(f.type)&&!/\.(jpe?g|png|gif|webp|bmp)$/i.test(f.name))return toast('Hãy chọn một tệp ảnh (JPG, PNG…).');
+ if(f.size>20*1048576)return toast('Ảnh quá lớn (tối đa 20 MB).');
+ const u=URL.createObjectURL(f),im=new Image();
+ im.onload=()=>{URL.revokeObjectURL(u);if(!$('#avc'))return;if(!im.naturalWidth||!im.naturalHeight)return toast('Không đọc được ảnh này.');
+  AVX={img:im,z:1,x:0,y:0};$('#avc').style.display='block';const cu=$('#avCur');if(cu)cu.style.display='none';const z=$('#avz');z.style.display='';z.value=1;$('#avOk').disabled=false;
+  $('#avh').innerHTML='Kéo ảnh để chọn phần hiển thị, dùng thanh trượt để phóng to. Xong bấm <b>Lưu ảnh</b>.';avDraw()};
+ im.onerror=()=>{URL.revokeObjectURL(u);toast('Không đọc được ảnh này. Hãy thử ảnh JPG hoặc PNG khác.')};im.src=u}
+let AVD=null;
+document.addEventListener('pointerdown',e=>{if(e.target.id=='avc'&&AVX.img){AVD={px:e.clientX,py:e.clientY,x:AVX.x,y:AVX.y,k:AVN/e.target.getBoundingClientRect().width};try{e.target.setPointerCapture(e.pointerId)}catch(_){}e.preventDefault()}});
+document.addEventListener('pointermove',e=>{if(!AVD)return;AVX.x=AVD.x+(e.clientX-AVD.px)*AVD.k;AVX.y=AVD.y+(e.clientY-AVD.py)*AVD.k;avDraw()});
+document.addEventListener('pointerup',()=>{AVD=null});document.addEventListener('pointercancel',()=>{AVD=null});
 document.addEventListener('click',async e=>{
  const box=$('#menuBox');if(!e.target.closest('[data-m]'))box.style.display='none';
  if(e.target===$('#ov')){if(!lockModal)close();return}
@@ -753,6 +789,13 @@ document.addEventListener('click',async e=>{
  if(a=='usage'||a=='usageRe')try{modal('usage',await rpc('usage.stats'))}catch(er){toast(er.message)}
  if(a=='users')try{modal('users',(await getUsers())||{users:[]})}catch(er){toast(er.message)}
  if(a=='pw')modal('pw');
+ if(a=='avatar'){if(!S)return modal('login');$('#sb').classList.remove('open');modal('avatar')}
+ if(a=='avPick')$('#avf').click();
+ if(a=='avOk'&&AVX.img){const b0=t.textContent;t.disabled=true;t.textContent='Đang lưu…';
+  try{const u=avOut(),d=await rpc('avatar.set',{img:u.split(',')[1]});if(d.me&&d.me.av){AVLOC[d.me.av]=u;S={...S,av:d.me.av};if(UD[S.name])UD[S.name].av=d.me.av;saveS()}close();render();toast('Đã cập nhật ảnh đại diện')}
+  catch(er){toast(er.message);t.disabled=false;t.textContent=b0}}
+ if(a=='avDel'){if(!await dlg({title:'Xóa ảnh đại diện',msg:'Xóa ảnh đại diện hiện tại? Tài khoản sẽ hiển thị 2 chữ cái đầu của tên.',ok:'Xóa',danger:1}))return;
+  try{await rpc('avatar.set',{clear:1});S={...S};delete S.av;if(UD[S.name])delete UD[S.name].av;saveS();close();render();toast('Đã xóa ảnh đại diện')}catch(er){toast(er.message)}}
  if(a=='pwOk')try{await doPw($('#p0').value,$('#p1').value,$('#p2').value)}catch(er){toast(er.message)}
  if(a=='uAdd')try{const n=$('#nn').value.trim(),p=$('#np').value,r=$('#nr').value,tm=$('#nt').value.trim(),ld=$('#nl').checked;chkPw(p);if(ld&&!tm)throw new Error('Hãy chọn tổ cho tổ trưởng');if(!/^[\w.-]{3,30}$/.test(n))throw new Error('Tên đăng nhập 3–30 ký tự: chữ không dấu, số, . _ -');
   const d=await rpc('user.add',{name:n,role:r,team:tm,leader:ld,pw:await kd(n,npw(n,p))});applyUsers(d);close();render();toast('Đã tạo tài khoản '+n)}catch(er){toast(er.message)}
@@ -815,6 +858,7 @@ document.addEventListener('change',e=>{
  if(e.target.classList.contains('fs')){F[e.target.dataset.k]=e.target.value;if(['src','type'].includes(e.target.dataset.k)){if(e.target.value)defF[e.target.dataset.k]=e.target.value;else delete defF[e.target.dataset.k]}render()}
  if(e.target.id=='sfl'){SX.flt=e.target.value;$('#stwrap').innerHTML=statusHtml()}
  if(e.target.id=='impFile'&&e.target.files[0])impLoad(e.target.files[0]);
+ if(e.target.id=='avf'&&e.target.files[0]){avLoad(e.target.files[0]);e.target.value=''}
  
  if(e.target.name=='dm'){const t=$('#dmT');if(t)t.disabled=e.target.value!='move'}
  if(e.target.id=='nrf'){NC.flt=e.target.value;rcRefresh()}
@@ -824,7 +868,8 @@ document.addEventListener('change',e=>{
  if(e.target.id=='uf'&&$('#ulist')){UF=e.target.value;$('#ulist').innerHTML=usersHtml()}
 });
 $('#fq').addEventListener('keydown',e=>{if(e.key=='Enter'){fq=e.target.value.trim().toLowerCase();render()}});
-document.addEventListener('input',e=>{if(e.target.id=='rcq'){NC.q=e.target.value.trim().toLowerCase();const l=$('#rcl');if(l)l.innerHTML=rcListHtml()}});
+document.addEventListener('input',e=>{if(e.target.id=='avz'&&AVX.img){AVX.z=+e.target.value;avDraw()}
+ if(e.target.id=='rcq'){NC.q=e.target.value.trim().toLowerCase();const l=$('#rcl');if(l)l.innerHTML=rcListHtml()}});
 $('#q').addEventListener('input',e=>{q=e.target.value.trim().toLowerCase();render()});
 addEventListener('dragover',e=>e.preventDefault());
 addEventListener('drop',e=>{e.preventDefault();if(!e.dataTransfer.files.length)return;if(!can()){toast('Hãy đăng nhập để tải lên.');return modal('login')}if(cur&&!canPut(cur))return toast('Bạn không có quyền tải lên thư mục này.');modal('up');$('#upf').files=e.dataTransfer.files});
