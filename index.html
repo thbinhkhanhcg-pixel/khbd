@@ -338,9 +338,17 @@ async function askDelete(id){
  if(r.mode=='move'&&!r.to)throw new Error('Chưa có tài khoản nào để nhận dữ liệu.');
  if(r.mode=='purge'&&!await dlg({title:'Xóa vĩnh viễn dữ liệu',msg:'Xóa tài khoản <b>'+esc(id)+'</b> cùng <b>'+own.length+' thư mục</b> và <b>'+its.length+' tệp</b>? Không thể hoàn tác.',ok:'Xóa vĩnh viễn',danger:1}))return;
  return finishDelete(id,r.mode,r.to)}
-async function finishDelete(id,mode,to){
- const d=await rpc('user.delete',{name:id,mode,to});applyUsers(d);applyBundle(d.bundle);modal('users',d);render();
- toast(mode=='move'?'Đã xóa tài khoản và chuyển dữ liệu cho '+to:mode=='purge'?'Đã xóa tài khoản và toàn bộ dữ liệu':'Đã xóa tài khoản')}
+// Xóa tài khoản: danh sách cập nhật NGAY, máy chủ xử lý nền (lỗi thì tự hoàn lại danh sách)
+function finishDelete(id,mode,to){
+ const u0=UD[id]||{},own=Object.keys(db.fowner||{}).filter(p=>db.fowner[p]===id),sub=p=>own.some(o=>p===o||p.startsWith(o+'/'));
+ const opt=()=>{
+  UL={...UL,users:(UL.users||[]).filter(x=>x.name!==id)};delete UD[id];
+  if(mode=='keep')RT[id]={team:u0.team||'',fn:u0.fn||''};
+  if(mode=='move'){Object.keys(db.fowner).forEach(p=>{if(db.fowner[p]===id)db.fowner[p]=to});db.items.forEach(x=>{if(x.by===id)x.by=to})}
+  if(mode=='purge'){db.items=db.items.filter(x=>!(sub(x.folder)||x.by===id));db.folders=db.folders.filter(p=>!sub(p));['fowner','share','track'].forEach(m=>{Object.keys(db[m]||{}).forEach(k=>{if(sub(k))delete db[m][k]})});if(cur&&sub(cur))cur=''}
+  const l=$('#ulist');if(l)l.innerHTML=usersHtml()};
+ const fn=async()=>{try{return await rpc('user.delete',{name:id,mode,to})}catch(e){try{UL=await getUsers();const l=$('#ulist');if(l)l.innerHTML=usersHtml()}catch(_){}throw e}};
+ act(fn,mode=='move'?'Đã xóa tài khoản và chuyển dữ liệu cho '+to:mode=='purge'?'Đã xóa tài khoản và toàn bộ dữ liệu':'Đã xóa tài khoản',opt,1)}
 // ===== Thông báo / ghi chú (Admin, BGH, Tổ trưởng gửi; người nhận thấy khi đăng nhập và xem lại trong mục Thông báo) =====
 let NT={notes:[]},NC={sel:new Set(),flt:'',q:''},NP=[],NPOP=new Set(),NTAB='in',NT_T=0;
 const canNote=()=>!!S&&(S.role=='admin'||S.role=='bgh'||!!S.leader);
@@ -820,7 +828,7 @@ document.addEventListener('click',async e=>{
  if(a=='uEditOk')try{const tm=$('#et').value.trim(),ld=$('#el').checked,r=$('#er').value;if(ld&&!tm)throw new Error('Hãy chọn tổ cho tổ trưởng');if(id==S.name&&r!='admin')throw new Error('Không thể tự hạ quyền Admin của chính mình');
   const d=await rpc('user.edit',{name:id,role:r,team:tm,leader:ld});applyUsers(d);modal('users',d);render();toast('Đã cập nhật phân quyền')}catch(er){toast(er.message)}
  if(a=='uReset')try{const p=await dlg({title:'Đặt lại mật khẩu',label:'Mật khẩu mới cho '+id+' (tối thiểu 8 ký tự)',type:'password',ok:'Đặt lại',input:1});if(!p)return;chkPw(p);const d=await rpc('user.reset',{name:id,pw:await kd(id,npw(id,p))});if(d.token){S={...S,token:d.token};saveS()}applyUsers(d);modal('users',d);toast('Đã đặt lại mật khẩu')}catch(er){toast(er.message)}
- if(a=='uDel')try{await load();await askDelete(id)}catch(er){toast(er.message)}
+ if(a=='uDel')try{await askDelete(id)}catch(er){toast(er.message)}
  if(a=='uLock')try{const cu=(UL.users||[]).find(u=>u.name==id);if(!cu)return;
   if(!cu.lock&&!await dlg({title:'Khóa tài khoản',msg:'Khóa tài khoản <b>'+esc(id)+'</b>? Người này sẽ không đăng nhập được nữa nhưng thư mục và tệp vẫn được giữ nguyên. Bạn có thể mở khóa bất cứ lúc nào.',ok:'Khóa'}))return;
   const on=!cu.lock;{const d=await rpc('user.lock',{name:id,on});applyUsers(d);modal('users',d)}toast(on?'Đã khóa tài khoản':'Đã mở khóa tài khoản')}catch(er){toast(er.message)}
