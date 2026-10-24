@@ -451,7 +451,7 @@ function placeMenu(r){const box=$('#menuBox');box.style.maxHeight='';box.style.d
  box.style.top=top+'px';box.style.left=Math.min(Math.max(8,r.right-w),Math.max(8,vw-w-8))+'px'}
 ['scroll','resize'].forEach(ev=>addEventListener(ev,e=>{const b=$('#menuBox');if(e.target!==b)b.style.display='none'},true));
 // Hướng dẫn theo vai trò
-const HC=[["Tải tệp lên","Mở thư mục cần lưu, bấm <b>Tải lên</b> (hoặc kéo thả tệp vào trang), chọn tệp, chọn môn và lớp nếu muốn rồi bấm Tải lên. Mỗi tệp tối đa 50 MB. Tệp lớn được tải lên từng phần nên cần chờ thêm vài giây."],["Tạo thư mục","Bấm <b>Thư mục mới</b> và đặt tên. Tạo được ở ngoài cùng hoặc bên trong thư mục của chính bạn."],["Xem và tải về","Bấm tên tệp hoặc <b>Xem trước</b> để xem, bấm <b>Tải xuống</b> để lưu về máy."],["Đổi tên, xóa","Bấm <b>⋮</b> cạnh tệp hoặc thư mục, chọn Đổi tên hoặc Xóa. Chỉ làm được với mục do bạn tạo."],["Bộ lọc mặc định","Khi đăng nhập, trang mặc định chỉ hiện thư mục và tệp do bạn tạo (Nguồn: Của tôi). Muốn xem thư mục được chia sẻ hoặc toàn bộ nội dung bạn có quyền xem, bấm icon phễu rồi chọn <b>Nguồn: Tất cả</b>."],["Tìm nhanh","Thanh công cụ có kính lúp (tìm trong cả kho), phễu (lọc theo nguồn: của tôi hoặc từng khối, loại tệp và môn học. Mọi bộ lọc chỉ áp dụng cho các mục trong thư mục đang mở, giống File Explorer của Windows; muốn tìm trong cả kho hãy dùng kính lúp), hai mũi tên (sắp xếp) và thanh trượt (hình thu nhỏ)."],["Đổi mật khẩu","Chọn <b>Đổi mật khẩu</b> ở cột bên trái. Quên mật khẩu thì liên hệ Admin để được đặt lại."]];
+const HC=[["Tải tệp lên","Mở thư mục cần lưu, bấm <b>Tải lên</b> (hoặc kéo thả tệp vào trang), chọn tệp, chọn môn và lớp nếu muốn rồi bấm Tải lên. Mỗi tệp tối đa 50 MB. Tệp lớn được tải lên từng phần nên cần chờ thêm vài giây."],["Tạo thư mục","Bấm <b>Thư mục mới</b> và đặt tên. Tạo được ở ngoài cùng hoặc bên trong thư mục của chính bạn."],["Xem và tải về","Bấm tên tệp hoặc <b>Xem trước</b> để xem, bấm <b>Tải xuống</b> để lưu về máy."],["Đổi tên, xóa","Bấm <b>⋮</b> cạnh tệp hoặc thư mục, chọn Đổi tên hoặc Xóa. Chỉ làm được với mục do bạn tạo."],["Bộ lọc mặc định","Khi đăng nhập, trang mặc định chỉ hiện thư mục và tệp do bạn tạo (Nguồn: Của tôi). Muốn xem thư mục được chia sẻ hoặc toàn bộ nội dung bạn có quyền xem, bấm icon phễu rồi chọn <b>Nguồn: Tất cả</b>."],["Tìm nhanh","Thanh công cụ có kính lúp (tìm trong cả kho), phễu (lọc theo nguồn: của tôi hoặc từng khối, loại tệp và môn học. Mọi bộ lọc chỉ áp dụng cho các mục trong thư mục đang mở, giống File Explorer của Windows; muốn tìm trong cả kho hãy dùng kính lúp. Ô <b>Môn</b> chỉ hiện khi lọc theo loại tệp (thư mục không có môn). Admin, Ban giám hiệu và Tổ trưởng có thêm ô <b>Giáo viên</b> để xem thư mục hoặc tệp của một người), hai mũi tên (sắp xếp) và thanh trượt (hình thu nhỏ)."],["Đổi mật khẩu","Chọn <b>Đổi mật khẩu</b> ở cột bên trái. Quên mật khẩu thì liên hệ Admin để được đặt lại."]];
 const HELP={
 guest:{intro:"Bạn chưa đăng nhập nên chưa xem được tệp nào.",steps:[["Đăng nhập","Bấm <b>Đăng nhập</b> ở cột bên trái, nhập tên đăng nhập và mật khẩu do Admin cấp."],["Chưa có tài khoản?","Liên hệ Admin để được tạo tài khoản. Trang không có chức năng tự đăng ký."],["Sau khi đăng nhập","Mở lại mục Hướng dẫn để xem hướng dẫn riêng cho vai trò của bạn."]]},
 gv:{intro:"Bạn thấy và quản lý được tệp, thư mục do chính mình tạo, cùng các thư mục mà BGH hoặc tổ trưởng chia sẻ cho khối của bạn.",
@@ -589,6 +589,7 @@ function matchF(f){
  if(F.subject)return false;
  if(F.type&&F.type!='folder')return false;
  const ow=(db.fowner||{})[f],o=ud(ow);
+ if(F.who&&ow!==F.who)return false;
  if(F.src=='mine')return ow===S.name;
  if(F.src)return !!(o&&o.team===F.src);
  return true}
@@ -597,17 +598,30 @@ function matchI(i){
  if(F.type&&EXT[F.type]&&!EXT[F.type].includes(ext(i.name)))return false;
  if(F.subject&&i.subject!==F.subject)return false;
  const o=ud(i.by);
+ if(F.who&&i.by!==F.who)return false;
  if(F.src=='mine')return i.by===S.name;
  if(F.src)return !!(o&&o.team===F.src);
  return true}
-// Bảng lọc gồm 3 ô: Nguồn (Của tôi hoặc từng khối), Loại, Môn
+// Bảng lọc: Nguồn (Của tôi hoặc từng khối), Loại, Giáo viên (Admin, BGH, Tổ trưởng) và Môn (chỉ khi lọc theo tệp, vì thư mục không có môn)
+const FILE_TYPES=['file','pdf','word','excel','ppt','image'];
+// Danh sách giáo viên để lọc: Admin/BGH thấy tất cả (hoặc theo khối đang chọn), Tổ trưởng chỉ thấy tổ mình
+function whoList(){
+ if(!S||F.src=='mine'||!(S.role=='admin'||S.role=='bgh'||S.leader))return [];
+ const wide=S.role=='admin'||S.role=='bgh';
+ return Object.values(UD).filter(u=>u.name!==S.name&&(wide?(!F.src||u.team===F.src):u.team===S.team)).sort((a,b)=>(a.team||'~').localeCompare(b.team||'~','vi')||(a.fn||a.name).localeCompare(b.fn||b.name,'vi'))}
+// Bỏ các lựa chọn không còn phù hợp (ví dụ đang chọn Môn mà chuyển sang lọc Thư mục)
+function fixF(){
+ if(F.subject&&!FILE_TYPES.includes(F.type))delete F.subject;
+ if(F.who&&!whoList().some(u=>u.name===F.who))delete F.who}
 function renderFilters(){
- if(!S)return;
+ if(!S)return;fixF();
  const wide=S.role=='admin'||S.role=='bgh',teams=wide?TEAMS:(S.team?[S.team]:[]);
  const mk=(k,lb,ops)=>`<label class="fsel">${lb}<select class="fs" data-k="${k}">${ops.map(([v,t])=>`<option value="${esc(v)}"${(F[k]||'')===v?' selected':''}>${esc(t)}</option>`).join('')}</select></label>`;
+ const wl=whoList();
  $('#fsel').innerHTML=mk('src','Nguồn',[['','Tất cả'],['mine','Của tôi'],...teams.map(t=>[t,t])])
   +mk('type','Loại',[['','Tất cả'],['folder','Thư mục'],['file','Tệp'],['pdf','PDF'],['word','Word'],['excel','Excel'],['ppt','PowerPoint'],['image','Ảnh']])
-  +mk('subject','Môn',[['','Tất cả'],...SUBJ.map(t=>[t,t])])}
+  +(wl.length?mk('who','Giáo viên',[['','Tất cả'],...wl.map(u=>[u.name,(u.fn?u.fn+' ('+u.name+')':u.name)+(wide&&!F.src&&u.team?' · '+u.team:'')])]):'')
+  +(FILE_TYPES.includes(F.type)?mk('subject','Môn',[['','Tất cả'],...SUBJ.map(t=>[t,t])]):'')}
 // Trạng thái nộp bài của một thư mục đã chia sẻ
 const canStatus=f=>!!S&&!!db.share&&!!db.share[f]&&db.share[f].length>0&&!!(db.track&&db.track[f])&&(S.role=='admin'||S.role=='bgh'||(S.leader&&(db.fowner||{})[f]===S.name));
 function statusData(f){const sh=db.share[f]||[],ow=(db.fowner||{})[f],sub=p=>p===f||p.startsWith(f+'/');
@@ -863,7 +877,7 @@ document.addEventListener('change',e=>{
  if(e.target.id=='sort'){sort=e.target.value;render()}
  if(e.target.id=='stall')document.querySelectorAll('.st').forEach(c=>c.checked=e.target.checked);
  if(e.target.classList.contains('st')){const al=$('#stall');if(al)al.checked=[...document.querySelectorAll('.st')].every(c=>c.checked)}
- if(e.target.classList.contains('fs')){F[e.target.dataset.k]=e.target.value;if(['src','type'].includes(e.target.dataset.k)){if(e.target.value)defF[e.target.dataset.k]=e.target.value;else delete defF[e.target.dataset.k]}render()}
+ if(e.target.classList.contains('fs')){F[e.target.dataset.k]=e.target.value;fixF();if(['src','type'].includes(e.target.dataset.k)){if(e.target.value)defF[e.target.dataset.k]=e.target.value;else delete defF[e.target.dataset.k]}render()}
  if(e.target.id=='sfl'){SX.flt=e.target.value;$('#stwrap').innerHTML=statusHtml()}
  if(e.target.id=='impFile'&&e.target.files[0])impLoad(e.target.files[0]);
  if(e.target.id=='avf'&&e.target.files[0]){avLoad(e.target.files[0]);e.target.value=''}
